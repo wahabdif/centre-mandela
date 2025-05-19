@@ -75,17 +75,25 @@ export default function Map() {
         title: "Centre D'Imagerie Benameur"
       }).addTo(map);
 
-      // Create a popup for the marker
+      // Create a popup for the marker with enhanced styling
       const popupContent = `
-        <div style="font-family: 'Open Sans', sans-serif; padding: 10px; min-width: 200px;">
-          <h3 style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-bottom: 8px; color: #0056b3; font-size: 16px;">Centre D'Imagerie Benameur</h3>
-          <p style="font-size: 14px; margin: 0 0 8px 0;">${contactInfo.address}</p>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${contactInfo.location.lat},${contactInfo.location.lng}" 
-             target="_blank" 
-             style="color: #0056b3; text-decoration: none; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center;">
-            <span style="margin-right: 4px;">Itinéraire</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
-          </a>
+        <div style="font-family: 'Open Sans', sans-serif; padding: 12px; min-width: 220px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <h3 style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-bottom: 10px; color: #0056b3; font-size: 17px; border-bottom: 2px solid #e0f0ff; padding-bottom: 8px;">Centre D'Imagerie Benameur</h3>
+          <p style="font-size: 14px; margin: 0 0 12px 0; color: #333;">${contactInfo.address}</p>
+          <p style="font-size: 13px; margin: 0 0 12px 0; color: #666;"><span style="color: #0056b3; font-weight: 600;">Tél:</span> ${contactInfo.phone}</p>
+          <div style="display: flex; justify-content: space-between;">
+            <a href="https://www.google.com/maps/dir/?api=1&destination=${contactInfo.location.lat},${contactInfo.location.lng}" 
+               target="_blank" 
+               style="color: #0056b3; text-decoration: none; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; background-color: #e0f0ff; padding: 6px 10px; border-radius: 4px; transition: background-color 0.3s;">
+              <span style="margin-right: 4px;">Itinéraire</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+            </a>
+            <a href="tel:${contactInfo.phone.replace(/\s/g, '')}" 
+               style="color: #0056b3; text-decoration: none; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; background-color: #e0f0ff; padding: 6px 10px; border-radius: 4px; transition: background-color 0.3s;">
+              <span style="margin-right: 4px;">Appeler</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </a>
+          </div>
         </div>
       `;
 
@@ -129,8 +137,12 @@ export default function Map() {
         // Get all maps and find the one associated with our element
         const maps = Object.values(window.L._leaflet_id_map || {});
         for (const mapInstance of maps) {
-          if (mapInstance._container === mapRef.current) {
-            mapInstance.remove();
+          if (mapInstance && 
+              typeof mapInstance === 'object' && 
+              '_container' in mapInstance && 
+              mapInstance._container === mapRef.current) {
+            // TypeScript safety: cast to any before accessing remove method
+            (mapInstance as any).remove();
             break;
           }
         }
