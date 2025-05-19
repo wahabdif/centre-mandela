@@ -5,28 +5,28 @@ export const services = [
     icon: "x-ray",
     title: "Radiologie générale",
     description: "Examens radiologiques standards pour diagnostiquer diverses conditions médicales avec précision.",
-    image: "https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?q=80&w=1500&auto=format&fit=crop"
+    image: "https://images.pexels.com/photos/4226219/pexels-photo-4226219.jpeg?auto=compress&cs=tinysrgb&w=1500"
   },
   {
     id: "irm",
     icon: "magnet",
     title: "IRM",
     description: "Imagerie par résonance magnétique haute définition pour des diagnostics avancés et précis.",
-    image: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?q=80&w=1500&auto=format&fit=crop"
+    image: "https://images.pexels.com/photos/6749773/pexels-photo-6749773.jpeg?auto=compress&cs=tinysrgb&w=1500"
   },
   {
     id: "scanner",
     icon: "laptop-medical",
     title: "Scanner",
     description: "Tomodensitométrie de dernière génération pour une visualisation détaillée des organes et tissus.",
-    image: "https://images.unsplash.com/photo-1588802806615-edc783f5a414?q=80&w=1500&auto=format&fit=crop"
+    image: "https://images.pexels.com/photos/6749293/pexels-photo-6749293.jpeg?auto=compress&cs=tinysrgb&w=1500"
   },
   {
     id: "echographie",
     icon: "search",
     title: "Échographie",
     description: "Examens échographiques réalisés par des médecins spécialistes expérimentés.",
-    image: "https://images.unsplash.com/photo-1593538313703-e4dc5e3f1998?q=80&w=1500&auto=format&fit=crop"
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg?auto=compress&cs=tinysrgb&w=1500"
   }
 ];
 
@@ -155,33 +155,33 @@ export const socialLinks = [
 
 // Hero images for different pages
 export const heroImages = {
-  home: "https://images.unsplash.com/photo-1516549655619-4b434355e5b7?q=80&w=1800&auto=format&fit=crop",
-  services: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1800&auto=format&fit=crop",
-  appointment: "https://images.unsplash.com/photo-1581349485608-9469926a8e5e?q=80&w=1800&auto=format&fit=crop",
-  testimonials: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1800&auto=format&fit=crop",
-  contact: "https://images.unsplash.com/photo-1516549655619-4b434355e5b7?q=80&w=1800&auto=format&fit=crop"
+  home: "https://images.pexels.com/photos/4033148/pexels-photo-4033148.jpeg?auto=compress&cs=tinysrgb&w=1800",
+  services: "https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=1800",
+  appointment: "https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg?auto=compress&cs=tinysrgb&w=1800",
+  testimonials: "https://images.pexels.com/photos/7088530/pexels-photo-7088530.jpeg?auto=compress&cs=tinysrgb&w=1800",
+  contact: "https://images.pexels.com/photos/6129507/pexels-photo-6129507.jpeg?auto=compress&cs=tinysrgb&w=1800"
 };
 
 // Equipment images
 export const equipmentImages = [
   {
     title: "IRM dernière génération",
-    image: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.pexels.com/photos/6749773/pexels-photo-6749773.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "Système IRM 3 Tesla avec logiciels avancés pour des examens détaillés"
   },
   {
     title: "Scanner multi-coupes",
-    image: "https://images.unsplash.com/photo-1588802806615-edc783f5a414?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.pexels.com/photos/6749293/pexels-photo-6749293.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "Scanner 128 barrettes avec reconstruction 3D et réduction de dose"
   },
   {
     title: "Échographe haute définition",
-    image: "https://images.unsplash.com/photo-1593538313703-e4dc5e3f1998?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "Échographie doppler couleur et modes avancés pour tous types d'examens"
   },
   {
     title: "Radiologie numérique",
-    image: "https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.pexels.com/photos/4226219/pexels-photo-4226219.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "Système de radiologie numérique direct avec post-traitement d'image"
   }
 ];
