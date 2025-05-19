@@ -53,9 +53,9 @@ export default function Header() {
         <nav className="hidden md:flex space-x-8 text-dark font-medium">
           <NavLink href="/" label="Accueil" />
           <NavLink href="/services" label="Services" />
-          <NavLink href="/rendez-vous" label="Prendre rendez-vous" />
           <NavLink href="/temoignages" label="Témoignages" />
           <NavLink href="/contact" label="Contact" />
+          <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
         </nav>
       </div>
 
@@ -65,9 +65,9 @@ export default function Header() {
           <div className="container mx-auto px-4 flex flex-col space-y-4">
             <NavLink href="/" label="Accueil" />
             <NavLink href="/services" label="Services" />
-            <NavLink href="/rendez-vous" label="Prendre rendez-vous" />
             <NavLink href="/temoignages" label="Témoignages" />
             <NavLink href="/contact" label="Contact" />
+            <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
           </div>
         </nav>
       )}
