@@ -1,6 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { contactInfo } from "@/lib/constants";
+import { MapPin, Navigation, Info, Phone, Mail, Clock } from "lucide-react";
+
+// Add TypeScript type for Leaflet
+declare global {
+  interface Window {
+    L: any;
+  }
+}
 
 export default function Map() {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -8,148 +16,210 @@ export default function Map() {
 
   // Map initialization function
   useEffect(() => {
-    // Create a script element for Google Maps API
-    const loadGoogleMapsAPI = () => {
-      const googleMapsScript = document.createElement('script');
-      googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY || ''}&callback=initMap`;
-      googleMapsScript.async = true;
-      googleMapsScript.defer = true;
-      
-      // Define the global callback function
-      window.initMap = function() {
-        if (mapRef.current) {
-          // Create the map
-          const map = new google.maps.Map(mapRef.current, {
-            center: { lat: contactInfo.location.lat, lng: contactInfo.location.lng },
-            zoom: 16,
-            mapTypeControl: false,
-            streetViewControl: false,
-            fullscreenControl: true,
-            zoomControl: true,
-            styles: [
-              {
-                featureType: "all",
-                elementType: "geometry.fill",
-                stylers: [{ weight: "2.00" }]
-              },
-              {
-                featureType: "all",
-                elementType: "geometry.stroke",
-                stylers: [{ color: "#9c9c9c" }]
-              },
-              {
-                featureType: "all",
-                elementType: "labels.text",
-                stylers: [{ visibility: "on" }]
-              },
-              {
-                featureType: "landscape",
-                elementType: "all",
-                stylers: [{ color: "#f2f2f2" }]
-              },
-              {
-                featureType: "landscape",
-                elementType: "geometry.fill",
-                stylers: [{ color: "#e6e6e6" }]
-              },
-              {
-                featureType: "poi.medical",
-                elementType: "geometry.fill",
-                stylers: [{ color: "#c2e2f2" }]
-              },
-              {
-                featureType: "poi.medical",
-                elementType: "labels.icon",
-                stylers: [{ color: "#0056b3" }]
-              },
-              {
-                featureType: "water",
-                elementType: "all",
-                stylers: [{ color: "#a0d1f2" }]
-              }
-            ]
-          });
+    // Enhanced map implementation with Leaflet (open-source)
+    const loadLeafletMap = () => {
+      // Only load if the map ref exists
+      if (!mapRef.current) return;
 
-          // Create a custom marker
-          const marker = new google.maps.Marker({
-            position: { lat: contactInfo.location.lat, lng: contactInfo.location.lng },
-            map: map,
-            title: "Centre D'Imagerie Benameur",
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              fillColor: "#0056b3",
-              fillOpacity: 1,
-              strokeColor: "#fff",
-              strokeWeight: 2,
-              scale: 10
-            },
-            animation: google.maps.Animation.DROP
-          });
+      // Create and add Leaflet CSS if not present
+      if (!document.querySelector('link[href*="leaflet.css"]')) {
+        const leafletCss = document.createElement('link');
+        leafletCss.rel = 'stylesheet';
+        leafletCss.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        leafletCss.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+        leafletCss.crossOrigin = '';
+        document.head.appendChild(leafletCss);
+      }
 
-          // Add an info window
-          const infoWindow = new google.maps.InfoWindow({
-            content: `
-              <div style="font-family: 'Open Sans', sans-serif; padding: 8px;">
-                <h3 style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-bottom: 5px; color: #0056b3;">Centre D'Imagerie Benameur</h3>
-                <p style="font-size: 14px; margin: 0;">${contactInfo.address}</p>
-              </div>
-            `
-          });
-
-          marker.addListener("click", () => {
-            infoWindow.open(map, marker);
-          });
-          
-          setMapLoaded(true);
-        }
-      };
-
-      // Attach the script to the DOM
-      document.head.appendChild(googleMapsScript);
+      // Create and add Leaflet script if not present
+      if (!document.querySelector('script[src*="leaflet.js"]')) {
+        const leafletScript = document.createElement('script');
+        leafletScript.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        leafletScript.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+        leafletScript.crossOrigin = '';
+        leafletScript.onload = initMap;
+        document.head.appendChild(leafletScript);
+      } else {
+        // If script is already loaded, initialize map directly
+        initMap();
+      }
     };
 
-    loadGoogleMapsAPI();
+    // Initialize the map with Leaflet
+    function initMap() {
+      if (!mapRef.current || !window.L) return;
 
-    // Cleanup
+      // Clear any existing map
+      mapRef.current.innerHTML = '';
+      
+      // Initialize map
+      const map = window.L.map(mapRef.current).setView([contactInfo.location.lat, contactInfo.location.lng], 16);
+
+      // Add OpenStreetMap tiles with custom styling
+      window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+      }).addTo(map);
+
+      // Custom icon for marker
+      const customIcon = window.L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div style="background-color: #0056b3; width: 22px; height: 22px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3);"></div>`,
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
+      });
+
+      // Add marker with custom icon
+      const marker = window.L.marker([contactInfo.location.lat, contactInfo.location.lng], {
+        icon: customIcon,
+        title: "Centre D'Imagerie Benameur"
+      }).addTo(map);
+
+      // Create a popup for the marker
+      const popupContent = `
+        <div style="font-family: 'Open Sans', sans-serif; padding: 10px; min-width: 200px;">
+          <h3 style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-bottom: 8px; color: #0056b3; font-size: 16px;">Centre D'Imagerie Benameur</h3>
+          <p style="font-size: 14px; margin: 0 0 8px 0;">${contactInfo.address}</p>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=${contactInfo.location.lat},${contactInfo.location.lng}" 
+             target="_blank" 
+             style="color: #0056b3; text-decoration: none; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center;">
+            <span style="margin-right: 4px;">Itinéraire</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+          </a>
+        </div>
+      `;
+
+      // Bind popup to marker
+      marker.bindPopup(popupContent);
+      
+      // Open popup on load
+      marker.openPopup();
+
+      // Add a subtle circle around the marker to highlight the area
+      window.L.circle([contactInfo.location.lat, contactInfo.location.lng], {
+        color: '#0056b3',
+        fillColor: '#0056b3',
+        fillOpacity: 0.1,
+        radius: 150
+      }).addTo(map);
+
+      setMapLoaded(true);
+    }
+
+    loadLeafletMap();
+
+    // Cleanup function
     return () => {
-      // Remove the global callback
-      if (window.initMap) {
-        window.initMap = undefined;
+      if (mapRef.current && window.L && window.L.map) {
+        // Get all maps and find the one associated with our element
+        const maps = Object.values(window.L._leaflet_id_map || {});
+        for (const mapInstance of maps) {
+          if (mapInstance._container === mapRef.current) {
+            mapInstance.remove();
+            break;
+          }
+        }
       }
     };
   }, []);
 
   return (
-    <Card className="rounded-lg shadow-lg overflow-hidden h-full">
-      <div 
-        ref={mapRef} 
-        id="map" 
-        className="w-full h-[400px] bg-gray-200 relative"
-      >
-        {!mapLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+      <Card className="rounded-xl shadow-lg overflow-hidden md:col-span-8 h-full">
+        <div 
+          ref={mapRef} 
+          id="map" 
+          className="w-full h-[450px] bg-gray-100 relative"
+        >
+          {!mapLoaded && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mb-4"></div>
+              <p className="text-gray-500">Chargement de la carte...</p>
+            </div>
+          )}
+        </div>
+        <CardContent className="bg-white p-6">
+          <div className="flex items-start">
+            <MapPin className="h-5 w-5 text-primary mt-1 mr-2 flex-shrink-0" />
+            <div>
+              <h4 className="font-bold text-primary text-lg">Comment nous trouver</h4>
+              <p className="text-gray-700">
+                Notre centre est idéalement situé à proximité du centre-ville d'Oran. Parking gratuit disponible pour tous nos patients.
+              </p>
+              <div className="flex space-x-4 mt-3">
+                <a 
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${contactInfo.location.lat},${contactInfo.location.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                >
+                  <Navigation className="h-4 w-4 mr-1" />
+                  <span>Itinéraire</span>
+                </a>
+                <button 
+                  onClick={() => window.open(`https://www.google.com/maps/@${contactInfo.location.lat},${contactInfo.location.lng},18z`, '_blank')}
+                  className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                >
+                  <Info className="h-4 w-4 mr-1" />
+                  <span>Plus d'informations</span>
+                </button>
+              </div>
+            </div>
           </div>
-        )}
-        {/* Fallback iframe if no API key is provided */}
-        {!process.env.GOOGLE_MAPS_API_KEY && (
-          <iframe
-            width="100%"
-            height="100%"
-            frameBorder="0"
-            style={{ border: 0 }}
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6505.926998200266!2d-0.6436311326176894!3d35.699058979230146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7e884f7c2a0b7d%3A0xba7e51b06ac46b9d!2sBoulevard%20Hammou%20Boutlelis%2C%20Oran!5e0!3m2!1sfr!2sdz!4v1644320011234"
-            allowFullScreen
-            loading="lazy"
-          ></iframe>
-        )}
-      </div>
-      <CardContent className="bg-white p-4">
-        <h4 className="font-bold text-primary">Comment nous trouver</h4>
-        <p className="text-sm text-dark">
-          À proximité du centre-ville d'Oran. Parking disponible pour les patients.
-        </p>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+
+      {/* Contact Info Card */}
+      <Card className="rounded-xl shadow-lg md:col-span-4 bg-primary text-white overflow-hidden">
+        <div className="h-24 bg-gradient-to-r from-primary to-secondary relative">
+          <div className="absolute inset-0 opacity-20" 
+               style={{backgroundImage: 'url("https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800")', 
+                      backgroundSize: 'cover', 
+                      backgroundPosition: 'center'}}></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <h3 className="text-2xl font-bold">Nos coordonnées</h3>
+          </div>
+        </div>
+        <CardContent className="p-6">
+          <div className="space-y-6">
+            <div className="flex">
+              <MapPin className="h-6 w-6 mr-4 flex-shrink-0" />
+              <div>
+                <h4 className="font-semibold mb-1">Adresse</h4>
+                <p className="opacity-90">{contactInfo.address}</p>
+              </div>
+            </div>
+            
+            <div className="flex">
+              <Phone className="h-6 w-6 mr-4 flex-shrink-0" />
+              <div>
+                <h4 className="font-semibold mb-1">Téléphone</h4>
+                <p className="opacity-90">{contactInfo.phone}</p>
+              </div>
+            </div>
+            
+            <div className="flex">
+              <Mail className="h-6 w-6 mr-4 flex-shrink-0" />
+              <div>
+                <h4 className="font-semibold mb-1">Email</h4>
+                <a href={`mailto:${contactInfo.email}`} className="opacity-90 hover:underline">{contactInfo.email}</a>
+              </div>
+            </div>
+            
+            <div className="flex">
+              <Clock className="h-6 w-6 mr-4 flex-shrink-0" />
+              <div>
+                <h4 className="font-semibold mb-2">Horaires d'ouverture</h4>
+                <div className="space-y-1 opacity-90">
+                  <p>Lundi - Vendredi: 8h00 - 18h00</p>
+                  <p>Samedi: 8h00 - 13h00</p>
+                  <p>Dimanche: Fermé</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
