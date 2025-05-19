@@ -26,7 +26,7 @@ export const services = [
     icon: "search",
     title: "Échographie",
     description: "Examens échographiques réalisés par des médecins spécialistes expérimentés.",
-    image: "https://images.pexels.com/photos/8460134/pexels-photo-8460134.jpeg?auto=compress&cs=tinysrgb&w=1500"
+    image: "https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg?auto=compress&cs=tinysrgb&w=1500"
   }
 ];
 
@@ -176,7 +176,7 @@ export const equipmentImages = [
   },
   {
     title: "Échographe haute définition",
-    image: "https://images.pexels.com/photos/8460134/pexels-photo-8460134.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "Échographie doppler couleur et modes avancés pour tous types d'examens"
   },
   {

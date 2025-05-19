@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { contactInfo } from "@/lib/constants";
 import { MapPin, Navigation, Info, Phone, Mail, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // Add TypeScript type for Leaflet
 declare global {
@@ -60,6 +61,11 @@ export default function Map() {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19,
       }).addTo(map);
+      
+      // Force map to invalidate size after container is visible
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 500);
 
       // Custom icon for marker
       const customIcon = window.L.divIcon({
@@ -166,30 +172,45 @@ export default function Map() {
           )}
         </div>
         <CardContent className="bg-white p-6">
-          <div className="flex items-start">
-            <MapPin className="h-5 w-5 text-primary mt-1 mr-2 flex-shrink-0" />
-            <div>
-              <h4 className="font-bold text-primary text-lg">Comment nous trouver</h4>
-              <p className="text-gray-700">
-                Notre centre est idéalement situé à proximité du centre-ville d'Oran. Parking gratuit disponible pour tous nos patients.
-              </p>
+          <div className="flex flex-col space-y-6">
+            <div className="flex items-start">
+              <MapPin className="h-5 w-5 text-primary mt-1 mr-2 flex-shrink-0" />
+              <div>
+                <h4 className="font-bold text-primary text-lg">Comment nous trouver</h4>
+                <p className="text-gray-700">
+                  Notre centre est idéalement situé à proximité du centre-ville d'Oran. Parking gratuit disponible pour tous nos patients.
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+              <div className="flex items-center mb-2">
+                <MapPin className="h-5 w-5 text-primary mr-2 flex-shrink-0" />
+                <h5 className="font-semibold text-primary">Adresse exacte</h5>
+              </div>
+              <p className="text-gray-700 mb-2">{contactInfo.address}</p>
+              <p className="text-gray-700 mb-2"><span className="font-medium">Téléphone:</span> {contactInfo.phone}</p>
+              <p className="text-gray-700 mb-3"><span className="font-medium">Coordonnées GPS:</span> {contactInfo.location.lat.toFixed(6)}, {contactInfo.location.lng.toFixed(6)}</p>
+              
               <div className="flex space-x-4 mt-3">
-                <a 
-                  href={`https://www.google.com/maps/dir/?api=1&destination=${contactInfo.location.lat},${contactInfo.location.lng}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                <Button 
+                  variant="outline"
+                  size="sm"
+                  className="inline-flex items-center"
+                  onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${contactInfo.location.lat},${contactInfo.location.lng}`, '_blank')}
                 >
                   <Navigation className="h-4 w-4 mr-1" />
                   <span>Itinéraire</span>
-                </a>
-                <button 
-                  onClick={() => window.open(`https://www.google.com/maps/@${contactInfo.location.lat},${contactInfo.location.lng},18z`, '_blank')}
-                  className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="inline-flex items-center"
+                  onClick={() => window.location.href = `tel:${contactInfo.phone.replace(/\s/g, '')}`}
                 >
-                  <Info className="h-4 w-4 mr-1" />
-                  <span>Plus d'informations</span>
-                </button>
+                  <Phone className="h-4 w-4 mr-1" />
+                  <span>Appeler</span>
+                </Button>
               </div>
             </div>
           </div>
