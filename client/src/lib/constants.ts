@@ -5,7 +5,7 @@ export const services = [
     icon: "x-ray",
     title: "Radiologie générale",
     description: "Examens radiologiques standards pour diagnostiquer diverses conditions médicales avec précision.",
-    image: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?q=80&w=1500&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?q=80&w=1500&auto=format&fit=crop"
   },
   {
     id: "irm",
@@ -19,14 +19,14 @@ export const services = [
     icon: "laptop-medical",
     title: "Scanner",
     description: "Tomodensitométrie de dernière génération pour une visualisation détaillée des organes et tissus.",
-    image: "https://images.unsplash.com/photo-1581595219373-88de4e18c25c?q=80&w=1500&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1588802806615-edc783f5a414?q=80&w=1500&auto=format&fit=crop"
   },
   {
     id: "echographie",
     icon: "search",
     title: "Échographie",
     description: "Examens échographiques réalisés par des médecins spécialistes expérimentés.",
-    image: "https://images.unsplash.com/photo-1578489758854-f134a358f08b?q=80&w=1500&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1593538313703-e4dc5e3f1998?q=80&w=1500&auto=format&fit=crop"
   }
 ];
 
@@ -155,11 +155,11 @@ export const socialLinks = [
 
 // Hero images for different pages
 export const heroImages = {
-  home: "https://images.unsplash.com/photo-1579154204601-01588f351e67?q=80&w=1800&auto=format&fit=crop",
-  services: "https://images.unsplash.com/photo-1632757015435-2d8f3fdce85d?q=80&w=1800&auto=format&fit=crop",
-  appointment: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=1800&auto=format&fit=crop",
-  testimonials: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?q=80&w=1800&auto=format&fit=crop",
-  contact: "https://images.unsplash.com/photo-1579154341098-e4e158cc7f55?q=80&w=1800&auto=format&fit=crop"
+  home: "https://images.unsplash.com/photo-1516549655619-4b434355e5b7?q=80&w=1800&auto=format&fit=crop",
+  services: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1800&auto=format&fit=crop",
+  appointment: "https://images.unsplash.com/photo-1581349485608-9469926a8e5e?q=80&w=1800&auto=format&fit=crop",
+  testimonials: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1800&auto=format&fit=crop",
+  contact: "https://images.unsplash.com/photo-1516549655619-4b434355e5b7?q=80&w=1800&auto=format&fit=crop"
 };
 
 // Equipment images
@@ -171,12 +171,12 @@ export const equipmentImages = [
   },
   {
     title: "Scanner multi-coupes",
-    image: "https://images.unsplash.com/photo-1583912268183-a34d41fe464a?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1588802806615-edc783f5a414?q=80&w=800&auto=format&fit=crop",
     description: "Scanner 128 barrettes avec reconstruction 3D et réduction de dose"
   },
   {
     title: "Échographe haute définition",
-    image: "https://images.unsplash.com/photo-1601055283742-8b27e81b5553?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1593538313703-e4dc5e3f1998?q=80&w=800&auto=format&fit=crop",
     description: "Échographie doppler couleur et modes avancés pour tous types d'examens"
   },
   {

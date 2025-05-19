@@ -182,25 +182,25 @@ const serviceDetails = {
     fullDescription: "Notre service de radiologie générale utilise des rayons X pour créer des images des structures internes du corps. Ces examens sont rapides, simples et peuvent diagnostiquer diverses conditions, des fractures aux infections pulmonaires.",
     uses: ["Examens osseux et articulaires", "Radiographie du thorax", "Examens digestifs", "Radiographie dentaire"],
     preparation: "La plupart des examens radiologiques ne nécessitent pas de préparation spéciale. Dans certains cas, il peut vous être demandé de retirer bijoux ou objets métalliques dans la zone à examiner.",
-    image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+    image: "https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?q=80&w=800&auto=format&fit=crop"
   },
   irm: {
     fullDescription: "L'Imagerie par Résonance Magnétique (IRM) utilise un puissant champ magnétique et des ondes radio pour produire des images détaillées des organes et tissus. Cette technique est particulièrement utile pour visualiser le cerveau, la colonne vertébrale et les articulations.",
     uses: ["Examens neurologiques", "Imagerie articulaire", "Examens abdominaux et pelviens", "Angiographie par résonance magnétique"],
     preparation: "Vous devrez retirer tous les objets métalliques avant l'examen. Informez votre médecin si vous avez des implants métalliques, un pacemaker ou si vous êtes claustrophobe.",
-    image: "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+    image: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?q=80&w=800&auto=format&fit=crop"
   },
   scanner: {
     fullDescription: "Le scanner (tomodensitométrie) combine l'utilisation des rayons X avec la technologie informatique pour créer des images en coupes du corps. Il offre une excellente visualisation des os, des organes internes et des tissus mous.",
     uses: ["Examens thoraciques et pulmonaires", "Imagerie abdominale et pelvienne", "Examens vasculaires", "Imagerie de la tête et du cou"],
     preparation: "Selon l'examen, vous pourriez devoir jeûner pendant plusieurs heures. Dans certains cas, un produit de contraste peut être nécessaire.",
-    image: "https://images.unsplash.com/photo-1573496773905-f5b17e717f05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+    image: "https://images.unsplash.com/photo-1588802806615-edc783f5a414?q=80&w=800&auto=format&fit=crop"
   },
   echographie: {
     fullDescription: "L'échographie utilise des ondes sonores pour créer des images des organes et structures du corps. Cette technique sûre et non invasive est idéale pour examiner les organes abdominaux, le cœur, et pour suivre le développement fœtal pendant la grossesse.",
     uses: ["Échographie abdominale", "Échographie cardiaque", "Échographie obstétricale", "Échographie des parties molles"],
     preparation: "La préparation varie selon l'examen. Pour certaines échographies abdominales, vous devrez jeûner pendant quelques heures ou avoir la vessie pleine.",
-    image: "https://images.unsplash.com/photo-1579154341098-e4e158cc7f55?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+    image: "https://images.unsplash.com/photo-1593538313703-e4dc5e3f1998?q=80&w=800&auto=format&fit=crop"
   }
 };
 
