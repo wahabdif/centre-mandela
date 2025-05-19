@@ -26,12 +26,12 @@ export default function Header() {
     <header className={`bg-white fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <Link href="/">
-          <a className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 cursor-pointer">
             <div className="font-bold text-2xl font-heading">
               <span className="text-primary">Centre D'Imagerie</span>{" "}
               <span className="text-secondary">Benameur</span>
             </div>
-          </a>
+          </div>
         </Link>
 
         {/* Mobile menu button */}
@@ -86,9 +86,9 @@ function NavLink({ href, label }: NavLinkProps) {
 
   return (
     <Link href={href}>
-      <a className={`hover:text-primary transition-colors ${isActive ? 'text-primary font-semibold' : ''}`}>
+      <div className={`hover:text-primary transition-colors cursor-pointer ${isActive ? 'text-primary font-semibold' : ''}`}>
         {label}
-      </a>
+      </div>
     </Link>
   );
 }

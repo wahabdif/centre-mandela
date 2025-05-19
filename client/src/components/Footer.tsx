@@ -35,9 +35,9 @@ interface FooterLinkProps {
 function FooterLink({ href, label }: FooterLinkProps) {
   return (
     <Link href={href}>
-      <a className="hover:text-secondary transition-colors">
+      <div className="hover:text-secondary transition-colors cursor-pointer">
         {label}
-      </a>
+      </div>
     </Link>
   );
 }
