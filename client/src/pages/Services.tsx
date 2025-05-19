@@ -194,13 +194,13 @@ const serviceDetails = {
     fullDescription: "Le scanner (tomodensitométrie) combine l'utilisation des rayons X avec la technologie informatique pour créer des images en coupes du corps. Il offre une excellente visualisation des os, des organes internes et des tissus mous.",
     uses: ["Examens thoraciques et pulmonaires", "Imagerie abdominale et pelvienne", "Examens vasculaires", "Imagerie de la tête et du cou"],
     preparation: "Selon l'examen, vous pourriez devoir jeûner pendant plusieurs heures. Dans certains cas, un produit de contraste peut être nécessaire.",
-    image: "https://images.pexels.com/photos/6749293/pexels-photo-6749293.jpeg?auto=compress&cs=tinysrgb&w=800"
+    image: "https://images.pexels.com/photos/4225880/pexels-photo-4225880.jpeg?auto=compress&cs=tinysrgb&w=800"
   },
   echographie: {
     fullDescription: "L'échographie utilise des ondes sonores pour créer des images des organes et structures du corps. Cette technique sûre et non invasive est idéale pour examiner les organes abdominaux, le cœur, et pour suivre le développement fœtal pendant la grossesse.",
     uses: ["Échographie abdominale", "Échographie cardiaque", "Échographie obstétricale", "Échographie des parties molles"],
     preparation: "La préparation varie selon l'examen. Pour certaines échographies abdominales, vous devrez jeûner pendant quelques heures ou avoir la vessie pleine.",
-    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg?auto=compress&cs=tinysrgb&w=800"
+    image: "https://images.pexels.com/photos/8460134/pexels-photo-8460134.jpeg?auto=compress&cs=tinysrgb&w=800"
   }
 };
 

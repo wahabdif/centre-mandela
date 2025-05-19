@@ -19,14 +19,14 @@ export const services = [
     icon: "laptop-medical",
     title: "Scanner",
     description: "Tomodensitométrie de dernière génération pour une visualisation détaillée des organes et tissus.",
-    image: "https://images.pexels.com/photos/6749293/pexels-photo-6749293.jpeg?auto=compress&cs=tinysrgb&w=1500"
+    image: "https://images.pexels.com/photos/4225880/pexels-photo-4225880.jpeg?auto=compress&cs=tinysrgb&w=1500"
   },
   {
     id: "echographie",
     icon: "search",
     title: "Échographie",
     description: "Examens échographiques réalisés par des médecins spécialistes expérimentés.",
-    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg?auto=compress&cs=tinysrgb&w=1500"
+    image: "https://images.pexels.com/photos/8460134/pexels-photo-8460134.jpeg?auto=compress&cs=tinysrgb&w=1500"
   }
 ];
 
@@ -171,12 +171,12 @@ export const equipmentImages = [
   },
   {
     title: "Scanner multi-coupes",
-    image: "https://images.pexels.com/photos/6749293/pexels-photo-6749293.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.pexels.com/photos/4225880/pexels-photo-4225880.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "Scanner 128 barrettes avec reconstruction 3D et réduction de dose"
   },
   {
     title: "Échographe haute définition",
-    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.pexels.com/photos/8460134/pexels-photo-8460134.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "Échographie doppler couleur et modes avancés pour tous types d'examens"
   },
   {
