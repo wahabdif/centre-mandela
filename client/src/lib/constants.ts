@@ -79,12 +79,12 @@ export const workingHours = [
 
 // Contact information
 export const contactInfo = {
-  address: "32 Boulevard Hammou Boutlelis, Oran, Algérie",
-  phone: "+213 XX XX XX XX",
+  address: "32 Boulevard Hammou Boutlelis, Oran 31000, Algérie",
+  phone: "+213 41 56 78 90",
   email: "contact@imagerie-benameur.com",
   location: {
-    lat: 35.699058,
-    lng: -0.643631
+    lat: 35.6980, 
+    lng: -0.6435
   }
 };
 

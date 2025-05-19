@@ -95,12 +95,27 @@ export default function Map() {
       // Open popup on load
       marker.openPopup();
 
-      // Add a subtle circle around the marker to highlight the area
+      // Add a more visible circle around the marker to highlight the area
       window.L.circle([contactInfo.location.lat, contactInfo.location.lng], {
         color: '#0056b3',
         fillColor: '#0056b3',
-        fillOpacity: 0.1,
-        radius: 150
+        fillOpacity: 0.15,
+        radius: 200,
+        weight: 2
+      }).addTo(map);
+      
+      // Add a directional marker to help with orientation
+      const directionIcon = window.L.divIcon({
+        className: 'direction-icon',
+        html: `<div style="font-size: 24px; color: #0056b3; font-weight: bold;">↑</div>`,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+      });
+      
+      // Place the directional marker 250m north of the center
+      window.L.marker([contactInfo.location.lat + 0.0022, contactInfo.location.lng], {
+        icon: directionIcon,
+        title: "Centre Ville"
       }).addTo(map);
 
       setMapLoaded(true);
@@ -173,7 +188,7 @@ export default function Map() {
       <Card className="rounded-xl shadow-lg md:col-span-4 bg-primary text-white overflow-hidden">
         <div className="h-24 bg-gradient-to-r from-primary to-secondary relative">
           <div className="absolute inset-0 opacity-20" 
-               style={{backgroundImage: 'url("https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800")', 
+               style={{backgroundImage: 'url("https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=800")', 
                       backgroundSize: 'cover', 
                       backgroundPosition: 'center'}}></div>
           <div className="absolute inset-0 flex items-center justify-center">
