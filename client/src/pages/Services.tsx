@@ -9,31 +9,46 @@ export default function Services() {
     <div className="pt-28">
       <div className="container mx-auto px-4 py-12">
         <div className="mb-6">
-          <button 
-            onClick={() => window.history.back()} 
+          <button
+            onClick={() => window.history.back()}
             className="flex items-center text-primary hover:text-primary/80 transition-colors font-medium"
+            aria-label="Retour à la page précédente"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
-              <path d="m12 19-7-7 7-7"/>
-              <path d="M19 12H5"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-2"
+              aria-hidden="true"
+            >
+              <path d="m12 19-7-7 7-7" />
+              <path d="M19 12H5" />
             </svg>
             Retour
           </button>
         </div>
+
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h1 className="text-4xl font-bold text-primary font-heading mb-4">
-            Nos Services d'Imagerie Médicale
+            Nos Services d&apos;Imagerie Médicale
           </h1>
           <p className="text-lg text-gray-600">
-            Le Centre D'Imagerie Benameur propose des services d'imagerie médicale avancés 
-            avec des équipements de dernière génération et une équipe de professionnels expérimentés.
+            Le Centre D&apos;Imagerie Benameur propose des services
+            d&apos;imagerie médicale avancés avec des équipements de dernière
+            génération et une équipe de professionnels expérimentés.
           </p>
         </div>
 
         {/* Services */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {services.map((service, index) => (
-            <ServiceDetailCard key={index} service={service} index={index} />
+            <ServiceDetailCard key={service.id} service={service} index={index} />
           ))}
         </div>
 
@@ -52,9 +67,11 @@ export default function Services() {
                 Technologie de Pointe
               </h2>
               <p className="text-gray-700 mb-6">
-                Pour garantir des diagnostics précis et fiables, notre centre est équipé des technologies 
-                d'imagerie médicale les plus récentes. Nos équipements sont régulièrement mis à jour pour 
-                rester à la pointe de l'innovation en matière d'imagerie médicale.
+                Pour garantir des diagnostics précis et fiables, notre centre est
+                équipé des technologies d&apos;imagerie médicale les plus
+                récentes. Nos équipements sont régulièrement mis à jour pour
+                rester à la pointe de l&apos;innovation en matière d&apos;imagerie
+                médicale.
               </p>
               <ul className="space-y-4">
                 {equipmentBenefits.map((benefit, index) => (
@@ -72,85 +89,60 @@ export default function Services() {
         <div className="bg-white rounded-lg shadow-lg p-8 mb-16">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-primary font-heading mb-6 text-center">
-              L'Expérience Patient
+              L&apos;Expérience Patient
             </h2>
             <p className="text-gray-700 mb-8 text-center">
-              Chez Centre D'Imagerie Benameur, nous nous efforçons de rendre votre visite aussi 
-              confortable et sans stress que possible.
+              Chez Centre D&apos;Imagerie Benameur, nous nous efforçons de rendre
+              votre visite aussi confortable et sans stress que possible.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-light rounded-lg p-6">
-                <h3 className="text-xl font-bold text-primary mb-4">Avant votre examen</h3>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Instructions claires sur la préparation requise</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Rappels de rendez-vous</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Processus d'enregistrement simplifié</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="bg-light rounded-lg p-6">
-                <h3 className="text-xl font-bold text-primary mb-4">Pendant votre examen</h3>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Personnel attentif et bienveillant</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Explications détaillées sur les procédures</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Environnement confortable et rassurant</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="bg-light rounded-lg p-6">
-                <h3 className="text-xl font-bold text-primary mb-4">Après votre examen</h3>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Résultats rapides et précis</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Consultation pour expliquer les résultats</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Suivi personnalisé si nécessaire</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="bg-light rounded-lg p-6">
-                <h3 className="text-xl font-bold text-primary mb-4">Notre engagement</h3>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Confidentialité et respect de votre vie privée</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Coordination avec votre médecin traitant</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Accessibilité pour tous les patients</span>
-                  </li>
-                </ul>
-              </div>
+              {[
+                {
+                  title: "Avant votre examen",
+                  items: [
+                    "Instructions claires sur la préparation requise",
+                    "Rappels de rendez-vous",
+                    "Processus d'enregistrement simplifié",
+                  ],
+                },
+                {
+                  title: "Pendant votre examen",
+                  items: [
+                    "Personnel attentif et bienveillant",
+                    "Explications détaillées sur les procédures",
+                    "Environnement confortable et rassurant",
+                  ],
+                },
+                {
+                  title: "Après votre examen",
+                  items: [
+                    "Résultats rapides et précis",
+                    "Consultation pour expliquer les résultats",
+                    "Suivi personnalisé si nécessaire",
+                  ],
+                },
+                {
+                  title: "Notre engagement",
+                  items: [
+                    "Confidentialité et respect de votre vie privée",
+                    "Coordination avec votre médecin traitant",
+                    "Accessibilité pour tous les patients",
+                  ],
+                },
+              ].map(({ title, items }, i) => (
+                <div key={i} className="bg-light rounded-lg p-6">
+                  <h3 className="text-xl font-bold text-primary mb-4">{title}</h3>
+                  <ul className="space-y-2">
+                    {items.map((item, j) => (
+                      <li key={j} className="flex items-start">
+                        <span className="text-secondary font-bold mr-2">•</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -161,14 +153,15 @@ export default function Services() {
             Prêt à prendre rendez-vous?
           </h2>
           <p className="text-lg mb-8 max-w-2xl mx-auto">
-            Notre équipe est prête à vous accueillir et à vous fournir des soins d'imagerie médicale exceptionnels.
+            Notre équipe est prête à vous accueillir et à vous fournir des soins
+            d&apos;imagerie médicale exceptionnels.
           </p>
           <Link href="/rendez-vous">
             <Button
               className="bg-accent hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-colors shadow-lg"
               size="lg"
             >
-              <i className="far fa-calendar-alt mr-2">📅</i> Prendre rendez-vous
+              <span aria-hidden="true" className="mr-2">📅</span> Prendre rendez-vous
             </Button>
           </Link>
         </div>
@@ -181,7 +174,7 @@ interface ServiceProps {
   id: string;
   icon: string;
   title: string;
-  description: string;
+  description?: string;
 }
 
 interface ServiceDetailCardProps {
@@ -191,77 +184,55 @@ interface ServiceDetailCardProps {
 
 const serviceDetails = {
   radiologie: {
-    fullDescription: "Notre service de radiologie générale utilise des rayons X pour créer des images des structures internes du corps. Ces examens sont rapides, simples et peuvent diagnostiquer diverses conditions, des fractures aux infections pulmonaires.",
-    uses: ["Examens osseux et articulaires", "Radiographie du thorax", "Examens digestifs", "Radiographie dentaire"],
-    preparation: "La plupart des examens radiologiques ne nécessitent pas de préparation spéciale. Dans certains cas, il peut vous être demandé de retirer bijoux ou objets métalliques dans la zone à examiner.",
-    image: "https://images.pexels.com/photos/4226219/pexels-photo-4226219.jpeg?auto=compress&cs=tinysrgb&w=800"
+    fullDescription:
+      "Notre service de radiologie générale utilise des rayons X pour créer des images des structures internes du corps. Ces examens sont rapides, simples et peuvent diagnostiquer diverses conditions, des fractures aux infections pulmonaires.",
+    uses: [
+      "Examens osseux et articulaires",
+      "Radiographie du thorax",
+      "Examens digestifs",
+      "Radiographie dentaire",
+    ],
+    preparation:
+      "La plupart des examens radiologiques ne nécessitent pas de préparation spéciale. Dans certains cas, il peut vous être demandé de retirer bijoux ou objets métalliques dans la zone à examiner.",
+    image:
+      "https://images.pexels.com/photos/4226219/pexels-photo-4226219.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   irm: {
-    fullDescription: "L'Imagerie par Résonance Magnétique (IRM) utilise un puissant champ magnétique et des ondes radio pour produire des images détaillées des organes et tissus. Cette technique est particulièrement utile pour visualiser le cerveau, la colonne vertébrale et les articulations.",
-    uses: ["Examens neurologiques", "Imagerie articulaire", "Examens abdominaux et pelviens", "Angiographie par résonance magnétique"],
-    preparation: "Vous devrez retirer tous les objets métalliques avant l'examen. Informez votre médecin si vous avez des implants métalliques, un pacemaker ou si vous êtes claustrophobe.",
-    image: "https://images.pexels.com/photos/6749773/pexels-photo-6749773.jpeg?auto=compress&cs=tinysrgb&w=800"
+    fullDescription:
+      "L'Imagerie par Résonance Magnétique (IRM) utilise un puissant champ magnétique et des ondes radio pour produire des images détaillées des organes et tissus. Cette technique est particulièrement utile pour visualiser le cerveau, la colonne vertébrale et les articulations.",
+    uses: [
+      "Examens neurologiques",
+      "Imagerie articulaire",
+      "Examens abdominaux et pelviens",
+      "Angiographie par résonance magnétique",
+    ],
+    preparation:
+      "Vous devrez retirer tous les objets métalliques avant l'examen. Informez votre médecin si vous avez des implants métalliques, un pacemaker ou si vous êtes claustrophobe.",
+    image:
+      "https://images.pexels.com/photos/6749773/pexels-photo-6749773.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   scanner: {
-    fullDescription: "Le scanner (tomodensitométrie) combine l'utilisation des rayons X avec la technologie informatique pour créer des images en coupes du corps. Il offre une excellente visualisation des os, des organes internes et des tissus mous.",
-    uses: ["Examens thoraciques et pulmonaires", "Imagerie abdominale et pelvienne", "Examens vasculaires", "Imagerie de la tête et du cou"],
-    preparation: "Selon l'examen, vous pourriez devoir jeûner pendant plusieurs heures. Dans certains cas, un produit de contraste peut être nécessaire.",
-    image: "https://images.pexels.com/photos/4225880/pexels-photo-4225880.jpeg?auto=compress&cs=tinysrgb&w=800"
+    fullDescription:
+      "Le scanner (tomodensitométrie) combine l'utilisation des rayons X avec la technologie informatique pour créer des images en coupes du corps. Il offre une excellente visualisation des os, des organes internes et des tissus mous.",
+    uses: [
+      "Examens thoraciques et pulmonaires",
+      "Imagerie abdominale et pelvienne",
+      "Examens vasculaires",
+      "Imagerie de la tête et du cou",
+    ],
+    preparation:
+      "Selon l'examen, vous pourriez devoir jeûner pendant plusieurs heures. Dans certains cas, un produit de contraste peut être nécessaire.",
+    image:
+      "https://images.pexels.com/photos/4225880/pexels-photo-4225880.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   echographie: {
-    fullDescription: "L'échographie utilise des ondes sonores pour créer des images des organes et structures du corps. Cette technique sûre et non invasive est idéale pour examiner les organes abdominaux, le cœur, et pour suivre le développement fœtal pendant la grossesse.",
-    uses: ["Échographie abdominale", "Échographie cardiaque", "Échographie obstétricale", "Échographie des parties molles"],
-    preparation: "La préparation varie selon l'examen. Pour certaines échographies abdominales, vous devrez jeûner pendant quelques heures ou avoir la vessie pleine.",
-    image: "https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg?auto=compress&cs=tinysrgb&w=800"
-  }
-};
-
-function ServiceDetailCard({ service, index }: ServiceDetailCardProps) {
-  const details = serviceDetails[service.id as keyof typeof serviceDetails];
-  const isEven = index % 2 === 0;
-
-  return (
-    <Card className="overflow-hidden">
-      <div className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-        <div className="md:w-2/5">
-          <img
-            src={details.image}
-            alt={service.title}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <CardContent className="p-6 md:w-3/5">
-          <div className="flex items-center mb-4">
-            <div className="text-3xl text-primary mr-3">
-              <i className={`fas fa-${service.icon}`} style={{ fontFamily: "'Font Awesome 5 Free'", fontWeight: 900 }}>
-                {service.icon === "x-ray" ? "📷" : 
-                 service.icon === "magnet" ? "🧲" : 
-                 service.icon === "laptop-medical" ? "💻" : "🔍"}
-              </i>
-            </div>
-            <h2 className="text-2xl font-bold text-primary font-heading">{service.title}</h2>
-          </div>
-          
-          <p className="text-gray-700 mb-4">{details.fullDescription}</p>
-          
-          <div className="mb-4">
-            <h3 className="font-bold text-gray-800 mb-2">Applications principales :</h3>
-            <ul className="space-y-1">
-              {details.uses.map((use, i) => (
-                <li key={i} className="flex items-start">
-                  <span className="text-secondary font-bold mr-2">•</span>
-                  <span>{use}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-bold text-gray-800 mb-2">Préparation :</h3>
-            <p className="text-gray-700">{details.preparation}</p>
-          </div>
-        </CardContent>
-      </div>
-    </Card>
-  );
-}
+    fullDescription:
+      "L'échographie utilise des ondes sonores pour créer des images des organes et structures du corps. Cette technique sûre et non invasive est idéale pour examiner les organes abdominaux, le cœur, et pour suivre le développement fœtal pendant la grossesse.",
+    uses: [
+      "Échographie abdominale",
+      "Échographie cardiaque",
+      "Échographie obstétricale",
+      "Échographie des parties molles",
+    ],
+    preparation:
+      "La préparation varie selon l'examen. Pour certaines éch
