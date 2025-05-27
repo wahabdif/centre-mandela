@@ -7,40 +7,36 @@ export default defineConfig(({ mode }) => {
 
   return {
     root,
+
     plugins: [react()],
+
     resolve: {
       alias: {
         "@": path.resolve(root, "src"),
-        "@shared": path.resolve(__dirname, "../shared"),
+        "@shared": path.resolve(root, "../shared"),
       },
     },
+
     css: {
       postcss: path.resolve(root, "postcss.config.cjs"),
     },
-    appType: "custom", // si tu intègres Express
+
+    appType: "custom",
+
     server: {
       middlewareMode: mode === "development",
       hmr: { port: 3000 },
       fs: { allow: [".."] },
     },
+
     build: {
-      outDir: path.resolve(__dirname, "../dist/client"),
+      outDir: path.resolve(root, "../dist/server/public"),
       emptyOutDir: true,
       rollupOptions: {
         input: path.resolve(root, "index.html"),
         commonjsOptions: {
           include: [/shared/, /node_modules/],
         },
-        external: [
-          "nanoid",
-          "express",
-          "vite",
-          "@vitejs/plugin-react",
-          "@replit/vite-plugin-runtime-error-modal",
-          "@replit/vite-plugin-cartographer",
-          "drizzle-orm/pg-core",
-          "drizzle-zod",
-        ].filter(Boolean),
       },
       base: "/",
     },
