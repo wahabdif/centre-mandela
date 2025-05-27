@@ -3,14 +3,14 @@
   "compilerOptions": {
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "outDir": "dist/server",
     "target": "ES2020",
+    "outDir": "../dist/server",
     "noEmit": false,
     "isolatedModules": false,
     "esModuleInterop": true,
     "allowJs": false,
     "skipLibCheck": true
   },
-  "include": ["server/**/*"],
-  "exclude": ["node_modules", "client", "dist"]
+  "include": ["./**/*"],
+  "exclude": ["../node_modules", "../client", "../dist"]
 }
