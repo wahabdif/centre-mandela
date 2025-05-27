@@ -1,0 +1,68 @@
+{
+  "hero": {
+    "subtitle": "Centre d'Excellence en Imagerie Médicale",
+    "title": "Excellence en imagerie médicale à Oran",
+    "description": "Des diagnostics précis et fiables réalisés par notre équipe de spécialistes avec des équipements de dernière génération.",
+    "cta_appointment": "Prendre rendez-vous",
+    "cta_services": "Nos services"
+  },
+  "services": {
+    "section_title": "Nos Services",
+    "section_subtitle": "Services d'imagerie médicale",
+    "section_description": "Nous proposons une gamme complète de services d'imagerie médicale avec des équipements de dernière génération pour des diagnostics précis."
+  },
+  "equipment": {
+    "section_title": "Technologie de pointe",
+    "section_subtitle": "Des équipements médicaux avancés",
+    "section_description": "Notre centre est équipé des technologies d'imagerie médicale les plus récentes pour garantir des diagnostics précis et fiables, avec une attention particulière portée au confort du patient.",
+    "benefits": [
+      "Imagerie de haute résolution",
+      "Temps d'attente réduits",
+      "Confort optimal pour les patients"
+    ]
+  },
+  "team": {
+    "section_title": "Notre équipe",
+    "section_subtitle": "Une équipe médicale hautement qualifiée",
+    "section_description": "Le Centre D'Imagerie Benameur réunit des radiologues et des professionnels de santé hautement qualifiés pour vous offrir des services d'imagerie médicale exceptionnels.",
+    "section_description_2": "Notre équipe s'engage à fournir des diagnostics précis dans un environnement accueillant, en plaçant le bien-être du patient au cœur de nos préoccupations.",
+    "benefits": [
+      {
+        "title": "Professionnels expérimentés",
+        "subtitle": "Des années d'expérience en imagerie médicale"
+      },
+      {
+        "title": "Approche centrée sur le patient",
+        "subtitle": "Un service personnalisé pour chaque patient"
+      }
+    ]
+  },
+  "testimonials": {
+    "section_title": "Témoignages",
+    "section_subtitle": "Ce que disent nos patients",
+    "section_description": "Découvrez l'expérience de nos patients avec nos services d'imagerie médicale et notre équipe.",
+    "cta": "Voir plus de témoignages"
+  },
+  "why_us": {
+    "section_title": "Pourquoi nous choisir",
+    "section_subtitle": "Notre engagement envers vous",
+    "section_description": "Nous nous engageons à fournir des services d'imagerie médicale de haute qualité avec une attention particulière à chaque patient.",
+    "features": [
+      {
+        "title": "Équipe dévouée",
+        "description": "Des professionnels passionnés par leur métier"
+      },
+      {
+        "title": "Technologie avancée",
+        "description": "Des équipements de dernière génération"
+      },
+      {
+        "title": "Disponibilité rapide",
+        "description": "Des rendez-vous disponibles rapidement"
+      }
+    ],
+    "cta_title": "Prêt à prendre rendez-vous?",
+    "cta_description": "Notre équipe de professionnels est à votre disposition pour répondre à tous vos besoins en matière d'imagerie médicale.",
+    "cta_button": "Prendre rendez-vous"
+  }
+}
