@@ -22,7 +22,11 @@ export default function Header() {
   }, [location]);
 
   return (
-    <header className={`bg-white fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
+    <header
+      className={`bg-white fixed w-full z-50 transition-all duration-300 ${
+        isScrolled ? "shadow-md" : ""
+      }`}
+    >
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <Link href="/">
@@ -35,18 +39,20 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6 rtl:space-x-reverse text-dark font-medium">
-          <NavLink href="/" label="Accueil" />
-          <NavLink href="/services" label="Services" />
-          <NavLink href="/temoignages" label="Témoignages" />
-          <NavLink href="/contact" label="Contact" />
-          <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
+        <div className="hidden md:flex items-center gap-6 rtl:space-x-reverse">
+          <nav className="flex items-center space-x-6 rtl:space-x-reverse text-dark font-medium">
+            <NavLink href="/" label="Accueil" />
+            <NavLink href="/services" label="Services" />
+            <NavLink href="/temoignages" label="Témoignages" />
+            <NavLink href="/contact" label="Contact" />
+            <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
+          </nav>
           <LanguageSwitcher />
-        </nav>
+        </div>
 
         {/* Mobile menu button */}
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           size="icon"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden"
@@ -69,7 +75,9 @@ export default function Header() {
             <NavLink href="/temoignages" label="Témoignages" />
             <NavLink href="/contact" label="Contact" />
             <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
-            <LanguageSwitcher />
+            <div className="pt-2 border-t">
+              <LanguageSwitcher />
+            </div>
           </div>
         </nav>
       )}
@@ -90,7 +98,7 @@ function NavLink({ href, label }: NavLinkProps) {
     <Link href={href}>
       <div
         className={`transition-colors cursor-pointer hover:text-primary ${
-          isActive ? 'text-primary font-semibold' : ''
+          isActive ? "text-primary font-semibold" : ""
         }`}
       >
         {label}
