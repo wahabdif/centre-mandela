@@ -1,68 +1,115 @@
 {
   "hero": {
     "subtitle": "Center of Excellence in Medical Imaging",
-    "title": "Excellence in medical imaging in Oran",
-    "description": "Accurate and reliable diagnostics performed by our team of specialists with state-of-the-art equipment.",
-    "cta_appointment": "Make an appointment",
-    "cta_services": "Our services"
+    "title": "Excellence in Medical Imaging in Oran",
+    "description": "Accurate and reliable diagnostics performed by our team of specialists using the latest equipment.",
+    "cta_appointment": "Book an Appointment",
+    "cta_services": "Our Services"
   },
   "services": {
     "section_title": "Our Services",
     "section_subtitle": "Medical Imaging Services",
-    "section_description": "We offer a comprehensive range of medical imaging services with state-of-the-art equipment for accurate diagnostics."
+    "section_description": "We offer a full range of medical imaging services with state-of-the-art equipment for precise diagnostics.",
+    "list": [
+      "Conventional Radiology",
+      "General and Specialized Ultrasound",
+      "High-Resolution CT Scan",
+      "MRI (Magnetic Resonance Imaging)",
+      "Mammography",
+      "Dental Radiology"
+    ]
   },
   "equipment": {
-    "section_title": "Cutting-edge Technology",
-    "section_subtitle": "Advanced medical equipment",
-    "section_description": "Our center is equipped with the latest medical imaging technologies to ensure accurate and reliable diagnostics, with particular attention to patient comfort.",
+    "section_title": "Advanced Technology",
+    "section_subtitle": "State-of-the-art Medical Equipment",
+    "section_description": "Our center is equipped with the latest medical imaging technologies to ensure accurate and reliable diagnostics, with special attention to patient comfort.",
     "benefits": [
       "High-resolution imaging",
       "Reduced waiting times",
-      "Optimal patient comfort"
+      "Optimal patient comfort",
+      "Regular maintenance to ensure quality",
+      "Strict safety protocols"
     ]
   },
   "team": {
     "section_title": "Our Team",
-    "section_subtitle": "A highly qualified medical team",
-    "section_description": "The Benameur Imaging Center brings together highly qualified radiologists and healthcare professionals to offer you exceptional medical imaging services.",
-    "section_description_2": "Our team is committed to providing accurate diagnostics in a welcoming environment, placing patient well-being at the heart of our concerns.",
+    "section_subtitle": "Highly Qualified Medical Team",
+    "section_description": "Centre D'Imagerie Benameur brings together highly qualified radiologists and healthcare professionals to provide exceptional medical imaging services.",
+    "section_description_2": "Our team is committed to delivering accurate diagnostics in a welcoming environment, placing patient well-being at the heart of our priorities.",
     "benefits": [
       {
-        "title": "Experienced professionals",
+        "title": "Experienced Professionals",
         "subtitle": "Years of experience in medical imaging"
       },
       {
-        "title": "Patient-centered approach",
-        "subtitle": "Personalized service for each patient"
+        "title": "Patient-Centered Approach",
+        "subtitle": "Personalized service for every patient"
+      },
+      {
+        "title": "Continuous Training",
+        "subtitle": "Our specialists regularly follow the latest advances"
       }
     ]
   },
   "testimonials": {
     "section_title": "Testimonials",
-    "section_subtitle": "What our patients say",
-    "section_description": "Discover our patients' experiences with our medical imaging services and our team.",
-    "cta": "See more testimonials"
+    "section_subtitle": "What Our Patients Say",
+    "section_description": "Discover our patients' experiences with our medical imaging services and team.",
+    "reviews": [
+      {
+        "name": "Fatima B.",
+        "comment": "Warm welcome and quick results. Very satisfied with the services.",
+        "rating": 5
+      },
+      {
+        "name": "Ahmed K.",
+        "comment": "Professional team and modern equipment. Highly recommended.",
+        "rating": 5
+      },
+      {
+        "name": "Nadia M.",
+        "comment": "Attentive doctors and accurate diagnosis. Thanks to the entire team.",
+        "rating": 4
+      }
+    ],
+    "cta": "See More Testimonials"
   },
   "why_us": {
-    "section_title": "Why choose us",
-    "section_subtitle": "Our commitment to you",
-    "section_description": "We are committed to providing high-quality medical imaging services with particular attention to each patient.",
+    "section_title": "Why Choose Us",
+    "section_subtitle": "Our Commitment to You",
+    "section_description": "We are committed to providing high-quality medical imaging services with special attention to each patient.",
     "features": [
       {
-        "title": "Dedicated team",
+        "title": "Dedicated Team",
         "description": "Professionals passionate about their work"
       },
       {
-        "title": "Advanced technology",
+        "title": "Advanced Technology",
         "description": "State-of-the-art equipment"
       },
       {
-        "title": "Quick availability",
+        "title": "Quick Availability",
         "description": "Appointments available quickly"
+      },
+      {
+        "title": "Guaranteed Confidentiality",
+        "description": "Full respect for privacy and medical data"
       }
     ],
-    "cta_title": "Ready to make an appointment?",
+    "cta_title": "Ready to book an appointment?",
     "cta_description": "Our team of professionals is at your disposal to meet all your medical imaging needs.",
-    "cta_button": "Make an appointment"
+    "cta_button": "Book an Appointment"
+  },
+  "footer": {
+    "contact_info": {
+      "address": "32 Boulevard Hammou Boutlelis, Oran, Algeria",
+      "phone": "+213 661 59 81 32",
+      "email": "cherif.benameur@gmail.com"
+    },
+    "social_media": {
+      "facebook": "https://facebook.com/centrebenameur",
+      "instagram": "https://instagram.com/centrebenameur"
+    },
+    "copyright": "© 2025 Centre d'Imagerie Benameur. All rights reserved."
   }
 }
