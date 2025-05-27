@@ -1,13 +1,17 @@
 {
   "name": "centre-mandela-client",
   "version": "1.0.0",
-  "type": "module",
+  "description": "",
+  "author": "",
   "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "keywords": [],
   "scripts": {
-    "start": "vite preview --host 0.0.0.0 --port $PORT",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "start": "vite preview --host 0.0.0.0 --port $PORT",
     "check": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
@@ -92,9 +96,5 @@
     "prettier": "^2.8.0",
     "tsx": "^4.19.1",
     "typescript": "5.6.3"
-  },
-  "main": "index.js",
-  "keywords": [],
-  "author": "",
-  "description": ""
+  }
 }
