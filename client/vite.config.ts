@@ -1,34 +1,33 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
-export default defineConfig(({ mode }) => {
-  // Charger les variables d'environnement depuis .env, .env.[mode]
-  const env = loadEnv(mode, process.cwd(), '');
-
-  return {
-    plugins: [react()],
-    define: {
-      // Exemple : exposer VITE_API_URL pour le code client
-      'process.env': {
-        VITE_API_URL: env.VITE_API_URL,
-      },
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),  // alias pratique pour src
     },
-    server: {
-      host: true, // permet l'accès réseau (utile sur Render ou Docker)
-      port: Number(env.PORT) || 3000,
+  },
+  server: {
+    port: 3000,
+    open: true,
+    strictPort: true,
+    // Proxy si besoin de rediriger vers backend en dev
+    proxy: {
+      '/api': 'http://localhost:4000',
     },
-    build: {
-      sourcemap: mode === 'development',
-    },
-    resolve: {
-      alias: {
-        // Exemple d'alias si besoin (facultatif)
-        '@': '/src',
-      },
-    },
-    css: {
-      // Configuration Tailwind éventuelle si besoin
-      postcss: './postcss.config.js',
-    },
-  };
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+  },
+  css: {
+    // Configuration Tailwind etc si besoin
+    postcss: './postcss.config.js',
+  },
+  define: {
+    'process.env': process.env, // si besoin compatibilité env
+  },
 });
