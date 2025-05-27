@@ -13,47 +13,54 @@ declare global {
 export default function Map() {
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const lat = contactInfo?.location?.lat;
+  const lng = contactInfo?.location?.lng;
 
   useEffect(() => {
-    const loadLeafletMap = () => {
+    if (!lat || !lng) return;
+
+    const loadLeaflet = () => {
       if (!mapRef.current) return;
 
-      // Charger la feuille de style si absente
+      // Inject CSS Leaflet si nécessaire
       if (!document.querySelector('link[href*="leaflet.css"]')) {
-        const leafletCss = document.createElement("link");
-        leafletCss.rel = "stylesheet";
-        leafletCss.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-        leafletCss.integrity = "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
-        leafletCss.crossOrigin = "";
-        document.head.appendChild(leafletCss);
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+        link.integrity =
+          "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
+        link.crossOrigin = "";
+        document.head.appendChild(link);
       }
 
-      // Charger le script Leaflet si absent
+      // Inject JS Leaflet si nécessaire
       if (!document.querySelector('script[src*="leaflet.js"]')) {
-        const leafletScript = document.createElement("script");
-        leafletScript.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-        leafletScript.integrity = "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
-        leafletScript.crossOrigin = "";
-        leafletScript.onload = () => {
-          const interval = setInterval(() => {
-            if (window.L) {
-              clearInterval(interval);
-              initializeMap();
-            }
-          }, 100);
-        };
-        document.head.appendChild(leafletScript);
+        const script = document.createElement("script");
+        script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+        script.integrity =
+          "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
+        script.crossOrigin = "";
+        script.onload = () => waitForLeaflet();
+        document.head.appendChild(script);
       } else {
-        initializeMap();
+        initMap();
       }
     };
 
-    const initializeMap = () => {
-      if (!mapRef.current || !window.L) return;
+    const waitForLeaflet = () => {
+      const interval = setInterval(() => {
+        if (window.L) {
+          clearInterval(interval);
+          initMap();
+        }
+      }, 100);
+    };
+
+    const initMap = () => {
+      if (!window.L || !mapRef.current) return;
 
       mapRef.current.innerHTML = "";
 
-      const { lat, lng } = contactInfo.location;
       const map = window.L.map(mapRef.current).setView([lat, lng], 16);
 
       window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -64,57 +71,43 @@ export default function Map() {
 
       setTimeout(() => map.invalidateSize(), 500);
 
-      const customIcon = window.L.divIcon({
-        className: "custom-div-icon",
-        html: `<div style="background-color: #0056b3; width: 22px; height: 22px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3);"></div>`,
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
-      });
+      const marker = window.L.marker([lat, lng]).addTo(map);
 
-      const marker = window.L.marker([lat, lng], {
-        icon: customIcon,
-        title: "Centre D'Imagerie Benameur",
-      }).addTo(map);
+      marker.bindPopup(`
+        <strong>Centre D'Imagerie Benameur</strong><br />
+        ${contactInfo.address}<br />
+        <a href="tel:${contactInfo.phone.replace(/\s/g, "")}">${contactInfo.phone}</a>
+      `);
 
-      const popupContent = `
-        <div style="font-family: 'Poppins', sans-serif; padding: 12px; min-width: 220px;">
-          <h3 style="font-weight: bold; margin-bottom: 8px; color: #0056b3;">Centre D'Imagerie Benameur</h3>
-          <p style="margin-bottom: 6px; color: #333;">${contactInfo.address}</p>
-          <p style="margin-bottom: 12px; color: #555;"><strong>Tél:</strong> ${contactInfo.phone}</p>
-          <div style="display: flex; gap: 8px;">
-            <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank" style="text-decoration:none;color:#0056b3;font-weight:600;">Itinéraire</a>
-            <a href="tel:${contactInfo.phone.replace(/\s/g, "")}" style="text-decoration:none;color:#0056b3;font-weight:600;">Appeler</a>
-          </div>
-        </div>
-      `;
-      marker.bindPopup(popupContent).openPopup();
-
-      window.L.circle([lat, lng], {
-        color: "#0056b3",
-        fillColor: "#0056b3",
-        fillOpacity: 0.15,
-        radius: 200,
-      }).addTo(map);
+      marker.openPopup();
 
       setMapLoaded(true);
     };
 
-    loadLeafletMap();
+    loadLeaflet();
 
     return () => {
+      // Clean up
       if (mapRef.current && window.L?.map) {
-        const el = mapRef.current;
-        const mapInstances = window.L.DomUtil.get(el);
-        if (mapInstances) {
-          window.L.map(el).remove();
+        try {
+          window.L.map(mapRef.current).remove();
+        } catch (e) {
+          // ignore
         }
       }
     };
-  }, []);
+  }, [lat, lng]);
+
+  if (!lat || !lng) {
+    return (
+      <div className="p-6 bg-red-50 text-red-700 rounded-md">
+        Les coordonnées de la carte sont manquantes.
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-      {/* Carte */}
       <Card className="rounded-xl shadow-lg md:col-span-8">
         <div
           ref={mapRef}
@@ -137,8 +130,7 @@ export default function Map() {
                   Comment nous trouver
                 </h4>
                 <p className="text-gray-700">
-                  Le centre est situé à proximité du centre-ville d'Oran. Un
-                  parking gratuit est à disposition.
+                  Le centre est situé à proximité du centre-ville d'Oran.
                 </p>
               </div>
             </div>
@@ -150,9 +142,7 @@ export default function Map() {
                 <strong>Téléphone :</strong> {contactInfo.phone}
               </p>
               <p className="text-gray-800">
-                <strong>Coordonnées GPS :</strong>{" "}
-                {contactInfo.location.lat.toFixed(6)},{" "}
-                {contactInfo.location.lng.toFixed(6)}
+                <strong>GPS :</strong> {lat.toFixed(6)}, {lng.toFixed(6)}
               </p>
               <div className="flex gap-4 mt-2">
                 <Button
@@ -160,7 +150,7 @@ export default function Map() {
                   size="sm"
                   onClick={() =>
                     window.open(
-                      `https://www.google.com/maps/dir/?api=1&destination=${contactInfo.location.lat},${contactInfo.location.lng}`,
+                      `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
                       "_blank"
                     )
                   }
@@ -187,7 +177,6 @@ export default function Map() {
         </CardContent>
       </Card>
 
-      {/* Coordonnées */}
       <Card className="rounded-xl shadow-lg md:col-span-4 bg-primary text-white">
         <div className="h-24 bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
           <h3 className="text-xl font-bold">Nos coordonnées</h3>
