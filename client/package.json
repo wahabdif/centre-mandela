@@ -1,13 +1,16 @@
 {
-  "name": "rest-express-client",
+  "name": "centre-mandela-client",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "start": "vite preview --host 0.0.0.0 --port $PORT",
-    "dev": "vite",
-    "build": "vite build",
-    "check": "tsc"
+    "start": "vite preview --host 0.0.0.0 --port $PORT", // Lancer Vite en mode prévisualisation
+    "dev": "vite", // Lancer Vite en mode développement
+    "build": "vite build", // Construire le projet en production
+    "check": "tsc --noEmit", // Vérification des types TypeScript sans compilation
+    "lint": "eslint . --ext .ts,.tsx", // Linter pour maintenir la qualité du code
+    "format": "prettier --write .", // Formatage automatique du code
+    "test": "jest" // Lancer les tests unitaires
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -84,6 +87,9 @@
     "postcss": "^8.4.47",
     "tsx": "^4.19.1",
     "typescript": "5.6.3",
-    "vite": "^5.4.14"
+    "vite": "^5.4.14",
+    "eslint": "^8.33.0", // Ajouté pour maintenir une bonne qualité de code
+    "prettier": "^2.8.0", // Formatage automatique du code
+    "jest": "^28.1.3" // Pour les tests unitaires
   }
 }
