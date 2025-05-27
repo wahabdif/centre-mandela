@@ -96,10 +96,10 @@ export default function Contact() {
         });
       }, 100);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast({
         title: t("toast.errorTitle"),
-        description: error.message || t("toast.errorDescription"),
+        description: error?.message || t("toast.errorDescription"),
         variant: "destructive",
       });
     },
@@ -237,4 +237,96 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="font-semibold mb-1">{t("form.qualityServiceTitle")}</h4>
-                      <p className="text-gray-600">{t("form
+                      <p className="text-gray-600">{t("form.qualityServiceDesc")}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Form */}
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6 bg-white p-8 rounded-xl shadow-md"
+                  noValidate
+                >
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("form.nameLabel")}</FormLabel>
+                        <FormControl>
+                          <Input placeholder={t("form.namePlaceholder")} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("form.emailLabel")}</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder={t("form.emailPlaceholder")} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />            
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("
+                          <Input type="tel" placeholder={t("form.phonePlaceholder")} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("form.messageLabel")}</FormLabel>
+                        <FormControl>
+                          <Textarea placeholder={t("form.messagePlaceholder")} rows={5} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button
+                    type="submit"
+                    className="w-full flex items-center justify-center space-x-2"
+                    disabled={submitContact.isLoading}
+                  >
+                    {submitContact.isLoading ? (
+                      <>
+                        <LoaderCircle className="mr-2 h-5 w-5 animate-spin" />
+                        <span>{t("form.sending")}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-5 w-5" />
+                        <span>{t("form.sendButton")}</span>
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </Form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
