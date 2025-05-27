@@ -49,6 +49,37 @@
         "title": "Formation continue",
         "subtitle": "Nos spécialistes suivent régulièrement les dernières avancées"
       }
+    ],
+    "members": [
+      {
+        "name": "Dr. Samir Benameur",
+        "specialty": "Radiologue",
+        "bio": "Expert en radiologie conventionnelle avec plus de 15 ans d'expérience.",
+        "image": "/images/doctors/dr-benameur.jpg"
+      },
+      {
+        "name": "Dr. Nadia Haddad",
+        "specialty": "Imagerie Médicale",
+        "bio": "Spécialiste en IRM et échographie avec une approche centrée sur le patient.",
+        "image": "/images/doctors/dr-haddad.jpg"
+      }
+    ]
+  },
+  "practicalInfo": {
+    "section_title": "Informations Pratiques",
+    "items": [
+      {
+        "title": "Horaires d'ouverture",
+        "detail": "Du lundi au vendredi, de 8h00 à 17h30"
+      },
+      {
+        "title": "Adresse",
+        "detail": "10 Rue des Frères Amirouche, Oran, Algérie"
+      },
+      {
+        "title": "Contact",
+        "detail": "+213 41 123 4567"
+      }
     ]
   },
   "testimonials": {
