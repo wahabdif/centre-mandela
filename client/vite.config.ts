@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { nanoid } from 'nanoid';
 
 export default defineConfig(({ mode }) => ({
   root: ".", // le dossier client est la racine
