@@ -40,5 +40,11 @@ export default defineConfig(({ mode }) => {
       },
       base: "/",
     },
+
+    preview: {
+      host: "0.0.0.0",
+      port: process.env.PORT ? Number(process.env.PORT) : 4173,
+      allowedHosts: ["centre-mandela-qscm.onrender.com"],
+    },
   };
 });
