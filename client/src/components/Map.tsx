@@ -1,176 +1,243 @@
-import { useState, useEffect, useRef } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { contactInfo } from "@/lib/constants";
-import { MapPin, Navigation, Phone, Mail, Clock } from "lucide-react";
+import { useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+import { services } from "@/lib/constants";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { LoaderCircle } from "lucide-react";
 
-// Add TypeScript type for Leaflet
-declare global {
-  interface Window {
-    L: any;
-    _leaflet_id_map?: Record<string, any>;
+const appointmentFormSchema = z.object({
+  name: z.string().min(3, {
+    message: "Le nom doit comporter au moins 3 caractères",
+  }),
+  email: z.string().email({
+    message: "Veuillez entrer une adresse e-mail valide",
+  }),
+  phone: z
+    .string()
+    .min(8, {
+      message: "Le numéro de téléphone doit comporter au moins 8 caractères",
+    })
+    .regex(/^[0-9+\s()-]{8,15}$/, {
+      message: "Veuillez entrer un numéro de téléphone valide",
+    }),
+  service: z.string({
+    required_error: "Veuillez sélectionner un service",
+  }),
+  message: z.string().optional(),
+});
+
+type AppointmentFormValues = z.infer<typeof appointmentFormSchema>;
+
+export default function AppointmentForm() {
+  const { toast } = useToast();
+  const [submitted, setSubmitted] = useState(false);
+
+  const form = useForm<AppointmentFormValues>({
+    resolver: zodResolver(appointmentFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      service: "",
+      message: "",
+    },
+  });
+
+  const createAppointment = useMutation({
+    mutationFn: async (data: AppointmentFormValues) => {
+      const response = await apiRequest("POST", "/api/appointments", data);
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Rendez-vous demandé",
+        description:
+          "Nous vous contacterons bientôt pour confirmer votre rendez-vous.",
+        variant: "default",
+      });
+      form.reset();
+      setSubmitted(true);
+    },
+    onError: (error) => {
+      toast({
+        title: "Erreur",
+        description:
+          error.message || "Une erreur s'est produite. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  function onSubmit(data: AppointmentFormValues) {
+    createAppointment.mutate(data);
   }
-}
 
-export default function Map() {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const [mapLoaded, setMapLoaded] = useState(false);
-
-  useEffect(() => {
-    const loadLeafletMap = () => {
-      if (!mapRef.current) return;
-
-      // Load CSS
-      if (!document.querySelector('link[href*="leaflet.css"]')) {
-        const leafletCss = document.createElement("link");
-        leafletCss.rel = "stylesheet";
-        leafletCss.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-        leafletCss.integrity = "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
-        leafletCss.crossOrigin = "";
-        document.head.appendChild(leafletCss);
-      }
-
-      // Load JS
-      if (!document.querySelector('script[src*="leaflet.js"]')) {
-        const leafletScript = document.createElement("script");
-        leafletScript.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-        leafletScript.integrity = "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
-        leafletScript.crossOrigin = "";
-        leafletScript.onload = () => waitForLeafletAndInit();
-        document.head.appendChild(leafletScript);
-      } else {
-        waitForLeafletAndInit();
-      }
-    };
-
-    const waitForLeafletAndInit = (retries = 10) => {
-      if (window.L && typeof window.L.map === "function") {
-        initMap();
-      } else if (retries > 0) {
-        setTimeout(() => waitForLeafletAndInit(retries - 1), 200);
-      } else {
-        console.error("Leaflet n'a pas pu être chargé.");
-      }
-    };
-
-    function initMap() {
-      try {
-        if (!mapRef.current || !window.L || !window.L.map) {
-          console.warn("Leaflet indisponible.");
-          return;
-        }
-
-        mapRef.current.innerHTML = "";
-
-        const map = window.L.map(mapRef.current).setView(
-          [contactInfo.location.lat, contactInfo.location.lng],
-          16
-        );
-
-        window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          maxZoom: 19,
-        }).addTo(map);
-
-        setTimeout(() => map.invalidateSize(), 500);
-
-        const customIcon = window.L.divIcon({
-          className: "custom-div-icon",
-          html: `<div style="background-color: #0056b3; width: 22px; height: 22px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3);"></div>`,
-          iconSize: [30, 30],
-          iconAnchor: [15, 15],
-        });
-
-        const marker = window.L.marker([contactInfo.location.lat, contactInfo.location.lng], {
-          icon: customIcon,
-          title: "Centre D'Imagerie Benameur",
-        }).addTo(map);
-
-        const popupContent = `
-          <div style="font-family: 'Open Sans', sans-serif; padding: 12px; min-width: 220px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-            <h3 style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-bottom: 10px; color: #0056b3; font-size: 17px; border-bottom: 2px solid #e0f0ff; padding-bottom: 8px;">Centre D'Imagerie Benameur</h3>
-            <p style="font-size: 14px; margin: 0 0 12px 0; color: #333;">${contactInfo.address}</p>
-            <p style="font-size: 13px; margin: 0 0 12px 0; color: #666;"><span style="color: #0056b3; font-weight: 600;">Tél:</span> ${contactInfo.phone}</p>
-            <div style="display: flex; justify-content: space-between;">
-              <a href="https://www.google.com/maps/dir/?api=1&destination=${contactInfo.location.lat},${contactInfo.location.lng}" 
-                 target="_blank" 
-                 style="color: #0056b3; text-decoration: none; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; background-color: #e0f0ff; padding: 6px 10px; border-radius: 4px;">
-                <span style="margin-right: 4px;">Itinéraire</span>
-              </a>
-              <a href="tel:${contactInfo.phone.replace(/\s/g, '')}" 
-                 style="color: #0056b3; text-decoration: none; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; background-color: #e0f0ff; padding: 6px 10px; border-radius: 4px;">
-                <span style="margin-right: 4px;">Appeler</span>
-              </a>
-            </div>
-          </div>
-        `;
-        marker.bindPopup(popupContent);
-        marker.openPopup();
-
-        window.L.circle([contactInfo.location.lat, contactInfo.location.lng], {
-          color: "#0056b3",
-          fillColor: "#0056b3",
-          fillOpacity: 0.15,
-          radius: 200,
-          weight: 2,
-        }).addTo(map);
-
-        const directionIcon = window.L.divIcon({
-          className: "direction-icon",
-          html: `<div style="font-size: 24px; color: #0056b3; font-weight: bold;">↑</div>`,
-          iconSize: [24, 24],
-          iconAnchor: [12, 12],
-        });
-
-        window.L.marker([contactInfo.location.lat + 0.0022, contactInfo.location.lng], {
-          icon: directionIcon,
-          title: "Centre Ville",
-        }).addTo(map);
-
-        setMapLoaded(true);
-      } catch (err) {
-        console.error("Erreur lors de l'initialisation de la carte :", err);
-      }
-    }
-
-    loadLeafletMap();
-
-    return () => {
-      if (mapRef.current && window.L && window.L.map) {
-        const maps = Object.values(window.L._leaflet_id_map || {});
-        for (const mapInstance of maps) {
-          if (mapInstance && "_container" in mapInstance && mapInstance._container === mapRef.current) {
-            (mapInstance as any).remove();
-            break;
-          }
-        }
-      }
-    };
-  }, []);
+  if (submitted) {
+    return (
+      <div className="bg-white rounded-lg shadow-xl overflow-hidden p-8 text-center text-gray-900">
+        <div className="mb-6 text-5xl text-green-500">✓</div>
+        <h3 className="text-2xl font-bold text-primary mb-4">
+          Demande envoyée avec succès
+        </h3>
+        <p className="text-lg mb-6">
+          Merci pour votre demande de rendez-vous. Notre équipe vous contactera
+          sous peu pour confirmer les détails.
+        </p>
+        <Button onClick={() => setSubmitted(false)}>Retour</Button>
+      </div>
+    );
+  }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-      <Card className="rounded-xl shadow-lg overflow-hidden md:col-span-8 h-full">
-        <div ref={mapRef} id="map" className="w-full h-[450px] bg-gray-100 relative">
-          {!mapLoaded && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mb-4"></div>
-              <p className="text-gray-500">Chargement de la carte...</p>
-            </div>
-          )}
-        </div>
-        <CardContent className="bg-white p-6">
-          <div className="flex flex-col space-y-6">
-            <div className="flex items-start">
-              <MapPin className="h-5 w-5 text-primary mt-1 mr-2 flex-shrink-0" />
-              <div>
-                <h4 className="font-bold text-primary text-lg">Comment nous trouver</h4>
-                <p className="text-gray-700">
-                  Notre centre est idéalement situé à proximité du centre-ville d'Oran. Parking gratuit disponible pour tous nos patients.
-                </p>
-              </div>
-            </div>
+    <div className="max-w-2xl mx-auto bg-white text-gray-900 rounded-lg shadow-xl overflow-hidden">
+      <div className="p-8">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold">Nom complet</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Votre nom complet"
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-              <div className="flex items-center mb-2">
-                <MapPin className="h-5 w-5 text-primary mr-2 flex-shrink
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold">Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="votre.email@exemple.com"
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold">Téléphone</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Votre numéro de téléphone"
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="service"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold">
+                    Service souhaité
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400">
+                        <SelectValue placeholder="Sélectionnez un service" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {services.map((service) => (
+                        <SelectItem key={service.id} value={service.id}>
+                          {service.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold">Message</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Précisez votre demande ou vos questions"
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
+                      rows={4}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type="submit"
+              className="w-full bg-accent hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md"
+              disabled={createAppointment.isPending}
+            >
+              {createAppointment.isPending ? (
+                <>
+                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                  Envoi en cours...
+                </>
+              ) : (
+                <>
+                  <span className="mr-2">📩</span> Envoyer
+                </>
+              )}
+            </Button>
+          </form>
+        </Form>
+      </div>
+    </div>
+  );
+}
