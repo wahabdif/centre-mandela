@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import { nanoid } from "nanoid";
 
 export default defineConfig(({ mode }) => ({
   root: ".", // Dossier racine de l'application client
@@ -17,39 +16,40 @@ export default defineConfig(({ mode }) => ({
   },
 
   css: {
-    postcss: path.resolve(__dirname, "postcss.config.cjs"),
+    postcss: path.resolve(__dirname, "postcss.config.cjs"), // Chemin vers le fichier PostCSS
   },
 
   appType: "custom", // Type d'application pour l'intégration avec Express
 
   server: {
-    middlewareMode: mode === "development", // Active le mode middleware uniquement en développement
+    middlewareMode: mode === "development", // Mode middleware uniquement en développement
     hmr: {
-      port: 3000, // Hot Module Replacement pour le développement
+      port: 3000, // Hot Module Replacement (HMR) pour la dev
     },
     fs: {
-      allow: [".."], // Accès au dossier parent
+      allow: [".."], // Permet l'accès au dossier parent
     },
   },
 
   build: {
-    outDir: path.resolve(__dirname, "../dist"),
-    emptyOutDir: true,
+    outDir: path.resolve(__dirname, "../dist"), // Dossier de sortie pour la build
+    emptyOutDir: true, // Vide le dossier de sortie avant de reconstruire
 
     rollupOptions: {
       input: path.resolve(__dirname, "index.html"),
 
       commonjsOptions: {
-        include: [/shared/, /node_modules/],
+        include: [/shared/, /node_modules/], // Inclure les modules nécessaires
       },
 
       external: [
-        // Exclure certains modules en fonction du rôle dans le projet
-        mode === 'production' ? 'vite' : null, 
-        mode === 'production' ? '@vitejs/plugin-react' : null, 
-        'nanoid', 
-        'express'
-      ].filter(Boolean), // Retirer les éléments `null` de la liste
+        "nanoid", // Exclure nanoid du bundle (elle sera utilisée au runtime)
+        "express", // Exclure express, si nécessaire
+        mode === "production" ? "vite" : null, // Exclure vite uniquement en mode production
+        mode === "production" ? "@vitejs/plugin-react" : null, // Exclure plugin-react en mode production
+      ].filter(Boolean), // Filtrer les valeurs nulles (en fonction du mode)
+
+      // Autres options Rollup si nécessaires...
     },
 
     base: "/", // Base pour les chemins relatifs des assets en production
