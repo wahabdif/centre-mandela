@@ -53,8 +53,13 @@ export default defineConfig(({ mode }) => ({
         include: [/shared/, /node_modules/],
       },
 
-      // Marquer certains modules comme externes si nécessaire (ex. Express, Vite, nanoid)
-      external: ["vite", "nanoid", "@vitejs/plugin-react", "express"],
+      // Marquer certains modules comme externes si nécessaire
+      external: [
+        "vite", 
+        "nanoid", 
+        "@vitejs/plugin-react", 
+        "express"
+      ],
     },
 
     // Base pour les chemins relatifs des assets en production
