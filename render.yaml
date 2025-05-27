@@ -5,11 +5,10 @@ services:
     plan: free
     buildCommand: "npm run build"
     startCommand: "npm run start"
-    branches: ["main"]
+    branches:
+      - main
     dockerfilePath: ""
     envVars:
-      - key: PORT
-        value: "5000"
       - key: NODE_ENV
         value: "production"
       - key: VITE_API_URL
