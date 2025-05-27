@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -77,6 +75,7 @@ export default function AppointmentForm() {
         title: "Rendez-vous demandé",
         description:
           "Nous vous contacterons bientôt pour confirmer votre rendez-vous.",
+        variant: "default",
       });
       form.reset();
       setSubmitted(true);
@@ -97,7 +96,7 @@ export default function AppointmentForm() {
 
   if (submitted) {
     return (
-      <div className="bg-white rounded-lg shadow-xl overflow-hidden p-8 text-center">
+      <div className="bg-white rounded-lg shadow-xl overflow-hidden p-8 text-center text-gray-900">
         <div className="mb-6 text-5xl text-green-500">✓</div>
         <h3 className="text-2xl font-bold text-primary mb-4">
           Demande envoyée avec succès
@@ -112,20 +111,20 @@ export default function AppointmentForm() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+    <div className="max-w-2xl mx-auto bg-white text-gray-900 rounded-lg shadow-xl overflow-hidden">
       <div className="p-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Nom */}
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nom complet</FormLabel>
+                  <FormLabel className="font-semibold">Nom complet</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Votre nom complet"
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
                       {...field}
                     />
                   </FormControl>
@@ -134,17 +133,17 @@ export default function AppointmentForm() {
               )}
             />
 
-            {/* Email */}
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="font-semibold">Email</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
                       placeholder="votre.email@exemple.com"
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
                       {...field}
                     />
                   </FormControl>
@@ -153,16 +152,16 @@ export default function AppointmentForm() {
               )}
             />
 
-            {/* Téléphone */}
             <FormField
               control={form.control}
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Téléphone</FormLabel>
+                  <FormLabel className="font-semibold">Téléphone</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Votre numéro de téléphone"
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
                       {...field}
                     />
                   </FormControl>
@@ -171,20 +170,20 @@ export default function AppointmentForm() {
               )}
             />
 
-            {/* Service */}
             <FormField
               control={form.control}
               name="service"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Service souhaité</FormLabel>
+                  <FormLabel className="font-semibold">
+                    Service souhaité
+                  </FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    value={field.value}
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400">
                         <SelectValue placeholder="Sélectionnez un service" />
                       </SelectTrigger>
                     </FormControl>
@@ -201,16 +200,16 @@ export default function AppointmentForm() {
               )}
             />
 
-            {/* Message */}
             <FormField
               control={form.control}
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Message</FormLabel>
+                  <FormLabel className="font-semibold">Message</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Précisez votre demande ou vos questions"
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
                       rows={4}
                       {...field}
                     />
@@ -220,7 +219,6 @@ export default function AppointmentForm() {
               )}
             />
 
-            {/* Bouton */}
             <Button
               type="submit"
               className="w-full bg-accent hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md"
