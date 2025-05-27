@@ -9,9 +9,12 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Corrigé : dossier du build Vite (dist)
-const publicDir = path.join(__dirname, '../dist');
+// Dossier du build Vite (frontend) — ici dans client/dist
+const publicDir = path.join(__dirname, '../client/dist');
 
+console.log('Dossier public statique :', publicDir);
+
+// Servir les fichiers statiques du build frontend
 app.use(express.static(publicDir));
 
 // Pour toutes les routes, renvoyer index.html (SPA)
