@@ -2,48 +2,34 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
-export default defineConfig(({ mode }) => {
-  const root = path.resolve(__dirname);
+export default defineConfig({
+  root: path.resolve(__dirname),
 
-  return {
-    root,
+  plugins: [react()],
 
-    plugins: [react()],
-
-    resolve: {
-      alias: {
-        "@": path.resolve(root, "src"),
-        "@shared": path.resolve(root, "../shared"),
-      },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+      "@shared": path.resolve(__dirname, "../shared"),
     },
+  },
 
-    css: {
-      postcss: path.resolve(root, "postcss.config.cjs"),
+  build: {
+    outDir: path.resolve(__dirname, "dist"),
+    emptyOutDir: true,
+    rollupOptions: {
+      input: path.resolve(__dirname, "index.html"),
     },
+    base: "/",
+  },
 
-    appType: "custom",
+  server: {
+    hmr: { port: 3000 },
+    fs: { allow: [".."] },
+  },
 
-    server: {
-      middlewareMode: mode === "development",
-      hmr: { port: 3000 },
-      fs: { allow: [".."] },
-    },
-
-    build: {
-      outDir: path.resolve(root, "../dist/server/public"),
-      emptyOutDir: true,
-      rollupOptions: {
-        input: path.resolve(root, "index.html"),
-        // commonjsOptions deprecated in vite v5, on peut gérer les externals si besoin
-        external: ["shared"],
-      },
-      base: "/",
-    },
-
-    preview: {
-      host: "0.0.0.0",
-      port: Number(process.env.PORT) || 4173,
-      allowedHosts: ["centre-mandela-qscm.onrender.com"],
-    },
-  };
+  preview: {
+    host: "0.0.0.0",
+    port: Number(process.env.PORT) || 4173,
+  },
 });
