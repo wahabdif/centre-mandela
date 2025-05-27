@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: centre-mandela
+    env: node
+    plan: free
+    buildCommand: "npm run build"
+    startCommand: "npm run start"
+    branches: ["main"]
+    dockerfilePath: ""
+    envVars:
+      - key: PORT
+        value: "5000"
+      - key: NODE_ENV
+        value: "production"
+      - key: VITE_API_URL
+        value: "https://api-centre-mandela.com"
