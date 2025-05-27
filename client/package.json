@@ -67,7 +67,8 @@
     "vaul": "^1.1.2",
     "wouter": "^3.3.5",
     "zod": "^3.24.2",
-    "zod-validation-error": "^3.4.0"
+    "zod-validation-error": "^3.4.0",
+    "class-variance-authority": "^1.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.2",
