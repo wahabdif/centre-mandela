@@ -2,60 +2,59 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
-export default defineConfig(({ mode }) => ({
-  // La racine du projet sous 'client'
-  root: path.resolve(__dirname, "client"),
+export default defineConfig(({ mode }) => {
+  const root = path.resolve(__dirname, "client");
 
-  plugins: [react()],
+  return {
+    root,
 
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "client/src"),
-      "@shared": path.resolve(__dirname, "../shared"),
+    plugins: [react()],
+
+    resolve: {
+      alias: {
+        "@": path.resolve(root, "src"),
+        "@shared": path.resolve(__dirname, "shared"), // ../shared devient shared si tu l’as dans le root
+      },
     },
-  },
 
-  css: {
-    postcss: path.resolve(__dirname, "client/postcss.config.cjs"),
-  },
-
-  appType: "custom", // Pour intégration Express par exemple
-
-  server: {
-    middlewareMode: mode === "development",
-    hmr: {
-      port: 3000,
+    css: {
+      postcss: path.resolve(root, "postcss.config.cjs"),
     },
-    fs: {
-      allow: [".."], // Autorise l'accès au dossier parent (monorepo)
+
+    appType: "custom",
+
+    server: {
+      middlewareMode: mode === "development",
+      hmr: {
+        port: 3000,
+      },
+      fs: {
+        allow: [".."],
+      },
     },
-  },
 
-  build: {
-    // Sortie dans ../dist (au niveau racine projet)
-    outDir: path.resolve(__dirname, "../dist"),
-    emptyOutDir: true,
+    build: {
+      outDir: path.resolve(__dirname, "dist"), // ../dist devient dist si tu veux le mettre à la racine
+      emptyOutDir: true,
 
-    rollupOptions: {
-      // Point d'entrée relatif à la racine (client/index.html)
-      input: "index.html",
-
-      commonjsOptions: {
-        include: [/shared/, /node_modules/],
+      rollupOptions: {
+        input: path.resolve(root, "index.html"), // CHEMIN ABSOLU ici
+        commonjsOptions: {
+          include: [/shared/, /node_modules/],
+        },
+        external: [
+          "nanoid",
+          "express",
+          "vite",
+          "@vitejs/plugin-react",
+          "@replit/vite-plugin-runtime-error-modal",
+          "@replit/vite-plugin-cartographer",
+          "drizzle-orm/pg-core",
+          "drizzle-zod",
+        ].filter(Boolean),
       },
 
-      external: [
-        "nanoid",
-        "express",
-        "vite",
-        "@vitejs/plugin-react",
-        "@replit/vite-plugin-runtime-error-modal",
-        "@replit/vite-plugin-cartographer",
-        "drizzle-orm/pg-core",
-        "drizzle-zod",
-      ].filter(Boolean),
+      base: "/",
     },
-
-    base: "/",
-  },
-}));
+  };
+});
