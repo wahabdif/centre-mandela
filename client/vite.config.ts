@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => ({
   },
   appType: "custom", // pour intégration avec Express
   server: {
-    middlewareMode: mode === "development",
+    middlewareMode: mode === "development", // Utilisé uniquement en dev
     hmr: {
       port: 3000,
     },
@@ -26,17 +26,18 @@ export default defineConfig(({ mode }) => ({
     },
   },
   preview: {
-    allowedHosts: ["centre-mandela-qscm.onrender.com"], // Autorise cet hôte pour la prévisualisation
+    // Utile uniquement si tu fais un vite preview sur Render (peu probable)
+    allowedHosts: ["centre-mandela-qscm.onrender.com"],
   },
   build: {
-    outDir: path.resolve(__dirname, "../dist"),
+    outDir: path.resolve(__dirname, "../dist"), // sortie pour Express
     emptyOutDir: true,
     rollupOptions: {
       input: path.resolve(__dirname, "index.html"),
     },
     commonjsOptions: {
-      include: [/shared/, /node_modules/], // inclure shared dans commonjs pour le build
+      include: [/shared/, /node_modules/], // inclure "shared" pour build
     },
-    base: '/',  // Corrige les chemins des assets en production
+    base: "/", // nécessaire pour que les assets soient correctement résolus
   },
 }));
