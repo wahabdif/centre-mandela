@@ -3,41 +3,39 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig(({ mode }) => ({
-  root: path.resolve(__dirname, "client"), // Dossier racine est déjà 'client'
+  root: path.resolve(__dirname, "client"), // Dossier racine du projet (client)
 
   plugins: [react()],
 
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "client/src"), // Répertoire source dans client
-      "@client": path.resolve(__dirname, "client/src"), // Répertoire client
-      "@shared": path.resolve(__dirname, "../shared"), // Répertoire partagé
+      "@": path.resolve(__dirname, "client/src"), // Si vous avez des fichiers dans 'client/src', l'alias @ pointe vers ce dossier
+      "@shared": path.resolve(__dirname, "../shared"), // Répertoire partagé situé à la racine
     },
   },
 
   css: {
-    postcss: path.resolve(__dirname, "client/postcss.config.cjs"), // Fichier PostCSS situé dans 'client'
+    postcss: path.resolve(__dirname, "client/postcss.config.cjs"), // Fichier PostCSS dans 'client'
   },
 
-  appType: "custom",
+  appType: "custom", // Type d'application pour l'intégration avec Express
 
   server: {
     middlewareMode: mode === "development",
     hmr: {
-      port: 3000,
+      port: 3000, // Port pour le Hot Module Replacement
     },
     fs: {
-      allow: [".."], // Autorise l'accès au dossier parent
+      allow: [".."], // Accès au dossier parent (utile dans un monorepo)
     },
   },
 
   build: {
-    outDir: path.resolve(__dirname, "client/../dist"), // Dossier de sortie à la racine
-    emptyOutDir: true,
+    outDir: path.resolve(__dirname, "client/../dist"), // Dossier de sortie à la racine du projet (dist)
 
     rollupOptions: {
-      // Utilisation de l'entrée par défaut de Vite, soit 'client/index.html'
-      input: path.resolve(__dirname, "client/index.html"), // Ce chemin doit être correct
+      // Ici, Vite utilise déjà 'client/index.html' en entrée, donc pas besoin de spécifier 'input'
+      input: path.resolve(__dirname, "client/index.html"), // Fichier d'entrée du build
 
       commonjsOptions: {
         include: [/shared/, /node_modules/],
@@ -51,6 +49,6 @@ export default defineConfig(({ mode }) => ({
       ].filter(Boolean),
     },
 
-    base: "/",
+    base: "/", // Base pour les chemins relatifs des assets en production
   },
 }));
