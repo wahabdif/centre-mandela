@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cd client && vite",
-    "build:client": "cd client && npm install && vite build",
+    "build:client": "cd client && npm install && npx vite build",
     "build:server": "tsc -p tsconfig.server.json",
     "build": "npm run build:client && npm run build:server",
     "start": "node server/dist/index.js",
