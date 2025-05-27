@@ -4,14 +4,14 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "vite", // Lancer Vite en mode développement
-    "build": "vite build", // Compilation de l'app React avec Vite
-    "check": "tsc", // Vérification des types TypeScript
-    "start": "node dist/server/index.js", // Démarrer le serveur Express en production
-    "prod": "NODE_ENV=production vite build && npm run start", // Build et lancement en mode prod
-    "lint": "eslint . --ext .ts,.tsx", // Vérification du code avec ESLint
-    "format": "prettier --write .", // Formatage du code avec Prettier
-    "test": "jest" // Lancer les tests unitaires (si config Jest)
+    "dev": "vite", 
+    "build": "vite build", 
+    "check": "tsc",
+    "start": "node dist/server/index.js", 
+    "prod": "NODE_ENV=production vite build && npm run start", 
+    "lint": "eslint . --ext .ts,.tsx", 
+    "format": "prettier --write .",
+    "test": "jest" 
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
