@@ -21,14 +21,14 @@ services:
     env: node
     plan: free
     buildCommand: "cd server && npm install && npm run build"
-    startCommand: "cd server && npm run start"
+    startCommand: "node server/dist/index.js"
     branches:
       - main
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 10000  # facultatif, Render attribue automatiquement le port
+        value: 10000  # facultatif, Render utilise process.env.PORT
     buildFilter:
       paths:
         - server/**
