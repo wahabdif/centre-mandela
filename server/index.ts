@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Enregistrement des routes
+// Démarrage du serveur
 (async () => {
   const server = await registerRoutes(app);
 
@@ -49,14 +49,13 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // Configuration de Vite en mode développement ou serveur statique en production
-  if (app.get('env') === 'development') {
+  // Mode de déploiement : dev = Vite middleware | prod = fichiers statiques
+  if (process.env.NODE_ENV === 'development') {
     await setupVite(app, server);
   } else {
-    serveStatic(app);
+    serveStatic(app); // doit servir dist/public/index.html
   }
 
-  // Démarrage du serveur sur le port spécifié par Render
   const port = process.env.PORT || 5000;
   server.listen(port, '0.0.0.0', () => {
     log(`Server is running on port ${port}`);
