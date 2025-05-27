@@ -49,6 +49,37 @@
         "title": "Continuous Training",
         "subtitle": "Our specialists regularly follow the latest advances"
       }
+    ],
+    "members": [
+      {
+        "name": "Dr. Samir Benameur",
+        "specialty": "Radiologist",
+        "bio": "Expert in conventional radiology with over 15 years of experience.",
+        "image": "/images/doctors/dr-benameur.jpg"
+      },
+      {
+        "name": "Dr. Nadia Haddad",
+        "specialty": "Medical Imaging Specialist",
+        "bio": "Specializes in MRI and ultrasound with a patient-centered approach.",
+        "image": "/images/doctors/dr-haddad.jpg"
+      }
+    ]
+  },
+  "practicalInfo": {
+    "section_title": "Practical Information",
+    "items": [
+      {
+        "title": "Opening Hours",
+        "detail": "Monday to Friday, 8:00 AM to 5:30 PM"
+      },
+      {
+        "title": "Address",
+        "detail": "10 Frères Amar Street, Oran, Algeria"
+      },
+      {
+        "title": "Contact",
+        "detail": "+213 41 123 4567"
+      }
     ]
   },
   "testimonials": {
