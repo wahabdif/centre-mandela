@@ -12,17 +12,16 @@ declare global {
 
 export default function Map() {
   const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<any>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+
   const lat = contactInfo?.location?.lat;
   const lng = contactInfo?.location?.lng;
 
   useEffect(() => {
     if (!lat || !lng) return;
 
-    const loadLeaflet = () => {
-      if (!mapRef.current) return;
-
-      // Inject CSS Leaflet si nécessaire
+    const injectLeafletAssets = () => {
       if (!document.querySelector('link[href*="leaflet.css"]')) {
         const link = document.createElement("link");
         link.rel = "stylesheet";
@@ -33,23 +32,22 @@ export default function Map() {
         document.head.appendChild(link);
       }
 
-      // Inject JS Leaflet si nécessaire
       if (!document.querySelector('script[src*="leaflet.js"]')) {
         const script = document.createElement("script");
         script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
         script.integrity =
           "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
         script.crossOrigin = "";
-        script.onload = () => waitForLeaflet();
+        script.onload = initMapWhenReady;
         document.head.appendChild(script);
       } else {
-        initMap();
+        initMapWhenReady();
       }
     };
 
-    const waitForLeaflet = () => {
+    const initMapWhenReady = () => {
       const interval = setInterval(() => {
-        if (window.L) {
+        if (window.L && mapRef.current) {
           clearInterval(interval);
           initMap();
         }
@@ -62,6 +60,7 @@ export default function Map() {
       mapRef.current.innerHTML = "";
 
       const map = window.L.map(mapRef.current).setView([lat, lng], 16);
+      mapInstanceRef.current = map;
 
       window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
@@ -73,27 +72,25 @@ export default function Map() {
 
       const marker = window.L.marker([lat, lng]).addTo(map);
 
+      const phone = contactInfo.phone.replace(/\s/g, "");
+      const safeAddress = contactInfo.address.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
       marker.bindPopup(`
         <strong>Centre D'Imagerie Benameur</strong><br />
-        ${contactInfo.address}<br />
-        <a href="tel:${contactInfo.phone.replace(/\s/g, "")}">${contactInfo.phone}</a>
+        ${safeAddress}<br />
+        <a href="tel:${phone}">${contactInfo.phone}</a>
       `);
 
       marker.openPopup();
-
       setMapLoaded(true);
     };
 
-    loadLeaflet();
+    injectLeafletAssets();
 
     return () => {
-      // Clean up
-      if (mapRef.current && window.L?.map) {
-        try {
-          window.L.map(mapRef.current).remove();
-        } catch (e) {
-          // ignore
-        }
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
       }
     };
   }, [lat, lng]);
