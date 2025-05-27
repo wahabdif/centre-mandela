@@ -39,7 +39,7 @@ export default defineConfig(({ mode }) => ({
 
     rollupOptions: {
       // Utilise 'client/index.html' comme point d'entrée pour le build
-      input: path.resolve(__dirname, "client/index.html"), // Assurez-vous que le fichier 'index.html' est dans 'client'
+      input: path.resolve(__dirname, "index.html"), // Assurez-vous que le fichier 'index.html' est dans 'client'
 
       commonjsOptions: {
         include: [/shared/, /node_modules/], // Modules communs à inclure dans le build
