@@ -3,42 +3,31 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig(({ mode }) => {
-  const root = path.resolve(__dirname, "client");
+  const root = path.resolve(__dirname);
 
   return {
     root,
-
     plugins: [react()],
-
     resolve: {
       alias: {
         "@": path.resolve(root, "src"),
-        "@shared": path.resolve(__dirname, "shared"),
+        "@shared": path.resolve(__dirname, "../shared"),
       },
     },
-
     css: {
       postcss: path.resolve(root, "postcss.config.cjs"),
     },
-
-    appType: "custom",
-
+    appType: "custom", // si tu intègres Express
     server: {
       middlewareMode: mode === "development",
-      hmr: {
-        port: 3000,
-      },
-      fs: {
-        allow: [".."],
-      },
+      hmr: { port: 3000 },
+      fs: { allow: [".."] },
     },
-
     build: {
-      outDir: path.resolve(__dirname, "dist"),
+      outDir: path.resolve(__dirname, "../dist/client"),
       emptyOutDir: true,
-
       rollupOptions: {
-        // ❌ Supprimer la ligne input
+        input: path.resolve(root, "index.html"),
         commonjsOptions: {
           include: [/shared/, /node_modules/],
         },
@@ -53,7 +42,6 @@ export default defineConfig(({ mode }) => {
           "drizzle-zod",
         ].filter(Boolean),
       },
-
       base: "/",
     },
   };
