@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(root, "src"),
-        "@shared": path.resolve(__dirname, "shared"), // ../shared devient shared si tu l’as dans le root
+        "@shared": path.resolve(__dirname, "shared"),
       },
     },
 
@@ -34,11 +34,11 @@ export default defineConfig(({ mode }) => {
     },
 
     build: {
-      outDir: path.resolve(__dirname, "dist"), // ../dist devient dist si tu veux le mettre à la racine
+      outDir: path.resolve(__dirname, "dist"),
       emptyOutDir: true,
 
       rollupOptions: {
-        input: path.resolve(root, "index.html"), // CHEMIN ABSOLU ici
+        // ❌ Supprimer la ligne input
         commonjsOptions: {
           include: [/shared/, /node_modules/],
         },
