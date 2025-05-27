@@ -1,0 +1,68 @@
+{
+  "hero": {
+    "subtitle": "Center of Excellence in Medical Imaging",
+    "title": "Excellence in medical imaging in Oran",
+    "description": "Accurate and reliable diagnostics performed by our team of specialists with state-of-the-art equipment.",
+    "cta_appointment": "Make an appointment",
+    "cta_services": "Our services"
+  },
+  "services": {
+    "section_title": "Our Services",
+    "section_subtitle": "Medical Imaging Services",
+    "section_description": "We offer a comprehensive range of medical imaging services with state-of-the-art equipment for accurate diagnostics."
+  },
+  "equipment": {
+    "section_title": "Cutting-edge Technology",
+    "section_subtitle": "Advanced medical equipment",
+    "section_description": "Our center is equipped with the latest medical imaging technologies to ensure accurate and reliable diagnostics, with particular attention to patient comfort.",
+    "benefits": [
+      "High-resolution imaging",
+      "Reduced waiting times",
+      "Optimal patient comfort"
+    ]
+  },
+  "team": {
+    "section_title": "Our Team",
+    "section_subtitle": "A highly qualified medical team",
+    "section_description": "The Benameur Imaging Center brings together highly qualified radiologists and healthcare professionals to offer you exceptional medical imaging services.",
+    "section_description_2": "Our team is committed to providing accurate diagnostics in a welcoming environment, placing patient well-being at the heart of our concerns.",
+    "benefits": [
+      {
+        "title": "Experienced professionals",
+        "subtitle": "Years of experience in medical imaging"
+      },
+      {
+        "title": "Patient-centered approach",
+        "subtitle": "Personalized service for each patient"
+      }
+    ]
+  },
+  "testimonials": {
+    "section_title": "Testimonials",
+    "section_subtitle": "What our patients say",
+    "section_description": "Discover our patients' experiences with our medical imaging services and our team.",
+    "cta": "See more testimonials"
+  },
+  "why_us": {
+    "section_title": "Why choose us",
+    "section_subtitle": "Our commitment to you",
+    "section_description": "We are committed to providing high-quality medical imaging services with particular attention to each patient.",
+    "features": [
+      {
+        "title": "Dedicated team",
+        "description": "Professionals passionate about their work"
+      },
+      {
+        "title": "Advanced technology",
+        "description": "State-of-the-art equipment"
+      },
+      {
+        "title": "Quick availability",
+        "description": "Appointments available quickly"
+      }
+    ],
+    "cta_title": "Ready to make an appointment?",
+    "cta_description": "Our team of professionals is at your disposal to meet all your medical imaging needs.",
+    "cta_button": "Make an appointment"
+  }
+}
