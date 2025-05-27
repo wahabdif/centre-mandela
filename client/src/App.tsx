@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Route, Switch } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
@@ -9,6 +10,29 @@ import Appointment from "./pages/Appointment";
 import Testimonials from "./pages/Testimonials";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/not-found";
+
+import { useTranslation } from "react-i18next";
+import i18n from "./i18n"; // ton fichier i18n config
+
+// Hook simple pour la langue et RTL
+function useLanguage() {
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    const lang = i18n.language || window.navigator.language;
+
+    // Appliquer la langue au html
+    document.documentElement.lang = lang;
+
+    // Si langue RTL (ex: arabe), ajouter classe 'rtl' sur <html>
+    const rtlLanguages = ["ar", "he", "fa", "ur"];
+    if (rtlLanguages.includes(lang.split("-")[0])) {
+      document.documentElement.classList.add("rtl");
+    } else {
+      document.documentElement.classList.remove("rtl");
+    }
+  }, [i18n.language]);
+}
 
 function Router() {
   return (
@@ -26,6 +50,8 @@ function Router() {
 }
 
 function App() {
+  useLanguage();
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
