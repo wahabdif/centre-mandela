@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
-// Si vous avez des imports de ces modules dans votre configuration, vous devez les marquer comme externes
 export default defineConfig(({ mode }) => ({
   root: ".", // Dossier racine de l'application client
 
@@ -44,16 +43,15 @@ export default defineConfig(({ mode }) => ({
       },
 
       external: [
-        // Exclure les modules spécifiques pour éviter les erreurs de résolution
-        mode === "production" ? "vite" : null,
-        mode === "production" ? "@vitejs/plugin-react" : null,
-        "nanoid",
-        "express",
-        "@replit/vite-plugin-runtime-error-modal", 
-        "@replit/vite-plugin-cartographer", 
-        "drizzle-orm/pg-core", 
-        "drizzle-zod"
-      ].filter(Boolean), // Filtrer les `null`
+        "nanoid", // Exclure nanoid du bundle
+        "express", // Exclure express du bundle
+        "vite", // Exclure Vite du bundle
+        "@vitejs/plugin-react", // Exclure le plugin React de Vite
+        "@replit/vite-plugin-runtime-error-modal", // Exclure le plugin de runtime error modal
+        "@replit/vite-plugin-cartographer", // Exclure le plugin cartographer
+        "drizzle-orm/pg-core", // Exclure le module pg-core de drizzle-orm
+        "drizzle-zod", // Exclure drizzle-zod
+      ].filter(Boolean), // Retirer les éléments `null` de la liste
     },
 
     base: "/", // Base pour les chemins relatifs des assets en production
