@@ -4,65 +4,54 @@ import path from "path";
 import { nanoid } from "nanoid";
 
 export default defineConfig(({ mode }) => ({
-  // Dossier racine de l'application client
-  root: ".", 
+  root: ".", // Dossier racine de l'application client
 
-  // Plugins utilisés dans la configuration
   plugins: [react()],
 
-  // Alias pour une résolution facile des chemins
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),         // pour "@/components/..."
+      "@": path.resolve(__dirname, "src"),
       "@client": path.resolve(__dirname, "src"),
-      "@shared": path.resolve(__dirname, "../shared"), // accès au dossier partagé
+      "@shared": path.resolve(__dirname, "../shared"),
     },
   },
 
-  // Configuration de PostCSS
   css: {
-    postcss: path.resolve(__dirname, "postcss.config.cjs"), // Chemin vers votre fichier PostCSS
+    postcss: path.resolve(__dirname, "postcss.config.cjs"),
   },
 
-  // Type d'application pour l'intégration avec Express
-  appType: "custom",
+  appType: "custom", // Type d'application pour l'intégration avec Express
 
-  // Configuration du serveur de développement
   server: {
-    middlewareMode: mode === "development",  // Active le mode middleware uniquement en développement
+    middlewareMode: mode === "development", // Active le mode middleware uniquement en développement
     hmr: {
-      port: 3000,  // Configuration du Hot Module Replacement (HMR) pour la dev
+      port: 3000, // Hot Module Replacement pour le développement
     },
     fs: {
-      allow: [".."],  // Permet l'accès au dossier parent (utile pour partager des ressources)
+      allow: [".."], // Accès au dossier parent
     },
   },
 
-  // Configuration de la construction de l'application
   build: {
-    // Dossier de sortie pour la construction
     outDir: path.resolve(__dirname, "../dist"),
-    emptyOutDir: true,  // Vide le dossier de sortie avant de reconstruire
+    emptyOutDir: true,
 
     rollupOptions: {
-      // Fichier d'entrée principal
       input: path.resolve(__dirname, "index.html"),
 
-      // Gestion des modules CommonJS (inclure shared dans le build)
       commonjsOptions: {
         include: [/shared/, /node_modules/],
       },
 
-      // Marquer certains modules comme externes si nécessaire
       external: [
-        "vite", 
-        "nanoid", 
-        "@vitejs/plugin-react", 
-        "express"
-      ],
+        // Exclure certains modules en fonction du rôle dans le projet
+        mode === 'production' ? 'vite' : null, 
+        mode === 'production' ? '@vitejs/plugin-react' : null, 
+        'nanoid', 
+        'express'
+      ].filter(Boolean), // Retirer les éléments `null` de la liste
     },
 
-    // Base pour les chemins relatifs des assets en production
-    base: "/",
+    base: "/", // Base pour les chemins relatifs des assets en production
   },
 }));
