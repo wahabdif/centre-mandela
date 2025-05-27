@@ -114,6 +114,14 @@
   .bg-gradient {
     @apply bg-gradient-to-r from-primary to-secondary;
   }
+  
+  /* Focus visible accessible */
+  .focus-visible:focus-visible {
+    outline: 3px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: var(--radius);
+    box-shadow: 0 0 8px hsl(var(--primary));
+  }
 }
 
 /* Custom scrollbar */
