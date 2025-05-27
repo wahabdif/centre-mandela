@@ -25,6 +25,9 @@ export default defineConfig(({ mode }) => ({
       allow: [".."], // autoriser l'accès au dossier parent (shared)
     },
   },
+  preview: {
+    allowedHosts: ["centre-mandela-qscm.onrender.com"], // Autorise cet hôte pour la prévisualisation
+  },
   build: {
     outDir: path.resolve(__dirname, "../dist"),
     emptyOutDir: true,
@@ -34,6 +37,6 @@ export default defineConfig(({ mode }) => ({
     commonjsOptions: {
       include: [/shared/, /node_modules/], // inclure shared dans commonjs pour le build
     },
-    base: '/',  // <-- Ajouté pour corriger les chemins des assets en production
+    base: '/',  // Corrige les chemins des assets en production
   },
 }));
