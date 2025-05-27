@@ -3,8 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig(({ mode }) => ({
-  // Déjà dans `client/`, donc pas besoin de redéfinir root
-  root: ".", // ou omettre carrément la propriété
+  root: ".", // Puisque ce fichier est déjà dans /client
 
   plugins: [react()],
 
@@ -36,12 +35,16 @@ export default defineConfig(({ mode }) => ({
     emptyOutDir: true,
 
     rollupOptions: {
-      input: path.resolve(__dirname, "index.html"), // car index.html est dans client/
+      input: path.resolve(__dirname, "index.html"),
       commonjsOptions: {
         include: [/shared/, /node_modules/],
       },
     },
 
     base: "/",
+  },
+
+  preview: {
+    allowedHosts: ["centre-mandela-qscm.onrender.com"],
   },
 }));
