@@ -3,14 +3,14 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig(({ mode }) => ({
-  root: path.resolve(__dirname, "client"), // Dossier racine du projet (client)
+  root: path.resolve(__dirname, "client"), // Le dossier racine de l'app est 'client'
 
   plugins: [react()],
 
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "client/src"), // Si vous avez des fichiers dans 'client/src', l'alias @ pointe vers ce dossier
-      "@shared": path.resolve(__dirname, "../shared"), // Répertoire partagé situé à la racine
+      "@": path.resolve(__dirname, "client/src"), // Alias pour src dans client
+      "@shared": path.resolve(__dirname, "../shared"), // Répertoire partagé
     },
   },
 
@@ -21,24 +21,26 @@ export default defineConfig(({ mode }) => ({
   appType: "custom", // Type d'application pour l'intégration avec Express
 
   server: {
-    middlewareMode: mode === "development",
+    middlewareMode: mode === "development", // En mode développement uniquement
     hmr: {
-      port: 3000, // Port pour le Hot Module Replacement
+      port: 3000, // Port pour Hot Module Replacement
     },
     fs: {
-      allow: [".."], // Accès au dossier parent (utile dans un monorepo)
+      allow: [".."], // Accès au dossier parent
     },
   },
 
   build: {
-    outDir: path.resolve(__dirname, "client/../dist"), // Dossier de sortie à la racine du projet (dist)
+    outDir: path.resolve(__dirname, "dist"), // Dossier de sortie à la racine
+
+    emptyOutDir: true, // Vide le dossier 'dist' avant le build
 
     rollupOptions: {
-      // Ici, Vite utilise déjà 'client/index.html' en entrée, donc pas besoin de spécifier 'input'
-      input: path.resolve(__dirname, "client/index.html"), // Fichier d'entrée du build
+      // Vite résout automatiquement le fichier 'index.html' situé dans 'client'
+      input: path.resolve(__dirname, "client/index.html"), // Fichier d'entrée dans 'client'
 
       commonjsOptions: {
-        include: [/shared/, /node_modules/],
+        include: [/shared/, /node_modules/], // Modules à inclure dans le build
       },
 
       external: [
