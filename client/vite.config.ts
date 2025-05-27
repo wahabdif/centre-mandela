@@ -3,21 +3,15 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-  root: ".", // dossier client = racine de l'app Vite
+  root: ".", // client est déjà le root
   plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
     },
   },
-  css: {
-    postcss: path.resolve(__dirname, "postcss.config.cjs"),
-  },
   build: {
-    outDir: "../dist", // <- met la build à la racine du projet
+    outDir: "../dist/client", // build côté client
     emptyOutDir: true,
-    rollupOptions: {
-      input: path.resolve(__dirname, "index.html"),
-    },
   },
 });
