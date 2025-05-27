@@ -9,8 +9,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Dossier de build généré par Vite (client/dist → dist/client après build global)
-const publicDir = path.join(__dirname, '../client'); // accessible depuis dist/server après transpilation
+// Corrigé : dossier du build Vite (dist)
+const publicDir = path.join(__dirname, '../dist');
 
 app.use(express.static(publicDir));
 
