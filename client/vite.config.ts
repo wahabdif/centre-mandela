@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig(({ mode }) => ({
-  root: path.resolve(__dirname, "client"), // Le dossier client est la racine pour Vite
+  root: path.resolve(__dirname, "client"), // Dossier racine est déjà 'client'
 
   plugins: [react()],
 
@@ -11,49 +11,46 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "client/src"), // Répertoire source dans client
       "@client": path.resolve(__dirname, "client/src"), // Répertoire client
-      "@shared": path.resolve(__dirname, "../shared"), // Répertoire partagé (relatif à la racine)
+      "@shared": path.resolve(__dirname, "../shared"), // Répertoire partagé
     },
   },
 
   css: {
-    postcss: path.resolve(__dirname, "client/postcss.config.cjs"), // Fichier PostCSS situé dans le dossier client
+    postcss: path.resolve(__dirname, "client/postcss.config.cjs"), // Fichier PostCSS situé dans 'client'
   },
 
-  appType: "custom", // Type d'application pour l'intégration avec Express
+  appType: "custom",
 
   server: {
-    middlewareMode: mode === "development", // Active le mode middleware uniquement en développement
+    middlewareMode: mode === "development",
     hmr: {
-      port: 3000, // Port pour le Hot Module Replacement
+      port: 3000,
     },
     fs: {
-      allow: [".."], // Accès au dossier parent
+      allow: [".."], // Autorise l'accès au dossier parent
     },
   },
 
   build: {
-    outDir: path.resolve(__dirname, "client/../dist"), // Dossier de sortie en dehors de client
-    emptyOutDir: true, // Vide le dossier de sortie avant de construire
+    outDir: path.resolve(__dirname, "client/../dist"), // Dossier de sortie à la racine
+    emptyOutDir: true,
 
     rollupOptions: {
-      input: path.resolve(__dirname, "client/index.html"), // Fichier d'entrée dans client
+      // Utilisation de l'entrée par défaut de Vite, soit 'client/index.html'
+      input: path.resolve(__dirname, "client/index.html"), // Ce chemin doit être correct
 
       commonjsOptions: {
-        include: [/shared/, /node_modules/], // Inclut les modules partagés et node_modules
+        include: [/shared/, /node_modules/],
       },
 
       external: [
-        "nanoid", // Exclure nanoid du bundle
-        "express", // Exclure express du bundle
-        "vite", // Exclure Vite du bundle
-        "@vitejs/plugin-react", // Exclure le plugin React de Vite
-        "@replit/vite-plugin-runtime-error-modal", // Exclure le plugin de runtime error modal
-        "@replit/vite-plugin-cartographer", // Exclure le plugin cartographer
-        "drizzle-orm/pg-core", // Exclure le module pg-core de drizzle-orm
-        "drizzle-zod", // Exclure drizzle-zod
-      ].filter(Boolean), // Retirer les éléments null ou undefined de la liste
+        "nanoid", "express", "vite", "@vitejs/plugin-react", 
+        "@replit/vite-plugin-runtime-error-modal", 
+        "@replit/vite-plugin-cartographer", 
+        "drizzle-orm/pg-core", "drizzle-zod",
+      ].filter(Boolean),
     },
 
-    base: "/", // Base pour les chemins relatifs des assets en production
+    base: "/",
   },
 }));
