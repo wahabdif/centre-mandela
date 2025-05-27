@@ -1,27 +1,23 @@
 import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-// Pour faire fonctionner __dirname avec les modules ES
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Dossier du build Vite (frontend) — ici dans client/dist
-const publicDir = path.join(__dirname, '../client/dist');
+// Middleware pour autoriser les requêtes CORS depuis le frontend
+app.use(cors());
 
-console.log('Dossier public statique :', publicDir);
+// Middleware pour parser le JSON dans les requêtes
+app.use(express.json());
 
-// Servir les fichiers statiques du build frontend
-app.use(express.static(publicDir));
-
-// Pour toutes les routes, renvoyer index.html (SPA)
-app.get('*', (_req, res) => {
-  res.sendFile(path.join(publicDir, 'index.html'));
+// Route de test simple
+app.get('/api/ping', (_req, res) => {
+  res.json({ message: 'pong' });
 });
 
+// Ici, tu peux ajouter d'autres routes API, par exemple:
+// app.post('/api/contact', (req, res) => { ... });
+
 app.listen(PORT, () => {
-  console.log(`Serveur Express démarré sur http://localhost:${PORT}`);
+  console.log(`Serveur backend en écoute sur http://localhost:${PORT}`);
 });
