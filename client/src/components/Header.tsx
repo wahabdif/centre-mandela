@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -12,12 +13,10 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when location changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
@@ -25,14 +24,25 @@ export default function Header() {
   return (
     <header className={`bg-white fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        {/* Logo */}
         <Link href="/">
-          <div className="flex items-center space-x-2 cursor-pointer">
+          <div className="flex items-center space-x-2 rtl:space-x-reverse cursor-pointer">
             <div className="font-bold text-2xl font-heading">
               <span className="text-primary">Centre D'Imagerie</span>{" "}
               <span className="text-secondary">Benameur</span>
             </div>
           </div>
         </Link>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center space-x-6 rtl:space-x-reverse text-dark font-medium">
+          <NavLink href="/" label="Accueil" />
+          <NavLink href="/services" label="Services" />
+          <NavLink href="/temoignages" label="Témoignages" />
+          <NavLink href="/contact" label="Contact" />
+          <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
+          <LanguageSwitcher />
+        </nav>
 
         {/* Mobile menu button */}
         <Button 
@@ -48,26 +58,18 @@ export default function Header() {
             <Menu className="h-6 w-6 text-primary" />
           )}
         </Button>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8 text-dark font-medium">
-          <NavLink href="/" label="Accueil" />
-          <NavLink href="/services" label="Services" />
-          <NavLink href="/temoignages" label="Témoignages" />
-          <NavLink href="/contact" label="Contact" />
-          <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
-        </nav>
       </div>
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
         <nav className="bg-white py-4 shadow-inner md:hidden">
-          <div className="container mx-auto px-4 flex flex-col space-y-4">
+          <div className="container mx-auto px-4 flex flex-col space-y-4 text-dark font-medium">
             <NavLink href="/" label="Accueil" />
             <NavLink href="/services" label="Services" />
             <NavLink href="/temoignages" label="Témoignages" />
             <NavLink href="/contact" label="Contact" />
             <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
+            <LanguageSwitcher />
           </div>
         </nav>
       )}
@@ -86,7 +88,11 @@ function NavLink({ href, label }: NavLinkProps) {
 
   return (
     <Link href={href}>
-      <div className={`hover:text-primary transition-colors cursor-pointer ${isActive ? 'text-primary font-semibold' : ''}`}>
+      <div
+        className={`transition-colors cursor-pointer hover:text-primary ${
+          isActive ? 'text-primary font-semibold' : ''
+        }`}
+      >
         {label}
       </div>
     </Link>
