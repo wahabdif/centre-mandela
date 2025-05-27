@@ -1,63 +1,49 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { registerRoutes } from './routes';
-import { setupVite, serveStatic, log } from './vite';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
-const app = express();
+export default defineConfig(({ mode }) => {
+  const root = path.resolve(__dirname);
 
-// Middleware pour parser le JSON et les URL encodées
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+  return {
+    root,
 
-// Middleware de logging des requêtes API
-app.use((req, res, next) => {
-  const start = Date.now();
-  const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined;
+    plugins: [react()],
 
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
+    resolve: {
+      alias: {
+        "@": path.resolve(root, "src"),
+        "@shared": path.resolve(root, "../shared"),
+      },
+    },
+
+    css: {
+      postcss: path.resolve(root, "postcss.config.cjs"),
+    },
+
+    appType: "custom",
+
+    server: {
+      middlewareMode: mode === "development",
+      hmr: { port: 3000 },
+      fs: { allow: [".."] },
+    },
+
+    build: {
+      outDir: path.resolve(root, "../dist/server/public"),
+      emptyOutDir: true,
+      rollupOptions: {
+        input: path.resolve(root, "index.html"),
+        // commonjsOptions deprecated in vite v5, on peut gérer les externals si besoin
+        external: ["shared"],
+      },
+      base: "/",
+    },
+
+    preview: {
+      host: "0.0.0.0",
+      port: Number(process.env.PORT) || 4173,
+      allowedHosts: ["centre-mandela-qscm.onrender.com"],
+    },
   };
-
-  res.on('finish', () => {
-    const duration = Date.now() - start;
-    if (path.startsWith('/api')) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + '…';
-      }
-      log(logLine);
-    }
-  });
-
-  next();
 });
-
-// Démarrage du serveur
-(async () => {
-  const server = await registerRoutes(app);
-
-  // Gestion des erreurs globales
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || 'Internal Server Error';
-    res.status(status).json({ message });
-    throw err;
-  });
-
-  // Mode de déploiement : dev = Vite middleware | prod = fichiers statiques
-  if (process.env.NODE_ENV === 'development') {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app); // doit servir dist/public/index.html
-  }
-
-  const port = process.env.PORT || 5000;
-  server.listen(port, '0.0.0.0', () => {
-    log(`Server is running on port ${port}`);
-  });
-})();
