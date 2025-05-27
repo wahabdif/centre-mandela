@@ -9,7 +9,15 @@
   "services": {
     "section_title": "Nos Services",
     "section_subtitle": "Services d'imagerie médicale",
-    "section_description": "Nous proposons une gamme complète de services d'imagerie médicale avec des équipements de dernière génération pour des diagnostics précis."
+    "section_description": "Nous proposons une gamme complète de services d'imagerie médicale avec des équipements de dernière génération pour des diagnostics précis.",
+    "list": [
+      "Radiologie conventionnelle",
+      "Échographie générale et spécialisée",
+      "Scanner (CT-scan) de haute résolution",
+      "IRM (Imagerie par Résonance Magnétique)",
+      "Mammographie",
+      "Radiologie dentaire"
+    ]
   },
   "equipment": {
     "section_title": "Technologie de pointe",
@@ -18,7 +26,9 @@
     "benefits": [
       "Imagerie de haute résolution",
       "Temps d'attente réduits",
-      "Confort optimal pour les patients"
+      "Confort optimal pour les patients",
+      "Maintenance régulière pour garantir la qualité",
+      "Protocoles de sécurité rigoureux"
     ]
   },
   "team": {
@@ -34,6 +44,10 @@
       {
         "title": "Approche centrée sur le patient",
         "subtitle": "Un service personnalisé pour chaque patient"
+      },
+      {
+        "title": "Formation continue",
+        "subtitle": "Nos spécialistes suivent régulièrement les dernières avancées"
       }
     ]
   },
@@ -41,6 +55,23 @@
     "section_title": "Témoignages",
     "section_subtitle": "Ce que disent nos patients",
     "section_description": "Découvrez l'expérience de nos patients avec nos services d'imagerie médicale et notre équipe.",
+    "reviews": [
+      {
+        "name": "Fatima B.",
+        "comment": "Accueil chaleureux et résultats rapides. Très satisfaite des services.",
+        "rating": 5
+      },
+      {
+        "name": "Ahmed K.",
+        "comment": "Équipe professionnelle et équipements modernes. Je recommande fortement.",
+        "rating": 5
+      },
+      {
+        "name": "Nadia M.",
+        "comment": "Des médecins à l'écoute et un diagnostic précis. Merci à toute l'équipe.",
+        "rating": 4
+      }
+    ],
     "cta": "Voir plus de témoignages"
   },
   "why_us": {
@@ -59,10 +90,26 @@
       {
         "title": "Disponibilité rapide",
         "description": "Des rendez-vous disponibles rapidement"
+      },
+      {
+        "title": "Confidentialité garantie",
+        "description": "Respect total de la vie privée et des données médicales"
       }
     ],
-    "cta_title": "Prêt à prendre rendez-vous?",
+    "cta_title": "Prêt à prendre rendez-vous ?",
     "cta_description": "Notre équipe de professionnels est à votre disposition pour répondre à tous vos besoins en matière d'imagerie médicale.",
     "cta_button": "Prendre rendez-vous"
+  },
+  "footer": {
+    "contact_info": {
+      "address": "32 Boulevard Hammou Boutlelis, Oran, Algérie",
+      "phone": "+213 661 59 81 32",
+      "email": "cherif.benameur@gmail.com"
+    },
+    "social_media": {
+      "facebook": "https://facebook.com/centrebenameur",
+      "instagram": "https://instagram.com/centrebenameur"
+    },
+    "copyright": "© 2025 Centre d'Imagerie Benameur. Tous droits réservés."
   }
 }
