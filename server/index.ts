@@ -1,49 +1,23 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-export default defineConfig(({ mode }) => {
-  const root = path.resolve(__dirname);
+// Pour que __dirname fonctionne dans un module ES
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-  return {
-    root,
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-    plugins: [react()],
+// Dossier de build généré par Vite
+const publicDir = path.join(__dirname, 'public');
+app.use(express.static(publicDir));
 
-    resolve: {
-      alias: {
-        "@": path.resolve(root, "src"),
-        "@shared": path.resolve(root, "../shared"),
-      },
-    },
+// Rediriger toutes les routes (sauf les fichiers) vers index.html (SPA)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(publicDir, 'index.html'));
+});
 
-    css: {
-      postcss: path.resolve(root, "postcss.config.cjs"),
-    },
-
-    appType: "custom",
-
-    server: {
-      middlewareMode: mode === "development",
-      hmr: { port: 3000 },
-      fs: { allow: [".."] },
-    },
-
-    build: {
-      outDir: path.resolve(root, "../dist/server/public"),
-      emptyOutDir: true,
-      rollupOptions: {
-        input: path.resolve(root, "index.html"),
-        // commonjsOptions deprecated in vite v5, on peut gérer les externals si besoin
-        external: ["shared"],
-      },
-      base: "/",
-    },
-
-    preview: {
-      host: "0.0.0.0",
-      port: Number(process.env.PORT) || 4173,
-      allowedHosts: ["centre-mandela-qscm.onrender.com"],
-    },
-  };
+app.listen(PORT, () => {
+  console.log(`Serveur Express démarré sur http://localhost:${PORT}`);
 });
