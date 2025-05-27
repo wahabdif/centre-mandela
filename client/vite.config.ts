@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig(({ mode }) => ({
-  root: ".", // Puisque ce fichier est déjà dans /client
+  root: ".", // Déjà dans /client
 
   plugins: [react()],
 
@@ -21,30 +21,34 @@ export default defineConfig(({ mode }) => ({
   appType: "custom",
 
   server: {
-    middlewareMode: mode === "development",
+    host: true,
+    port: 5173,
     hmr: {
-      port: 3000,
+      protocol: "ws",
+      host: "localhost",
+      port: 5173,
     },
     fs: {
       allow: [".."],
     },
+    middlewareMode: mode === "development" ? false : undefined, // pas toujours utile
   },
 
   build: {
     outDir: path.resolve(__dirname, "../dist"),
     emptyOutDir: true,
-
     rollupOptions: {
       input: path.resolve(__dirname, "index.html"),
       commonjsOptions: {
         include: [/shared/, /node_modules/],
       },
     },
-
     base: "/",
   },
 
   preview: {
+    port: 4173,
+    host: true,
     allowedHosts: ["centre-mandela-qscm.onrender.com"],
   },
 }));
