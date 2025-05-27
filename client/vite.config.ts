@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
+// Si vous avez des imports de ces modules dans votre configuration, vous devez les marquer comme externes
 export default defineConfig(({ mode }) => ({
   root: ".", // Dossier racine de l'application client
 
@@ -16,40 +17,43 @@ export default defineConfig(({ mode }) => ({
   },
 
   css: {
-    postcss: path.resolve(__dirname, "postcss.config.cjs"), // Chemin vers le fichier PostCSS
+    postcss: path.resolve(__dirname, "postcss.config.cjs"),
   },
 
   appType: "custom", // Type d'application pour l'intégration avec Express
 
   server: {
-    middlewareMode: mode === "development", // Mode middleware uniquement en développement
+    middlewareMode: mode === "development", // Active le mode middleware uniquement en développement
     hmr: {
-      port: 3000, // Hot Module Replacement (HMR) pour la dev
+      port: 3000, // Hot Module Replacement pour le développement
     },
     fs: {
-      allow: [".."], // Permet l'accès au dossier parent
+      allow: [".."], // Accès au dossier parent
     },
   },
 
   build: {
-    outDir: path.resolve(__dirname, "../dist"), // Dossier de sortie pour la build
-    emptyOutDir: true, // Vide le dossier de sortie avant de reconstruire
+    outDir: path.resolve(__dirname, "../dist"),
+    emptyOutDir: true,
 
     rollupOptions: {
       input: path.resolve(__dirname, "index.html"),
 
       commonjsOptions: {
-        include: [/shared/, /node_modules/], // Inclure les modules nécessaires
+        include: [/shared/, /node_modules/],
       },
 
       external: [
-        "nanoid", // Exclure nanoid du bundle (elle sera utilisée au runtime)
-        "express", // Exclure express, si nécessaire
-        mode === "production" ? "vite" : null, // Exclure vite uniquement en mode production
-        mode === "production" ? "@vitejs/plugin-react" : null, // Exclure plugin-react en mode production
-      ].filter(Boolean), // Filtrer les valeurs nulles (en fonction du mode)
-
-      // Autres options Rollup si nécessaires...
+        // Exclure les modules spécifiques pour éviter les erreurs de résolution
+        mode === "production" ? "vite" : null,
+        mode === "production" ? "@vitejs/plugin-react" : null,
+        "nanoid",
+        "express",
+        "@replit/vite-plugin-runtime-error-modal", 
+        "@replit/vite-plugin-cartographer", 
+        "drizzle-orm/pg-core", 
+        "drizzle-zod"
+      ].filter(Boolean), // Filtrer les `null`
     },
 
     base: "/", // Base pour les chemins relatifs des assets en production
