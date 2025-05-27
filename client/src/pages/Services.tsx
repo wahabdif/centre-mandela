@@ -1,6 +1,5 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 import { services, equipmentBenefits } from "@/lib/constants";
 
@@ -8,6 +7,7 @@ export default function Services() {
   return (
     <div className="pt-28">
       <div className="container mx-auto px-4 py-12">
+        {/* Bouton Retour */}
         <div className="mb-6">
           <button
             onClick={() => window.history.back()}
@@ -34,6 +34,7 @@ export default function Services() {
           </button>
         </div>
 
+        {/* Titre et introduction */}
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h1 className="text-4xl font-bold text-primary font-heading mb-4">
             Nos Services d&apos;Imagerie Médicale
@@ -45,14 +46,14 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Services */}
+        {/* Liste des services */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {services.map((service, index) => (
             <ServiceDetailCard key={service.id} service={service} index={index} />
           ))}
         </div>
 
-        {/* Equipment and Technology */}
+        {/* Équipement et technologie */}
         <div className="bg-light rounded-lg shadow-lg overflow-hidden mb-16">
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/2">
@@ -85,7 +86,7 @@ export default function Services() {
           </div>
         </div>
 
-        {/* Patient Experience */}
+        {/* Expérience patient */}
         <div className="bg-white rounded-lg shadow-lg p-8 mb-16">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-primary font-heading mb-6 text-center">
@@ -172,7 +173,7 @@ export default function Services() {
 
 interface ServiceProps {
   id: string;
-  icon: string;
+  icon: string; // URL or icon class name
   title: string;
   description?: string;
 }
@@ -182,7 +183,12 @@ interface ServiceDetailCardProps {
   index: number;
 }
 
-const serviceDetails = {
+const serviceDetails: Record<string, {
+  fullDescription: string;
+  uses: string[];
+  preparation: string;
+  image: string;
+}> = {
   radiologie: {
     fullDescription:
       "Notre service de radiologie générale utilise des rayons X pour créer des images des structures internes du corps. Ces examens sont rapides, simples et peuvent diagnostiquer diverses conditions, des fractures aux infections pulmonaires.",
@@ -235,4 +241,38 @@ const serviceDetails = {
       "Échographie des parties molles",
     ],
     preparation:
-      "La préparation varie selon l'examen. Pour certaines éch
+      "La préparation varie selon l'examen. Pour certaines échographies abdominales, il est conseillé de venir à jeun.",
+    image:
+      "https://images.pexels.com/photos/40568/ultrasound-ultrasound-scan-sonogram-40568.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+};
+
+function ServiceDetailCard({ service, index }: ServiceDetailCardProps) {
+  const detail = serviceDetails[service.id];
+
+  if (!detail) return null;
+
+  return (
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+      <img
+        src={detail.image}
+        alt={`Image illustrant le service ${service.title}`}
+        className="w-full h-48 object-cover"
+      />
+      <div className="p-6 flex flex-col flex-grow">
+        <h3 className="text-2xl font-semibold text-primary mb-3">{service.title}</h3>
+        <p className="text-gray-700 mb-4">{detail.fullDescription}</p>
+
+        <h4 className="font-bold text-primary mb-2">Utilisations principales :</h4>
+        <ul className="list-disc list-inside mb-4 text-gray-700">
+          {detail.uses.map((use, i) => (
+            <li key={i}>{use}</li>
+          ))}
+        </ul>
+
+        <h4 className="font-bold text-primary mb-2">Préparation :</h4>
+        <p className="text-gray-700">{detail.preparation}</p>
+      </div>
+    </div>
+  );
+}
