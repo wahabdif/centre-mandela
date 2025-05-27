@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, Home, Settings, MessageSquare, PhoneCall, Calendar } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
@@ -28,9 +28,10 @@ export default function Header() {
       }`}
     >
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo */}
+        {/* Logo with hidden H1 for SEO */}
         <Link href="/">
           <div className="flex items-center space-x-2 rtl:space-x-reverse cursor-pointer">
+            <h1 className="sr-only">Centre d’Imagerie Benameur</h1>
             <div className="font-bold text-2xl font-heading">
               <span className="text-primary">Centre D'Imagerie</span>{" "}
               <span className="text-secondary">Benameur</span>
@@ -39,16 +40,17 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-6 rtl:space-x-reverse">
-          <nav className="flex items-center space-x-6 rtl:space-x-reverse text-dark font-medium">
-            <NavLink href="/" label="Accueil" Icon={Home} />
-            <NavLink href="/services" label="Services" Icon={Settings} />
-            <NavLink href="/temoignages" label="Témoignages" Icon={MessageSquare} />
-            <NavLink href="/contact" label="Contact" Icon={PhoneCall} />
-            <NavLink href="/rendez-vous" label="📅 Rendez-vous" Icon={Calendar} />
-          </nav>
+        <nav
+          aria-label="Menu principal"
+          className="hidden md:flex items-center space-x-6 rtl:space-x-reverse text-dark font-medium"
+        >
+          <NavLink href="/" label="Accueil" />
+          <NavLink href="/services" label="Services" />
+          <NavLink href="/temoignages" label="Témoignages" />
+          <NavLink href="/contact" label="Contact" />
+          <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
           <LanguageSwitcher />
-        </div>
+        </nav>
 
         {/* Mobile menu button */}
         <Button
@@ -57,6 +59,8 @@ export default function Header() {
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden"
           aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-menu"
         >
           {isMobileMenuOpen ? (
             <X className="h-6 w-6 text-primary" />
@@ -66,23 +70,23 @@ export default function Header() {
         </Button>
       </div>
 
-      {/* Mobile Navigation with animation */}
-      <nav
-        className={`bg-white shadow-inner md:hidden transition-transform duration-300 ease-in-out origin-top ${
-          isMobileMenuOpen ? "max-h-screen scale-y-100 opacity-100" : "max-h-0 scale-y-0 opacity-0 pointer-events-none"
-        } overflow-hidden`}
-      >
-        <div className="container mx-auto px-4 flex flex-col space-y-4 text-dark font-medium py-4">
-          <NavLink href="/" label="Accueil" Icon={Home} />
-          <NavLink href="/services" label="Services" Icon={Settings} />
-          <NavLink href="/temoignages" label="Témoignages" Icon={MessageSquare} />
-          <NavLink href="/contact" label="Contact" Icon={PhoneCall} />
-          <NavLink href="/rendez-vous" label="📅 Rendez-vous" Icon={Calendar} />
-          <div className="pt-2 border-t">
+      {/* Mobile Navigation */}
+      {isMobileMenuOpen && (
+        <nav
+          id="mobile-menu"
+          aria-label="Menu mobile"
+          className="bg-white py-4 shadow-inner md:hidden"
+        >
+          <div className="container mx-auto px-4 flex flex-col space-y-4 text-dark font-medium">
+            <NavLink href="/" label="Accueil" />
+            <NavLink href="/services" label="Services" />
+            <NavLink href="/temoignages" label="Témoignages" />
+            <NavLink href="/contact" label="Contact" />
+            <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
             <LanguageSwitcher />
           </div>
-        </div>
-      </nav>
+        </nav>
+      )}
     </header>
   );
 }
@@ -90,21 +94,20 @@ export default function Header() {
 interface NavLinkProps {
   href: string;
   label: string;
-  Icon?: React.ComponentType<{ className?: string }>;
 }
 
-function NavLink({ href, label, Icon }: NavLinkProps) {
+function NavLink({ href, label }: NavLinkProps) {
   const [location] = useLocation();
   const isActive = location === href;
 
   return (
     <Link href={href}>
       <div
-        className={`flex items-center gap-2 cursor-pointer transition-colors hover:text-primary ${
+        className={`transition-colors cursor-pointer hover:text-primary ${
           isActive ? "text-primary font-semibold" : ""
         }`}
+        tabIndex={0}
       >
-        {Icon && <Icon className="w-5 h-5" />}
         {label}
       </div>
     </Link>
