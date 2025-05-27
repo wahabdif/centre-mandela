@@ -9,7 +9,9 @@
     "isolatedModules": false,
     "esModuleInterop": true,
     "allowJs": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node"],        // Ajout des types Node
+    "resolveJsonModule": true // Pratique si tu importes du JSON
   },
   "include": ["./**/*"],
   "exclude": ["../node_modules", "../client", "../dist"]
