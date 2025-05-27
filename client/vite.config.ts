@@ -34,16 +34,15 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true,
       rollupOptions: {
         input: path.resolve(root, "index.html"),
-        commonjsOptions: {
-          include: [/shared/, /node_modules/],
-        },
+        // commonjsOptions deprecated in vite v5, on peut gérer les externals si besoin
+        external: ["shared"],
       },
       base: "/",
     },
 
     preview: {
       host: "0.0.0.0",
-      port: process.env.PORT ? Number(process.env.PORT) : 4173,
+      port: Number(process.env.PORT) || 4173,
       allowedHosts: ["centre-mandela-qscm.onrender.com"],
     },
   };
