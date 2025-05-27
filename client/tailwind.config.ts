@@ -73,6 +73,14 @@ const config: Config = {
         lg: "var(--radius)",
       },
 
+      ringColor: {
+        primary: "hsl(var(--primary))",
+      },
+
+      ringWidth: {
+        DEFAULT: "3px",
+      },
+
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -88,6 +96,12 @@ const config: Config = {
         "accordion-down": "accordion-down 0.3s ease-out",
         "accordion-up": "accordion-up 0.3s ease-out",
       },
+    },
+  },
+  variants: {
+    extend: {
+      ringColor: ["focus-visible"],
+      ringWidth: ["focus-visible"],
     },
   },
   plugins: [
