@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Home, Settings, MessageSquare, PhoneCall, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
@@ -41,11 +41,11 @@ export default function Header() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6 rtl:space-x-reverse">
           <nav className="flex items-center space-x-6 rtl:space-x-reverse text-dark font-medium">
-            <NavLink href="/" label="Accueil" />
-            <NavLink href="/services" label="Services" />
-            <NavLink href="/temoignages" label="Témoignages" />
-            <NavLink href="/contact" label="Contact" />
-            <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
+            <NavLink href="/" label="Accueil" Icon={Home} />
+            <NavLink href="/services" label="Services" Icon={Settings} />
+            <NavLink href="/temoignages" label="Témoignages" Icon={MessageSquare} />
+            <NavLink href="/contact" label="Contact" Icon={PhoneCall} />
+            <NavLink href="/rendez-vous" label="📅 Rendez-vous" Icon={Calendar} />
           </nav>
           <LanguageSwitcher />
         </div>
@@ -66,21 +66,23 @@ export default function Header() {
         </Button>
       </div>
 
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && (
-        <nav className="bg-white py-4 shadow-inner md:hidden">
-          <div className="container mx-auto px-4 flex flex-col space-y-4 text-dark font-medium">
-            <NavLink href="/" label="Accueil" />
-            <NavLink href="/services" label="Services" />
-            <NavLink href="/temoignages" label="Témoignages" />
-            <NavLink href="/contact" label="Contact" />
-            <NavLink href="/rendez-vous" label="📅 Rendez-vous" />
-            <div className="pt-2 border-t">
-              <LanguageSwitcher />
-            </div>
+      {/* Mobile Navigation with animation */}
+      <nav
+        className={`bg-white shadow-inner md:hidden transition-transform duration-300 ease-in-out origin-top ${
+          isMobileMenuOpen ? "max-h-screen scale-y-100 opacity-100" : "max-h-0 scale-y-0 opacity-0 pointer-events-none"
+        } overflow-hidden`}
+      >
+        <div className="container mx-auto px-4 flex flex-col space-y-4 text-dark font-medium py-4">
+          <NavLink href="/" label="Accueil" Icon={Home} />
+          <NavLink href="/services" label="Services" Icon={Settings} />
+          <NavLink href="/temoignages" label="Témoignages" Icon={MessageSquare} />
+          <NavLink href="/contact" label="Contact" Icon={PhoneCall} />
+          <NavLink href="/rendez-vous" label="📅 Rendez-vous" Icon={Calendar} />
+          <div className="pt-2 border-t">
+            <LanguageSwitcher />
           </div>
-        </nav>
-      )}
+        </div>
+      </nav>
     </header>
   );
 }
@@ -88,19 +90,21 @@ export default function Header() {
 interface NavLinkProps {
   href: string;
   label: string;
+  Icon?: React.ComponentType<{ className?: string }>;
 }
 
-function NavLink({ href, label }: NavLinkProps) {
+function NavLink({ href, label, Icon }: NavLinkProps) {
   const [location] = useLocation();
   const isActive = location === href;
 
   return (
     <Link href={href}>
       <div
-        className={`transition-colors cursor-pointer hover:text-primary ${
+        className={`flex items-center gap-2 cursor-pointer transition-colors hover:text-primary ${
           isActive ? "text-primary font-semibold" : ""
         }`}
       >
+        {Icon && <Icon className="w-5 h-5" />}
         {label}
       </div>
     </Link>
