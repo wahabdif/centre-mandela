@@ -17,29 +17,30 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Ferme le menu mobile à chaque changement de route
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
 
   return (
     <header
-      className={`bg-white fixed w-full z-50 transition-all duration-300 ${
+      className={`bg-white fixed w-full z-50 transition-shadow duration-300 ${
         isScrolled ? "shadow-md" : ""
       }`}
+      role="banner"
     >
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo with hidden H1 for SEO */}
-        <Link href="/">
-          <div className="flex items-center space-x-2 rtl:space-x-reverse cursor-pointer">
-            <h1 className="sr-only">Centre d’Imagerie Benameur</h1>
-            <div className="font-bold text-2xl font-heading">
+        {/* Logo */}
+        <Link href="/" aria-label="Accueil - Centre D'Imagerie Benameur">
+          <div className="flex items-center space-x-2 rtl:space-x-reverse cursor-pointer select-none">
+            <div className="font-bold text-2xl font-heading text-gray-900">
               <span className="text-primary">Centre D'Imagerie</span>{" "}
               <span className="text-secondary">Benameur</span>
             </div>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Navigation desktop */}
         <nav
           aria-label="Menu principal"
           className="hidden md:flex items-center space-x-6 rtl:space-x-reverse text-dark font-medium"
@@ -52,12 +53,12 @@ export default function Header() {
           <LanguageSwitcher />
         </nav>
 
-        {/* Mobile menu button */}
+        {/* Bouton menu mobile */}
         <Button
           variant="ghost"
           size="icon"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden"
+          className="md:hidden focus-visible:ring-primary rounded"
           aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-menu"
@@ -70,7 +71,7 @@ export default function Header() {
         </Button>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Navigation mobile */}
       {isMobileMenuOpen && (
         <nav
           id="mobile-menu"
@@ -103,10 +104,12 @@ function NavLink({ href, label }: NavLinkProps) {
   return (
     <Link href={href}>
       <div
-        className={`transition-colors cursor-pointer hover:text-primary ${
-          isActive ? "text-primary font-semibold" : ""
-        }`}
         tabIndex={0}
+        className={`transition-colors cursor-pointer px-2 py-1 rounded focus:outline-none focus-visible:ring-primary ${
+          isActive ? "text-primary font-semibold" : "text-dark hover:text-primary"
+        }`}
+        role="link"
+        aria-current={isActive ? "page" : undefined}
       >
         {label}
       </div>
