@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { services } from "@/lib/data/services";
 import { doctors } from "@/lib/data/doctors";
-// import { practicalInfo } from "@/lib/data/practicalInfo";
+import { practicalInfo } from "@/lib/data/practicalInfo";
 import { testimonials } from "@/lib/data/"testimonials;
 
 export default function Home() {
