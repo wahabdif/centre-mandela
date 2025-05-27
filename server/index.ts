@@ -2,19 +2,20 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Pour que __dirname fonctionne dans un module ES
+// Pour faire fonctionner __dirname avec les modules ES
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Dossier de build généré par Vite
-const publicDir = path.join(__dirname, 'public');
+// Dossier de build généré par Vite (client/dist → dist/client après build global)
+const publicDir = path.join(__dirname, '../client'); // accessible depuis dist/server après transpilation
+
 app.use(express.static(publicDir));
 
-// Rediriger toutes les routes (sauf les fichiers) vers index.html (SPA)
-app.get('*', (req, res) => {
+// Pour toutes les routes, renvoyer index.html (SPA)
+app.get('*', (_req, res) => {
   res.sendFile(path.join(publicDir, 'index.html'));
 });
 
