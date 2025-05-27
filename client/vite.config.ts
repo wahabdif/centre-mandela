@@ -3,20 +3,20 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig(({ mode }) => ({
-  // Le dossier `client` est la racine de l'application
-  root: path.resolve(__dirname, "client"),
+  // Déjà dans `client/`, donc pas besoin de redéfinir root
+  root: ".", // ou omettre carrément la propriété
 
   plugins: [react()],
 
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "client/src"),
+      "@": path.resolve(__dirname, "src"),
       "@shared": path.resolve(__dirname, "../shared"),
     },
   },
 
   css: {
-    postcss: path.resolve(__dirname, "client/postcss.config.cjs"),
+    postcss: path.resolve(__dirname, "postcss.config.cjs"),
   },
 
   appType: "custom",
@@ -34,13 +34,14 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: path.resolve(__dirname, "../dist"),
     emptyOutDir: true,
+
     rollupOptions: {
-      input: "index.html", // Chemin RELATIF à `root`, donc 'client/index.html'
+      input: path.resolve(__dirname, "index.html"), // car index.html est dans client/
       commonjsOptions: {
         include: [/shared/, /node_modules/],
       },
-      // external: [...]
     },
+
     base: "/",
   },
 }));
