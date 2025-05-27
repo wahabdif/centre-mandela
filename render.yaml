@@ -3,8 +3,13 @@ services:
     name: centre-mandela-frontend
     env: node
     plan: free
-    buildCommand: "cd client && npm install && npm run build"
-    startCommand: "cd client && npm run preview -- --host 0.0.0.0 --port $PORT"
+    buildCommand: |
+      cd client
+      npm install
+      npm run build
+    startCommand: |
+      cd client
+      npm run preview -- --host 0.0.0.0 --port $PORT
     branches:
       - main
     envVars:
@@ -20,15 +25,17 @@ services:
     name: centre-mandela-backend
     env: node
     plan: free
-    buildCommand: "cd server && npm install && npm run build"
-    startCommand: "node server/dist/index.js"
+    buildCommand: |
+      cd server
+      npm install
+      npm run build
+    startCommand: node server/dist/index.js
     branches:
       - main
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 10000  # facultatif, Render utilise process.env.PORT
+      # Render injecte automatiquement la variable PORT à l'environnement
     buildFilter:
       paths:
         - server/**
