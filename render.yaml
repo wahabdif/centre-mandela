@@ -1,9 +1,8 @@
 services:
   - type: web
-    name: centre-mandela
+    name: centre-mandela-frontend
     env: node
     plan: free
-    region: frankfurt  # Tu peux changer en 'oregon', 'singapore' selon ta localisation
     buildCommand: "cd client && npm install && npm run build"
     startCommand: "cd client && npm run preview -- --host 0.0.0.0 --port $PORT"
     branches:
@@ -12,11 +11,24 @@ services:
       - key: NODE_ENV
         value: production
       - key: VITE_API_URL
-        value: "https://api-centre-mandela.com"
+        value: "https://centre-mandela-backend.onrender.com"
     buildFilter:
       paths:
         - client/**
-    autoDeploy: true
 
-build:
-  nodeVersion: 20.14.0  # Spécifie une version compatible et stable
+  - type: web
+    name: centre-mandela-backend
+    env: node
+    plan: free
+    buildCommand: "cd server && npm install && npm run build"
+    startCommand: "cd server && npm run start"
+    branches:
+      - main
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000  # facultatif, Render attribue automatiquement le port
+    buildFilter:
+      paths:
+        - server/**
