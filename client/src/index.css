@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Variables de couleurs pour clair et sombre */
 :root {
   --background: 0 0% 100%;
   --foreground: 222.2 84% 4.9%;
@@ -43,6 +44,7 @@
   --destructive-foreground: 210 40% 98%;
 }
 
+/* Mode sombre */
 .dark {
   --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
@@ -63,6 +65,29 @@
   --ring: 224.3 76.3% 48%;
 }
 
+/* Support automatique selon préférence système */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 90% 34%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 207 90% 54%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --accent: 0 84% 57%;
+    --accent-foreground: 0 0% 100%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -73,6 +98,11 @@
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', sans-serif;
+  }
+  /* For RTL languages (ex: arabe), on peut définir une classe */
+  .rtl {
+    direction: rtl;
+    unicode-bidi: bidi-override;
   }
 }
 
