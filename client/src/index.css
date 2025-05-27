@@ -2,146 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Variables de couleurs pour clair et sombre */
+/* ...tes variables et styles précédents... */
+
+/* Personnalisation du focus ring */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 210 90% 34%;  /* #0056b3 */
-  --primary-foreground: 0 0% 100%;
-  --secondary: 207 90% 54%;  /* #2c95ff */
-  --secondary-foreground: 0 0% 100%;
-  --accent: 0 84% 57%;  /* #e74c3c */
-  --accent-foreground: 0 0% 100%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 221.2 83.2% 53.3%;
-  --radius: 0.5rem;
-  
-  /* Chart colors */
-  --chart-1: 207 90% 54%;
-  --chart-2: 210 90% 34%;
-  --chart-3: 0 84% 57%;
-  --chart-4: 0 0% 100%;
-  --chart-5: 0 0% 0%;
-  
-  /* Sidebar colors */
-  --sidebar-background: 210 90% 34%;
-  --sidebar-foreground: 0 0% 100%;
-  --sidebar-primary: 0 0% 100%;
-  --sidebar-primary-foreground: 210 90% 34%;
-  --sidebar-accent: 0 84% 57%;
-  --sidebar-accent-foreground: 0 0% 100%;
-  --sidebar-border: 206 100% 40%;
-  --sidebar-ring: 0 0% 100%;
-  
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
+  --primary: 210 90% 34%; /* #0056b3 */
 }
 
-/* Mode sombre */
-.dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 210 90% 34%;  /* #0056b3 */
-  --primary-foreground: 0 0% 100%;
-  --secondary: 207 90% 54%;  /* #2c95ff */
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --accent: 0 84% 57%;  /* #e74c3c */
-  --accent-foreground: 0 0% 100%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 224.3 76.3% 48%;
+/* Ajouter la couleur custom pour le ring */
+.focus-visible\:ring-primary:focus-visible {
+  --tw-ring-color: hsl(var(--primary));
+  box-shadow: 0 0 0 3px var(--tw-ring-color);
 }
 
-/* Support automatique selon préférence système */
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 90% 34%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 207 90% 54%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --accent: 0 84% 57%;
-    --accent-foreground: 0 0% 100%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'Open Sans', sans-serif;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
-  }
-  /* For RTL languages (ex: arabe), on peut définir une classe */
-  .rtl {
-    direction: rtl;
-    unicode-bidi: bidi-override;
-  }
-}
-
-@layer utilities {
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text;
-  }
-  
-  .bg-gradient {
-    @apply bg-gradient-to-r from-primary to-secondary;
-  }
-  
-  /* Focus visible accessible */
-  .focus-visible:focus-visible {
-    outline: 3px solid hsl(var(--primary));
-    outline-offset: 2px;
-    border-radius: var(--radius);
-    box-shadow: 0 0 8px hsl(var(--primary));
-  }
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-primary/50 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-primary;
-}
-
-html {
-  scroll-behavior: smooth;
+/* Assure aussi que les boutons et liens ont le ring avec une bonne visibilité */
+button:focus-visible,
+div[role="link"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px hsl(var(--primary));
 }
