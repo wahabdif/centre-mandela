@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
-import { pool } from './db'; // Fichier pg.pool (assure-toi qu'il est bien configuré)
+import { pool } from './db/db'; // Fichier pg.pool (assure-toi qu'il est bien configuré)
 
 const router = Router();
 
