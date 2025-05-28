@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../dist/server",
-    "rootDir": "../",
+    "rootDir": "../",          // remonte à la racine du projet
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
