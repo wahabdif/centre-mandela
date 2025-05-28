@@ -26,17 +26,19 @@ services:
     env: node
     plan: free
     buildCommand: |
+      cd server
       npm install
-      npm run build:server
+      npm run build
     startCommand: |
-      node dist/server/index.js
+      cd server
+      node dist/index.js
     branches:
       - main
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 10000  # Optionnel : Render fournit $PORT automatiquement
+        value: 10000  # Render fournit automatiquement $PORT si non défini
     buildFilter:
       paths:
         - server/**
