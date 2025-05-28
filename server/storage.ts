@@ -1,107 +1,65 @@
-import { 
-  users, 
-  type User, 
-  type InsertUser,
-  contactMessages,
-  type ContactMessage,
-  type InsertContactMessage,
-  appointments,
-  type Appointment,
-  type InsertAppointment
-} from "@shared/schema";
+export type ContactMessage = {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  service: string;
+  message: string | null;
+  status: string;
+  createdAt: Date;
+};
 
-export interface IStorage {
-  getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+export type InsertContactMessage = {
+  name: string;
+  email: string;
+  phone: string;
+  service: string;
+  message?: string | null;
+  status?: string;
+};
 
-  createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
-  getContactMessages(): Promise<ContactMessage[]>;
+export class Storage {
+  private contactMessages: Map<number, ContactMessage> = new Map();
+  private contactMessageCurrentId = 1;
 
-  createAppointment(appointment: InsertAppointment): Promise<Appointment>;
-  getAppointments(): Promise<Appointment[]>;
-  getAppointmentById(id: number): Promise<Appointment | undefined>;
-  updateAppointmentStatus(id: number, status: string): Promise<Appointment | undefined>;
-}
-
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  private contactMessages: Map<number, ContactMessage>;
-  private appointments: Map<number, Appointment>;
-
-  private userCurrentId: number;
-  private contactMessageCurrentId: number;
-  private appointmentCurrentId: number;
-
-  constructor() {
-    this.users = new Map();
-    this.contactMessages = new Map();
-    this.appointments = new Map();
-
-    this.userCurrentId = 1;
-    this.contactMessageCurrentId = 1;
-    this.appointmentCurrentId = 1;
+  async getAllContactMessages(): Promise<ContactMessage[]> {
+    return [...this.contactMessages.values()].sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+    );
   }
 
-  async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
-  }
-
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(user => user.username === username);
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.userCurrentId++;
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
-  }
-
-  async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
+  async createContactMessage(data: InsertContactMessage): Promise<ContactMessage> {
     const id = this.contactMessageCurrentId++;
     const createdAt = new Date();
 
-    // Forcer message à null si undefined
-    const message: ContactMessage = { 
-      ...insertMessage, 
-      id, 
-      createdAt, 
-      message: insertMessage.message ?? null
+    const newMessage: ContactMessage = {
+      id,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      service: data.service,
+      message: data.message ?? null, // corrigé ici : undefined devient null
+      status: data.status ?? 'pending',
+      createdAt,
     };
-    this.contactMessages.set(id, message);
-    return message;
+
+    this.contactMessages.set(id, newMessage);
+    return newMessage;
   }
 
-  async getContactMessages(): Promise<ContactMessage[]> {
-    return Array.from(this.contactMessages.values());
+  async updateContactMessageStatus(id: number, status: string): Promise<ContactMessage | null> {
+    const existing = this.contactMessages.get(id);
+    if (!existing) return null;
+
+    const updated: ContactMessage = { ...existing, status };
+    this.contactMessages.set(id, updated);
+    return updated;
   }
 
-  async createAppointment(insertAppointment: InsertAppointment): Promise<Appointment> {
-    const id = this.appointmentCurrentId++;
-    const createdAt = new Date();
-    const status = "pending";
-    const appointment: Appointment = { ...insertAppointment, id, status, createdAt };
-    this.appointments.set(id, appointment);
-    return appointment;
-  }
-
-  async getAppointments(): Promise<Appointment[]> {
-    return Array.from(this.appointments.values());
-  }
-
-  async getAppointmentById(id: number): Promise<Appointment | undefined> {
-    return this.appointments.get(id);
-  }
-
-  async updateAppointmentStatus(id: number, status: string): Promise<Appointment | undefined> {
-    const appointment = this.appointments.get(id);
-    if (!appointment) return undefined;
-
-    const updatedAppointment = { ...appointment, status };
-    this.appointments.set(id, updatedAppointment);
-    return updatedAppointment;
+  async getContactMessageById(id: number): Promise<ContactMessage | null> {
+    return this.contactMessages.get(id) ?? null;
   }
 }
 
-export const storage = new MemStorage();
+const storage = new Storage();
+export default storage;
