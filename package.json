@@ -5,16 +5,18 @@
   "skipLibCheck": true,
   "license": "MIT",
   "scripts": {
-    "dev": "cd client && vite",
-    "build:client": "cd client && npm install && npx vite build",
-    "build:server": "tsc -p ./server/tsconfig.server.json",
-    "build": "npm run build:client && npm run build:server",
-    "start": "node server/dist/index.js",
-    "prod": "npm run build && npm run start",
-    "check": "tsc",
-    "lint": "eslint . --ext .ts,.tsx",
-    "format": "prettier --write .",
-    "test": "jest"
+  "dev": "vite",
+  "dev:server": "tsx server/index.ts",
+  "build": "npm run build:client && npm run build:server",
+  "build:client": "vite build",
+  "build:server": "tsc -p ./server/tsconfig.server.json",
+  "start": "node dist/server/index.js",
+  "preview": "vite preview",
+  "check": "tsc --noEmit",
+  "lint": "eslint . --ext .ts,.tsx",
+  "format": "prettier --write .",
+  "test": "jest"
+}
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
