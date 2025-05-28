@@ -1,3 +1,5 @@
+// server/storage.ts
+
 export type ContactMessage = {
   id: number;
   name: string;
@@ -18,8 +20,8 @@ export type InsertContactMessage = {
   status?: string;
 };
 
-export class Storage {
-  private contactMessages: Map<number, ContactMessage> = new Map();
+class Storage {
+  private contactMessages = new Map<number, ContactMessage>();
   private contactMessageCurrentId = 1;
 
   async getAllContactMessages(): Promise<ContactMessage[]> {
@@ -38,7 +40,7 @@ export class Storage {
       email: data.email,
       phone: data.phone,
       service: data.service,
-      message: data.message ?? null, // corrigé ici : undefined devient null
+      message: data.message ?? null, // compatibilité strict
       status: data.status ?? 'pending',
       createdAt,
     };
@@ -51,7 +53,11 @@ export class Storage {
     const existing = this.contactMessages.get(id);
     if (!existing) return null;
 
-    const updated: ContactMessage = { ...existing, status };
+    const updated: ContactMessage = {
+      ...existing,
+      status,
+    };
+
     this.contactMessages.set(id, updated);
     return updated;
   }
