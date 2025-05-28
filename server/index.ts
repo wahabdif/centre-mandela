@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 
 const app = express();
@@ -11,12 +11,12 @@ app.use(cors());
 app.use(express.json());
 
 // Route de test simple
-app.get('/api/ping', (_req, res) => {
+app.get('/api/ping', (_req: Request, res: Response) => {
   res.json({ message: 'pong' });
 });
 
 // Ici, tu peux ajouter d'autres routes API, par exemple:
-// app.post('/api/contact', (req, res) => { ... });
+// app.post('/api/contact', (req: Request, res: Response) => { ... });
 
 app.listen(PORT, () => {
   console.log(`Serveur backend en écoute sur http://localhost:${PORT}`);
