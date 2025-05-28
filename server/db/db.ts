@@ -1,5 +1,5 @@
 // server/db.ts
-import { Pool } from 'pg';
+import pkg from 'pg';
 
 const pool = new Pool({
   host: 'localhost',
