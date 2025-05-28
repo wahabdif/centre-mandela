@@ -6,32 +6,35 @@ import { fileURLToPath } from 'url';
 // Obtenir __dirname en ESM
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Configuration Vite
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),        // Utilisation de @ pour importer depuis /src
-      '@shared': path.resolve(__dirname, '../shared') // Alias facultatif si tu veux utiliser @shared
+      '@': path.resolve(__dirname, 'src'),               // Alias @ vers /src
+      '@shared': path.resolve(__dirname, '../shared'),   // Alias @shared vers ../shared
     },
   },
   server: {
-    port: 3000,               // Port pour le frontend
-    open: true,               // Ouvrir automatiquement le navigateur
-    strictPort: true,         // Échouer si le port est occupé
+    port: 3000,
+    open: true,
+    strictPort: true,
     proxy: {
-      '/api': 'http://localhost:4000' // Proxy pour l'API backend Express
+      '/api': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
   build: {
-    outDir: '../server/public', // Output dans le backend pour un serveur fullstack
+    outDir: path.resolve(__dirname, '../server/public'), // Sortie dans backend/public
     emptyOutDir: true,
     sourcemap: true,
   },
   css: {
-    postcss: './postcss.config.js', // Config PostCSS (si existante)
+    postcss: './postcss.config.js', // si tu as un fichier postcss
   },
   define: {
-    'process.env': process.env, // Injection des variables d'environnement
+    'process.env': {}, // On évite d’injecter process.env complet qui peut poser problème côté client
   },
 });
