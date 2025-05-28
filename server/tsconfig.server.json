@@ -1,18 +1,15 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
     "target": "ES2020",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "CommonJS",
     "outDir": "../dist/server",
-    "noEmit": false,
-    "isolatedModules": false,
+    "rootDir": "./",
     "esModuleInterop": true,
-    "allowJs": false,
+    "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "types": ["node"]
   },
-  "include": ["./**/*"],
+  "include": ["./**/*.ts"],
   "exclude": ["../node_modules", "../client", "../dist"]
 }
