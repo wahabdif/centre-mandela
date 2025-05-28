@@ -9,7 +9,7 @@ import express, {
 } from "express";
 import fs from "fs";
 import path from "path";
-import { createViteServer } from "vite";  // <-- correction ici
+import { createServer as createViteServer } from "vite";  // Correction ici : createServer au lieu de createViteServer
 import { Server } from "http";
 import { nanoid } from "nanoid";
 import { fileURLToPath } from "url";
