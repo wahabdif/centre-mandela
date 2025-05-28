@@ -2,8 +2,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../dist/server",
-    "rootDir": ".",
-    "module": "CommonJS",
+    "rootDir": "../",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -13,13 +13,13 @@
     "skipLibCheck": true
   },
   "include": [
-    "**/*.ts",
-    "../shared/**/*.ts"
+    "server/**/*.ts",
+    "shared/**/*.ts"
   ],
   "exclude": [
-    "../node_modules",
-    "../client",
-    "../dist",
+    "node_modules",
+    "client",
+    "dist",
     "**/*.test.ts",
     "**/*.test.js"
   ]
