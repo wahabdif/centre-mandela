@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "node16",
-    "moduleResolution": "node16",
+    "module": "CommonJS",
     "outDir": "../dist/server",
     "rootDir": "./",
     "baseUrl": ".",
@@ -13,7 +12,8 @@
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["node"]
+    "types": ["node"],
+    "moduleResolution": "node"
   },
   "include": ["./**/*.ts"],
   "exclude": ["../node_modules", "../client", "../dist"]
