@@ -1,17 +1,36 @@
-- type: web
-  name: centre-mandela-frontend
-  env: node
-  plan: free
-  rootDir: .
-  buildCommand: npm install && npm run build:client
-  startCommand: npm run preview -- --host 0.0.0.0 --port $PORT
-  branches:
-    - main
-  envVars:
-    - key: NODE_ENV
-      value: production
-    - key: VITE_API_URL
-      value: "https://centre-mandela-backend.onrender.com"
-  buildFilter:
-    paths:
-      - client/**
+services:
+  - type: web
+    name: centre-mandela-frontend
+    env: node
+    plan: free
+    rootDir: .
+    buildCommand: npm install && npm run build:client
+    startCommand: npm run preview -- --host 0.0.0.0 --port $PORT
+    branches:
+      - main
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_API_URL
+        value: "https://centre-mandela-backend.onrender.com"
+    buildFilter:
+      paths:
+        - client/**
+
+  - type: web
+    name: centre-mandela-backend
+    env: node
+    plan: free
+    rootDir: .
+    buildCommand: npm install && npm run build:server
+    startCommand: node server/dist/index.js
+    branches:
+      - main
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+    buildFilter:
+      paths:
+        - server/**
