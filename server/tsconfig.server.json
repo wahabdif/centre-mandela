@@ -18,8 +18,8 @@
     ]
   },
   "include": [
-    "./*.ts",
-    "../shared/*.ts"
+    "./../*.ts",
+    "../shared/**/*.ts"
   ],
   "exclude": [
     "node_modules",
