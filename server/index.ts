@@ -16,7 +16,7 @@ app.use('/api', contactRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   const root = path.resolve(__dirname, '../../client/dist');
-  console.log('Serving static files from:', root); // Pour debug
+  console.log('Serving static files from:', root);
   app.use(express.static(root));
   app.get('*', (_, res) => {
     res.sendFile(path.join(root, 'index.html'));
