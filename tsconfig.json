@@ -1,17 +1,31 @@
+dit :
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "jsx": "react-jsx",
-    "baseUrl": "./src",
+    "module": "NodeNext",                // pour supporter ES modules côté Node
+    "moduleResolution": "NodeNext",      // résolution compatible avec ES Modules
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["client/src/*"],
+      "@shared/*": ["shared/*"]
     },
-    "strict": true,
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "strict": true,
+    "types": ["node"]                    // ajoute les types Node globalement
   },
-  "include": ["src"]
+  "include": [
+    "client/src",
+    "shared",
+    "server"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "**/*.test.ts",
+    "**/*.test.js"
+  ]
 }
