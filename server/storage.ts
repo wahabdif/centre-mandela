@@ -68,12 +68,13 @@ export class MemStorage implements IStorage {
   async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
     const id = this.contactMessageCurrentId++;
     const createdAt = new Date();
-    // Assure que message n'est jamais undefined (string | null)
+
+    // Correction ici : message ne doit jamais être undefined, uniquement string ou null
     const message: ContactMessage = { 
       ...insertMessage, 
       id, 
       createdAt, 
-      message: insertMessage.message ?? null 
+      message: insertMessage.message ?? null  // forcer null si undefined
     };
     this.contactMessages.set(id, message);
     return message;
