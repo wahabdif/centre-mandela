@@ -26,15 +26,17 @@ services:
     env: node
     plan: free
     buildCommand: |
-      cd server
       npm install
-      npm run build
-    startCommand: node server/dist/index.js  # OK si dist est dans /server/dist
+      npm run build:server
+    startCommand: |
+      node dist/server/index.js
     branches:
       - main
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 10000  # Optionnel : Render fournit $PORT automatiquement
     buildFilter:
       paths:
         - server/**
