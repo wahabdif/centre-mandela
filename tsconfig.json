@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "NodeNext",                // pour supporter ES modules côté Node
-    "moduleResolution": "NodeNext",      // résolution compatible avec ES Modules
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "baseUrl": ".",
     "paths": {
       "@/*": ["client/src/*"],
@@ -13,7 +13,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "strict": true,
-    "types": ["node"]                    // ajoute les types Node globalement
+    "types": ["node"]
   },
   "include": [
     "client/src",
