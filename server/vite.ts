@@ -9,15 +9,13 @@ import express, {
 } from "express";
 import fs from "fs";
 import path from "path";
-import { createServer as createViteServer, type ViteDevServer, createLogger } from "vite";
-import { type Server } from "http";
-import { fileURLToPath } from "url";
+import { createServer as createViteServer } from "vite"; // attention: import direct, voir note ci-dessous
+import { Server } from "http";
 import { nanoid } from "nanoid";
-import type { InlineConfig } from "vite";
 
-import viteConfig from "../vite.config.js";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Remplacement simple pour CommonJS (à adapter selon ton environnement)
+const __dirname = path.resolve();
 
 /**
  * Logger avec horodatage
@@ -36,29 +34,16 @@ export function log(message: string, source = "express"): void {
  * Middleware Vite pour Express en mode développement
  */
 export async function setupVite(app: Express, server: Server): Promise<void> {
-  const viteLogger = createLogger("info");
-
-  const serverOptions = {
-    middlewareMode: true,
-    hmr: { server },
-    allowedHosts: true,
-  };
-
-  const vite: ViteDevServer = await createViteServer({
-    ...(viteConfig as InlineConfig),
-    configFile: false,
-    customLogger: {
-      ...viteLogger,
-      error: (msg: string, options?: any) => {
-        viteLogger.error(msg, options);
-        process.exit(1);
-      },
+  // Création du serveur Vite avec config inline simplifiée
+  const vite = await createViteServer({
+    server: {
+      middlewareMode: true,
+      hmr: { server },
+      allowedHosts: "all",
     },
-    server: serverOptions,
     appType: "custom",
   });
 
-  // ✅ Correction TS2769 ici
   app.use(vite.middlewares as unknown as RequestHandler);
 
   app.use("*", async (req: Request, res: Response, next: NextFunction) => {
