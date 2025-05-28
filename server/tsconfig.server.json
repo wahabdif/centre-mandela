@@ -1,20 +1,21 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "CommonJS",
+    "module": "ESNext",                         // Pour supporter `import.meta`
     "outDir": "../dist/server",
-    "rootDir": "./",
-    "baseUrl": ".",
+    "rootDir": "../",                           // Doit inclure `server/` ET `shared/`
+    "baseUrl": "../",                           // Pour les paths relatifs depuis la racine
     "paths": {
-      "@shared/*": ["../shared/*"]
+      "@shared/*": ["shared/*"]
     },
+    "moduleResolution": "node",
     "esModuleInterop": true,
-    "strict": true,
-    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "types": ["node"],
-    "moduleResolution": "node"
+    "strict": true,
+    "skipLibCheck": true
   },
-  "include": ["./**/*.ts"],
-  "exclude": ["../node_modules", "../client", "../dist"]
+  "include": ["server/**/*.ts", "shared/**/*.ts"],
+  "exclude": ["node_modules", "client", "dist"]
 }
