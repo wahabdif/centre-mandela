@@ -13,7 +13,7 @@ const ContactSchema = z.object({
 });
 
 // GET /api/contact — liste tous les messages
-router.get('/api/contact', async (_req: Request, res: Response) => {
+router.get('/contact', async (_req: Request, res: Response) => {
   try {
     const { rows } = await pool.query('SELECT * FROM contact ORDER BY "createdAt" DESC');
     res.status(200).json(rows);
@@ -24,7 +24,7 @@ router.get('/api/contact', async (_req: Request, res: Response) => {
 });
 
 // POST /api/contact — insère un message
-router.post('/api/contact', async (req: Request, res: Response) => {
+router.post('/contact', async (req: Request, res: Response) => {
   const result = ContactSchema.safeParse(req.body);
 
   if (!result.success) {
@@ -58,7 +58,7 @@ router.post('/api/contact', async (req: Request, res: Response) => {
 });
 
 // PATCH /api/contact/:id/status — met à jour le statut
-router.patch('/api/contact/:id/status', async (req: Request, res: Response) => {
+router.patch('/contact/:id/status', async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const { status } = req.body;
 
