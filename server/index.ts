@@ -16,8 +16,8 @@ app.get('/api/ping', (_req: Request, res: Response) => {
   res.json({ message: 'pong' });
 });
 
-// Ici on monte ton routeur qui gère /contact (GET, POST, PATCH)
-app.use(router);
+// Monter le routeur avec un chemin de base '/api'
+app.use('/api', router);
 
 app.listen(PORT, () => {
   console.log(`Serveur backend en écoute sur http://localhost:${PORT}`);
