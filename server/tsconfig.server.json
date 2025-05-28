@@ -1,5 +1,4 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../dist/server",
     "rootDir": "../",
@@ -13,13 +12,13 @@
     "skipLibCheck": true
   },
   "include": [
-    "server/*.ts",
-    "shared/*.ts"
+    "../server/**/*.ts",
+    "../shared/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "client",
-    "dist",
+    "../node_modules",
+    "../client",
+    "../dist",
     "**/*.test.ts",
     "**/*.test.js"
   ]
