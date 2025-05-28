@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import contactRoutes from './routes.js'; // Extension .js obligatoire en ESM
+import contactRoutes from './routes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,13 +15,10 @@ app.use(express.json());
 app.use('/api', contactRoutes);
 
 if (process.env.NODE_ENV === 'production') {
-  // Le dossier où Vite build le frontend (build.outDir = ../server/public)
-  const root = path.resolve(__dirname, '../public');
+  // <-- ici, adapter le chemin vers le dossier où est index.html
+  const root = path.resolve(__dirname, './dist');
   console.log('Serving static files from:', root);
-
   app.use(express.static(root));
-
-  // Pour toute autre route, renvoyer index.html (SPA)
   app.get('*', (_, res) => {
     res.sendFile(path.join(root, 'index.html'));
   });
