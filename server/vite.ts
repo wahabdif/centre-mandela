@@ -1,21 +1,21 @@
 /// <reference types="node" />
 
-import express, { type Express } from "express";
+import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import fs from "fs";
 import path from "path";
-import { createServer as createViteServer, createLogger, type ViteDevServer } from "vite";
+import { createServer as createViteServer, type ViteDevServer, createLogger } from "vite";
 import { type Server } from "http";
 import { fileURLToPath } from "url";
 import { nanoid } from "nanoid";
+import type { InlineConfig } from "vite";
 
-// @ts-ignore — Import de config ESM sans types (temporaire, peut être remplacé par une déclaration .d.ts)
+// Import de config Vite avec typage
 import viteConfig from "../vite.config.js";
 
-// Obtenir __dirname dans un module ES
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
- * Log avec horodatage
+ * Logger avec horodatage
  */
 export function log(message: string, source = "express"): void {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -28,9 +28,11 @@ export function log(message: string, source = "express"): void {
 }
 
 /**
- * Configure Vite comme middleware Express (mode développement)
+ * Middleware Vite pour Express en mode développement
  */
 export async function setupVite(app: Express, server: Server): Promise<void> {
+  const viteLogger = createLogger("info");
+
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
@@ -38,13 +40,13 @@ export async function setupVite(app: Express, server: Server): Promise<void> {
   };
 
   const vite: ViteDevServer = await createViteServer({
-    ...viteConfig,
+    ...(viteConfig as InlineConfig),
     configFile: false,
     customLogger: {
       ...viteLogger,
       error: (msg: string, options?: any) => {
         viteLogger.error(msg, options);
-        process.exit(1); // Quitte en cas d'erreur critique
+        process.exit(1);
       },
     },
     server: serverOptions,
@@ -53,20 +55,18 @@ export async function setupVite(app: Express, server: Server): Promise<void> {
 
   app.use(vite.middlewares);
 
-  app.use("*", async (req, res, next) => {
+  app.use("*", async (req: Request, res: Response, next: NextFunction) => {
     const url = req.originalUrl;
 
     try {
       const clientTemplate = path.resolve(__dirname, "..", "client", "index.html");
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
 
-      // Injecter version dans le script principal pour forcer un rafraîchissement
       template = template.replace(
         `src="/src/main.tsx"`,
         `src="/src/main.tsx?v=${nanoid()}"`
       );
 
-      // Laisser Vite transformer le template (injection HMR, etc.)
       const page = await vite.transformIndexHtml(url, template);
 
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
@@ -78,7 +78,7 @@ export async function setupVite(app: Express, server: Server): Promise<void> {
 }
 
 /**
- * Sert les fichiers statiques en production
+ * Sert les fichiers statiques générés en production
  */
 export function serveStatic(app: Express): void {
   const distPath = path.resolve(__dirname, "public");
@@ -91,8 +91,7 @@ export function serveStatic(app: Express): void {
 
   app.use(express.static(distPath));
 
-  // Fallback SPA : toutes les routes renvoient vers index.html
-  app.use("*", (_req, res) => {
+  app.use("*", (_req: Request, res: Response) => {
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
