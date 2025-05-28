@@ -1,6 +1,12 @@
 /// <reference types="node" />
 
-import express, { type Express, type Request, type Response, type NextFunction } from "express";
+import express, {
+  type Express,
+  type Request,
+  type Response,
+  type NextFunction,
+  type RequestHandler,
+} from "express";
 import fs from "fs";
 import path from "path";
 import { createServer as createViteServer, type ViteDevServer, createLogger } from "vite";
@@ -9,7 +15,6 @@ import { fileURLToPath } from "url";
 import { nanoid } from "nanoid";
 import type { InlineConfig } from "vite";
 
-// Import de config Vite avec typage
 import viteConfig from "../vite.config.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -53,7 +58,8 @@ export async function setupVite(app: Express, server: Server): Promise<void> {
     appType: "custom",
   });
 
-  app.use(vite.middlewares);
+  // ✅ Correction TS2769 ici
+  app.use(vite.middlewares as unknown as RequestHandler);
 
   app.use("*", async (req: Request, res: Response, next: NextFunction) => {
     const url = req.originalUrl;
@@ -68,7 +74,6 @@ export async function setupVite(app: Express, server: Server): Promise<void> {
       );
 
       const page = await vite.transformIndexHtml(url, template);
-
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
       vite.ssrFixStacktrace(e as Error);
