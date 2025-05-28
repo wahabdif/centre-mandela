@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
-import { pool } from './db/db'; // Fichier pg.pool (assure-toi qu'il est bien configuré)
+import pool from './db/db'; // Import par défaut de pool, si c'est un export default
 
 const router = Router();
 
@@ -28,7 +28,7 @@ router.post('/api/contact', async (req: Request, res: Response) => {
   const result = ContactSchema.safeParse(req.body);
 
   if (!result.success) {
-    return res.status(400).json({ error: 'Données invalides', details: result.error });
+    return res.status(400).json({ error: 'Données invalides', details: result.error.format() });
   }
 
   const data = result.data;
@@ -75,6 +75,10 @@ router.patch('/api/contact/:id/status', async (req: Request, res: Response) => {
     `;
 
     const { rows } = await pool.query(updateQuery, [status, id]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Message non trouvé' });
+    }
 
     res.status(200).json(rows[0]);
   } catch (err) {
