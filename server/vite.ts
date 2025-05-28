@@ -3,21 +3,21 @@
 import express, { type Express } from "express";
 import fs from "fs";
 import path from "path";
-import { createServer as createViteServer, createLogger } from "vite";
+import { createServer as createViteServer, createLogger, type ViteDevServer } from "vite";
 import { type Server } from "http";
-import viteConfig from "../vite.config";
-import { nanoid } from "nanoid";
 import { fileURLToPath } from "url";
+import { nanoid } from "nanoid";
 
-const viteLogger = createLogger();
+// @ts-ignore — Import de config ESM sans types (temporaire, peut être remplacé par une déclaration .d.ts)
+import viteConfig from "../vite.config.js";
 
-// __dirname compatible avec ES modules
+// Obtenir __dirname dans un module ES
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * Log avec horodatage
  */
-export function log(message: string, source = "express") {
+export function log(message: string, source = "express"): void {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
@@ -28,23 +28,23 @@ export function log(message: string, source = "express") {
 }
 
 /**
- * Setup Vite en mode middleware avec Express
+ * Configure Vite comme middleware Express (mode développement)
  */
-export async function setupVite(app: Express, server: Server) {
+export async function setupVite(app: Express, server: Server): Promise<void> {
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
     allowedHosts: true,
   };
 
-  const vite = await createViteServer({
+  const vite: ViteDevServer = await createViteServer({
     ...viteConfig,
     configFile: false,
     customLogger: {
       ...viteLogger,
       error: (msg: string, options?: any) => {
         viteLogger.error(msg, options);
-        process.exit(1); // Quitte si erreur critique dans Vite
+        process.exit(1); // Quitte en cas d'erreur critique
       },
     },
     server: serverOptions,
@@ -58,16 +58,15 @@ export async function setupVite(app: Express, server: Server) {
 
     try {
       const clientTemplate = path.resolve(__dirname, "..", "client", "index.html");
-
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
 
-      // Ajout d'un query param versionné pour forcer le rechargement du script
+      // Injecter version dans le script principal pour forcer un rafraîchissement
       template = template.replace(
         `src="/src/main.tsx"`,
         `src="/src/main.tsx?v=${nanoid()}"`
       );
 
-      // Transformation du template par Vite (injecte HMR, etc.)
+      // Laisser Vite transformer le template (injection HMR, etc.)
       const page = await vite.transformIndexHtml(url, template);
 
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
@@ -79,20 +78,20 @@ export async function setupVite(app: Express, server: Server) {
 }
 
 /**
- * Sert un site statique depuis le dossier public
+ * Sert les fichiers statiques en production
  */
-export function serveStatic(app: Express) {
+export function serveStatic(app: Express): void {
   const distPath = path.resolve(__dirname, "public");
 
   if (!fs.existsSync(distPath)) {
     throw new Error(
-      `Répertoire de build introuvable: ${distPath}, veuillez construire le client avant`
+      `Répertoire introuvable : ${distPath}. Veuillez exécuter "npm run build" d'abord.`
     );
   }
 
   app.use(express.static(distPath));
 
-  // Route fallback pour SPA : renvoie toujours index.html
+  // Fallback SPA : toutes les routes renvoient vers index.html
   app.use("*", (_req, res) => {
     res.sendFile(path.resolve(distPath, "index.html"));
   });
