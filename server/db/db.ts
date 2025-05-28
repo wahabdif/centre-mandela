@@ -1,5 +1,5 @@
 // server/db.ts
-import Pool from ...;
+import { Pool } from 'pg';
 
 const pool = new Pool({
   host: 'localhost',
