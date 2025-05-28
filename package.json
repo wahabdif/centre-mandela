@@ -2,6 +2,7 @@
   "name": "centre-mandela",
   "version": "1.0.0",
   "type": "module",
+  "skipLibCheck": true,
   "license": "MIT",
   "scripts": {
     "dev": "cd client && vite",
