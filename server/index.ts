@@ -1,24 +1,28 @@
-import express, { Request, Response } from 'express';
+// server/index.ts
+import express from 'express';
 import cors from 'cors';
-import router from './routes'; // ajuste le chemin si besoin
+import path from 'path';
+import contactRoutes from './routes';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware pour autoriser les requêtes CORS depuis le frontend
 app.use(cors());
-
-// Middleware pour parser le JSON dans les requêtes
 app.use(express.json());
 
-// Route de test simple
-app.get('/api/ping', (_req: Request, res: Response) => {
-  res.json({ message: 'pong' });
-});
+// API routes
+app.use('/api', contactRoutes);
 
-// Monter le routeur avec un chemin de base '/api'
-app.use('/api', router);
+// Static file serving for production
+if (process.env.NODE_ENV === 'production') {
+  const root = path.resolve(__dirname, '../client/dist');
+  app.use(express.static(root));
+
+  app.get('*', (_, res) => {
+    res.sendFile(path.join(root, 'index.html'));
+  });
+}
 
 app.listen(PORT, () => {
-  console.log(`Serveur backend en écoute sur http://localhost:${PORT}`);
+  console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
