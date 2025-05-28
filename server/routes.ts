@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
-import pool from './db/db'; // Import par défaut de pool, si c'est un export default
+import pool from './db/db';
 
 const router = Router();
 
@@ -12,7 +12,7 @@ const ContactSchema = z.object({
   message: z.string().nullable().optional(),
 });
 
-// GET /api/contact — liste tous les messages
+// GET /api/contact
 router.get('/contact', async (_req: Request, res: Response) => {
   try {
     const { rows } = await pool.query('SELECT * FROM contact ORDER BY "createdAt" DESC');
@@ -23,10 +23,9 @@ router.get('/contact', async (_req: Request, res: Response) => {
   }
 });
 
-// POST /api/contact — insère un message
+// POST /api/contact
 router.post('/contact', async (req: Request, res: Response) => {
   const result = ContactSchema.safeParse(req.body);
-
   if (!result.success) {
     return res.status(400).json({ error: 'Données invalides', details: result.error.format() });
   }
@@ -45,11 +44,10 @@ router.post('/contact', async (req: Request, res: Response) => {
       data.email,
       data.phone,
       data.service,
-      data.message ?? null
+      data.message ?? null,
     ];
 
     const { rows } = await pool.query(insertQuery, values);
-
     res.status(200).json(rows[0]);
   } catch (err) {
     console.error(err);
@@ -57,7 +55,7 @@ router.post('/contact', async (req: Request, res: Response) => {
   }
 });
 
-// PATCH /api/contact/:id/status — met à jour le statut
+// PATCH /api/contact/:id/status
 router.patch('/contact/:id/status', async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const { status } = req.body;
@@ -75,7 +73,6 @@ router.patch('/contact/:id/status', async (req: Request, res: Response) => {
     `;
 
     const { rows } = await pool.query(updateQuery, [status, id]);
-
     if (rows.length === 0) {
       return res.status(404).json({ error: 'Message non trouvé' });
     }
