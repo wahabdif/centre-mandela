@@ -3,18 +3,20 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// Résoudre __dirname dans un module ESM
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  root: __dirname, // Définit le dossier racine de Vite sur /client
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@shared': path.resolve(__dirname, '../shared'),
+      '@': path.resolve(__dirname, 'src'),                  // Alias vers client/src
+      '@shared': path.resolve(__dirname, '../shared'),      // Alias vers shared à la racine
     },
   },
   build: {
-    outDir: path.resolve(__dirname, '../server/dist/client'), // Build frontend dans server/dist/client
+    outDir: path.resolve(__dirname, '../server/public'),    // Sortie build dans server/public
     emptyOutDir: true,
     sourcemap: true,
   },
@@ -31,9 +33,9 @@ export default defineConfig({
     },
   },
   css: {
-    postcss: './postcss.config.js',
+    postcss: path.resolve(__dirname, './postcss.config.js'), // Résolu correctement
   },
   define: {
-    'process.env': {},
+    'process.env': {}, // Empêche les erreurs de process.env côté client
   },
 });
