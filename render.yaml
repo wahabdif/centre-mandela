@@ -3,12 +3,11 @@ services:
     name: centre-mandela-frontend
     env: node
     plan: free
+    rootDir: client
     buildCommand: |
-      cd client
       npm install
       npm run build
     startCommand: |
-      cd client
       npm run preview -- --host 0.0.0.0 --port $PORT
     branches:
       - main
@@ -25,19 +24,17 @@ services:
     name: centre-mandela-backend
     env: node
     plan: free
+    rootDir: server
     buildCommand: |
-      rm -rf node_modules package-lock.json
       npm install
-      npm run build:server
+      npm run build
     startCommand: |
-      node dist/server/index.js
+      node dist/index.js
     branches:
       - main
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 10000
     buildFilter:
       paths:
         - server/**
