@@ -1,5 +1,5 @@
 import express, { type Express, type Request, type Response, type NextFunction, type RequestHandler } from 'express';
-import { createServer as createViteServer, type ViteDevServer } from 'vite';
+import createViteServer from 'vite';  // import par défaut sans accolades
 import fs from 'fs';
 import path from 'path';
 import { Server } from 'http';
@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export async function setupVite(app: Express, server: Server): Promise<void> {
-  const vite: ViteDevServer = await createViteServer({
+  const vite = await createViteServer({
     server: {
       middlewareMode: true,
       hmr: { server },
