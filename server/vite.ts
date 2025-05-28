@@ -9,13 +9,14 @@ import express, {
 } from "express";
 import fs from "fs";
 import path from "path";
-import { createServer as createViteServer } from "vite"; // attention: import direct, voir note ci-dessous
+import { createServer as createViteServer } from "vite";
 import { Server } from "http";
 import { nanoid } from "nanoid";
+import { fileURLToPath } from "url";
 
-// const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// Remplacement simple pour CommonJS (à adapter selon ton environnement)
-const __dirname = path.resolve();
+// Correction de __dirname en environnement ES Module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Logger avec horodatage
@@ -34,7 +35,6 @@ export function log(message: string, source = "express"): void {
  * Middleware Vite pour Express en mode développement
  */
 export async function setupVite(app: Express, server: Server): Promise<void> {
-  // Création du serveur Vite avec config inline simplifiée
   const vite = await createViteServer({
     server: {
       middlewareMode: true,
