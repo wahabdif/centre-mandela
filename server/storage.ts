@@ -10,25 +10,20 @@ import {
   type InsertAppointment
 } from "@shared/schema";
 
-// Interface décrivant toutes les opérations de stockage
 export interface IStorage {
-  // Méthodes utilisateurs
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
 
-  // Méthodes messages de contact
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
   getContactMessages(): Promise<ContactMessage[]>;
 
-  // Méthodes rendez-vous
   createAppointment(appointment: InsertAppointment): Promise<Appointment>;
   getAppointments(): Promise<Appointment[]>;
   getAppointmentById(id: number): Promise<Appointment | undefined>;
   updateAppointmentStatus(id: number, status: string): Promise<Appointment | undefined>;
 }
 
-// Implémentation en mémoire
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private contactMessages: Map<number, ContactMessage>;
@@ -48,7 +43,6 @@ export class MemStorage implements IStorage {
     this.appointmentCurrentId = 1;
   }
 
-  // Users
   async getUser(id: number): Promise<User | undefined> {
     return this.users.get(id);
   }
@@ -64,17 +58,16 @@ export class MemStorage implements IStorage {
     return user;
   }
 
-  // Contact messages
   async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
     const id = this.contactMessageCurrentId++;
     const createdAt = new Date();
 
-    // Correction ici : message ne doit jamais être undefined, uniquement string ou null
+    // Forcer message à null si undefined
     const message: ContactMessage = { 
       ...insertMessage, 
       id, 
       createdAt, 
-      message: insertMessage.message ?? null  // forcer null si undefined
+      message: insertMessage.message ?? null
     };
     this.contactMessages.set(id, message);
     return message;
@@ -84,7 +77,6 @@ export class MemStorage implements IStorage {
     return Array.from(this.contactMessages.values());
   }
 
-  // Appointments
   async createAppointment(insertAppointment: InsertAppointment): Promise<Appointment> {
     const id = this.appointmentCurrentId++;
     const createdAt = new Date();
@@ -112,5 +104,4 @@ export class MemStorage implements IStorage {
   }
 }
 
-// Export singleton instance
 export const storage = new MemStorage();
