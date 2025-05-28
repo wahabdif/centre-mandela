@@ -15,10 +15,10 @@ app.use(express.json());
 app.use('/api', contactRoutes);
 
 if (process.env.NODE_ENV === 'production') {
-  // <-- ici, adapter le chemin vers le dossier où est index.html
-  const root = path.resolve(__dirname, './dist');
+  const root = path.resolve(__dirname, './dist/client'); // Dossier frontend compilé
   console.log('Serving static files from:', root);
   app.use(express.static(root));
+
   app.get('*', (_, res) => {
     res.sendFile(path.join(root, 'index.html'));
   });
