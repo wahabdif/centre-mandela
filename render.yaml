@@ -26,6 +26,7 @@ services:
     env: node
     plan: free
     buildCommand: |
+      rm -rf node_modules package-lock.json
       npm install
       npm run build:server
     startCommand: |
@@ -36,7 +37,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 10000  # Render fournit $PORT automatiquement si absent
+        value: 10000
     buildFilter:
       paths:
         - server/**
