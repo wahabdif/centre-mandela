@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
-import pool from './db/db';
+import pool from './db/db.js';
 
 const router = Router();
 
