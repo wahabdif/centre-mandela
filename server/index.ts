@@ -15,7 +15,7 @@ app.use(express.json());
 app.use('/api', contactRoutes);
 
 if (process.env.NODE_ENV === 'production') {
-  const root = path.resolve(__dirname, '../client/dist');
+  const root = path.resolve(__dirname, '../../client/dist');
   app.use(express.static(root));
   app.get('*', (_, res) => {
     res.sendFile(path.join(root, 'index.html'));
