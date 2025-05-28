@@ -27,7 +27,7 @@ services:
     rootDir: server
     buildCommand: |
       npm install
-      npm run build
+      npm run build:server
     startCommand: |
       node dist/index.js
     branches:
@@ -35,6 +35,8 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 10000  # Optionnel, Render fournit $PORT automatiquement
     buildFilter:
       paths:
         - server/**
