@@ -10,51 +10,51 @@ import {
   type InsertAppointment
 } from "@shared/schema";
 
-// Interface for all storage operations
+// Interface décrivant toutes les opérations de stockage
 export interface IStorage {
-  // User methods
+  // Méthodes utilisateurs
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  
-  // Contact message methods
+
+  // Méthodes messages de contact
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
   getContactMessages(): Promise<ContactMessage[]>;
-  
-  // Appointment methods
+
+  // Méthodes rendez-vous
   createAppointment(appointment: InsertAppointment): Promise<Appointment>;
   getAppointments(): Promise<Appointment[]>;
   getAppointmentById(id: number): Promise<Appointment | undefined>;
   updateAppointmentStatus(id: number, status: string): Promise<Appointment | undefined>;
 }
 
-// In-memory storage implementation
+// Implémentation en mémoire
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private contactMessages: Map<number, ContactMessage>;
   private appointments: Map<number, Appointment>;
-  userCurrentId: number;
-  contactMessageCurrentId: number;
-  appointmentCurrentId: number;
+
+  private userCurrentId: number;
+  private contactMessageCurrentId: number;
+  private appointmentCurrentId: number;
 
   constructor() {
     this.users = new Map();
     this.contactMessages = new Map();
     this.appointments = new Map();
+
     this.userCurrentId = 1;
     this.contactMessageCurrentId = 1;
     this.appointmentCurrentId = 1;
   }
 
-  // User methods
+  // Users
   async getUser(id: number): Promise<User | undefined> {
     return this.users.get(id);
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    return Array.from(this.users.values()).find(user => user.username === username);
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
@@ -63,8 +63,8 @@ export class MemStorage implements IStorage {
     this.users.set(id, user);
     return user;
   }
-  
-  // Contact message methods
+
+  // Contact messages
   async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
     const id = this.contactMessageCurrentId++;
     const createdAt = new Date();
@@ -72,12 +72,12 @@ export class MemStorage implements IStorage {
     this.contactMessages.set(id, message);
     return message;
   }
-  
+
   async getContactMessages(): Promise<ContactMessage[]> {
     return Array.from(this.contactMessages.values());
   }
-  
-  // Appointment methods
+
+  // Appointments
   async createAppointment(insertAppointment: InsertAppointment): Promise<Appointment> {
     const id = this.appointmentCurrentId++;
     const createdAt = new Date();
@@ -86,24 +86,24 @@ export class MemStorage implements IStorage {
     this.appointments.set(id, appointment);
     return appointment;
   }
-  
+
   async getAppointments(): Promise<Appointment[]> {
     return Array.from(this.appointments.values());
   }
-  
+
   async getAppointmentById(id: number): Promise<Appointment | undefined> {
     return this.appointments.get(id);
   }
-  
+
   async updateAppointmentStatus(id: number, status: string): Promise<Appointment | undefined> {
     const appointment = this.appointments.get(id);
-    if (appointment) {
-      const updatedAppointment = { ...appointment, status };
-      this.appointments.set(id, updatedAppointment);
-      return updatedAppointment;
-    }
-    return undefined;
+    if (!appointment) return undefined;
+
+    const updatedAppointment = { ...appointment, status };
+    this.appointments.set(id, updatedAppointment);
+    return updatedAppointment;
   }
 }
 
+// Export singleton instance
 export const storage = new MemStorage();
