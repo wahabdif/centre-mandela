@@ -1,16 +1,18 @@
 import express, { type Express, type Request, type Response, type NextFunction, type RequestHandler } from 'express';
-import createViteServer from 'vite';  // import par défaut sans accolades
+import * as vite from 'vite';  // Importer tout
 import fs from 'fs';
 import path from 'path';
 import { Server } from 'http';
 import { nanoid } from 'nanoid';
 import { fileURLToPath } from 'url';
 
+const createServer = (vite as any).createServer;  // Extraction forcée
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export async function setupVite(app: Express, server: Server): Promise<void> {
-  const vite = await createViteServer({
+  const viteServer = await createServer({
     server: {
       middlewareMode: true,
       hmr: { server },
@@ -19,7 +21,7 @@ export async function setupVite(app: Express, server: Server): Promise<void> {
     appType: 'custom',
   });
 
-  app.use(vite.middlewares as unknown as RequestHandler);
+  app.use(viteServer.middlewares as unknown as RequestHandler);
 
   app.use('*', async (req: Request, res: Response, next: NextFunction) => {
     const url = req.originalUrl;
@@ -33,10 +35,10 @@ export async function setupVite(app: Express, server: Server): Promise<void> {
         `src="/src/main.tsx?v=${nanoid()}"`
       );
 
-      const page = await vite.transformIndexHtml(url, template);
+      const page = await viteServer.transformIndexHtml(url, template);
       res.status(200).set({ 'Content-Type': 'text/html' }).end(page);
     } catch (e) {
-      vite.ssrFixStacktrace(e as Error);
+      viteServer.ssrFixStacktrace(e as Error);
       next(e);
     }
   });
