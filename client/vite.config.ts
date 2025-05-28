@@ -3,15 +3,15 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Obtenir __dirname en ESM
+// Obtenir __dirname en mode ESM
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),               // Alias @ vers /src
-      '@shared': path.resolve(__dirname, '../shared'),   // Alias @shared vers ../shared
+      '@': path.resolve(__dirname, 'src'),               // Alias '@' vers /src
+      '@shared': path.resolve(__dirname, '../shared'),   // Alias '@shared' vers ../shared
     },
   },
   server: {
@@ -27,14 +27,14 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: path.resolve(__dirname, '../server/public'), // Sortie dans backend/public
+    outDir: path.resolve(__dirname, '../server/public'), // Dossier de sortie du build
     emptyOutDir: true,
     sourcemap: true,
   },
   css: {
-    postcss: './postcss.config.js', // si tu as un fichier postcss
+    postcss: './postcss.config.js', // Si tu utilises PostCSS, sinon tu peux retirer cette ligne
   },
   define: {
-    'process.env': {}, // On évite d’injecter process.env complet qui peut poser problème côté client
+    'process.env': {}, // Définit process.env vide pour éviter les erreurs côté client
   },
 });
