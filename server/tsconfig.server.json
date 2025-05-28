@@ -1,14 +1,10 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",                         // Pour supporter `import.meta`
     "outDir": "../dist/server",
-    "rootDir": "../",                           // Doit inclure `server/` ET `shared/`
-    "baseUrl": "../",                           // Pour les paths relatifs depuis la racine
-    "paths": {
-      "@shared/*": ["shared/*"]
-    },
-    "moduleResolution": "node",
+    "rootDir": ".",
+    "module": "CommonJS",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
@@ -16,6 +12,15 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["server/**/*.ts", "shared/**/*.ts"],
-  "exclude": ["node_modules", "client", "dist"]
+  "include": [
+    "**/*.ts",
+    "../shared/**/*.ts"
+  ],
+  "exclude": [
+    "../node_modules",
+    "../client",
+    "../dist",
+    "**/*.test.ts",
+    "**/*.test.js"
+  ]
 }
