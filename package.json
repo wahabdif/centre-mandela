@@ -6,7 +6,22 @@
   "type": "module",
   "main": "server/dist/index.js",
   "scripts": {
-    "dev": "npm run dev --prefix client",
+    "scripts": {
+  "dev": "vite",
+  "dev:server": "tsx server/index.ts",
+  "build": "npm run build:client && npm run build:server",
+  "build:client": "cd client && npm install && npm run build",
+  "build:server": "tsc -p ./server/tsconfig.server.json",
+  "start": "node server/dist/index.js",
+  "preview": "vite preview",
+  "check": "tsc --noEmit",
+  "lint": "eslint . --ext .ts,.tsx",
+  "format": "prettier --write .",
+  "test": "jest"
+}
+
+}
+"dev": "npm run dev --prefix client",
     "dev:server": "tsx server/index.ts",
     "build": "npm run build --prefix client && npm run build:server",
     "build:server": "tsc -p ./server/tsconfig.server.json",
