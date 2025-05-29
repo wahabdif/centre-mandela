@@ -5,175 +5,77 @@ import { services, equipmentBenefits } from "@/lib/constants";
 
 export default function Services() {
   return (
-    <div className="pt-28">
+    <main className="pt-28">
       <div className="container mx-auto px-4 py-12">
         {/* Bouton Retour */}
-        <div className="mb-6">
-          <button
-            onClick={() => window.history.back()}
-            className="flex items-center text-primary hover:text-primary/80 transition-colors font-medium"
-            aria-label="Retour à la page précédente"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2"
-              aria-hidden="true"
-            >
-              <path d="m12 19-7-7 7-7" />
-              <path d="M19 12H5" />
-            </svg>
-            Retour
-          </button>
-        </div>
+        <BackButton />
 
         {/* Titre et introduction */}
-        <div className="max-w-3xl mx-auto text-center mb-12">
+        <header className="max-w-3xl mx-auto text-center mb-12">
           <h1 className="text-4xl font-bold text-primary font-heading mb-4">
             Nos Services d&apos;Imagerie Médicale
           </h1>
           <p className="text-lg text-gray-600">
-            Le Centre D&apos;Imagerie Benameur propose des services
-            d&apos;imagerie médicale avancés avec des équipements de dernière
-            génération et une équipe de professionnels expérimentés.
+            Le Centre D&apos;Imagerie Benameur propose des services d&apos;imagerie médicale avancés avec des équipements de dernière génération et une équipe de professionnels expérimentés.
           </p>
-        </div>
+        </header>
 
         {/* Liste des services */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16" aria-label="Liste des services d'imagerie médicale">
           {services.map((service, index) => (
             <ServiceDetailCard key={service.id} service={service} index={index} />
           ))}
-        </div>
+        </section>
 
-        {/* Équipement et technologie */}
-        <div className="bg-light rounded-lg shadow-lg overflow-hidden mb-16">
-          <div className="flex flex-col md:flex-row">
-            <div className="md:w-1/2">
-              <img
-                src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
-                alt="Équipement d'imagerie médicale moderne"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="md:w-1/2 p-8">
-              <h2 className="text-3xl font-bold text-primary font-heading mb-6">
-                Technologie de Pointe
-              </h2>
-              <p className="text-gray-700 mb-6">
-                Pour garantir des diagnostics précis et fiables, notre centre est
-                équipé des technologies d&apos;imagerie médicale les plus
-                récentes. Nos équipements sont régulièrement mis à jour pour
-                rester à la pointe de l&apos;innovation en matière d&apos;imagerie
-                médicale.
-              </p>
-              <ul className="space-y-4">
-                {equipmentBenefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start">
-                    <CheckCircle className="text-secondary h-5 w-5 mt-1 mr-3 flex-shrink-0" />
-                    <span className="text-gray-700">{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
+        {/* Section équipement et technologie */}
+        <EquipmentTechnology />
 
-        {/* Expérience patient */}
-        <div className="bg-white rounded-lg shadow-lg p-8 mb-16">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-primary font-heading mb-6 text-center">
-              L&apos;Expérience Patient
-            </h2>
-            <p className="text-gray-700 mb-8 text-center">
-              Chez Centre D&apos;Imagerie Benameur, nous nous efforçons de rendre
-              votre visite aussi confortable et sans stress que possible.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {[
-                {
-                  title: "Avant votre examen",
-                  items: [
-                    "Instructions claires sur la préparation requise",
-                    "Rappels de rendez-vous",
-                    "Processus d'enregistrement simplifié",
-                  ],
-                },
-                {
-                  title: "Pendant votre examen",
-                  items: [
-                    "Personnel attentif et bienveillant",
-                    "Explications détaillées sur les procédures",
-                    "Environnement confortable et rassurant",
-                  ],
-                },
-                {
-                  title: "Après votre examen",
-                  items: [
-                    "Résultats rapides et précis",
-                    "Consultation pour expliquer les résultats",
-                    "Suivi personnalisé si nécessaire",
-                  ],
-                },
-                {
-                  title: "Notre engagement",
-                  items: [
-                    "Confidentialité et respect de votre vie privée",
-                    "Coordination avec votre médecin traitant",
-                    "Accessibilité pour tous les patients",
-                  ],
-                },
-              ].map(({ title, items }, i) => (
-                <div key={i} className="bg-light rounded-lg p-6">
-                  <h3 className="text-xl font-bold text-primary mb-4">{title}</h3>
-                  <ul className="space-y-2">
-                    {items.map((item, j) => (
-                      <li key={j} className="flex items-start">
-                        <span className="text-secondary font-bold mr-2">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        {/* Section expérience patient */}
+        <PatientExperience />
 
         {/* Call to Action */}
-        <div className="bg-gradient-to-r from-primary to-secondary rounded-lg shadow-lg text-white p-10 text-center">
-          <h2 className="text-3xl font-bold font-heading mb-6">
-            Prêt à prendre rendez-vous?
-          </h2>
-          <p className="text-lg mb-8 max-w-2xl mx-auto">
-            Notre équipe est prête à vous accueillir et à vous fournir des soins
-            d&apos;imagerie médicale exceptionnels.
-          </p>
-          <Link href="/rendez-vous">
-            <Button
-              className="bg-accent hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-colors shadow-lg"
-              size="lg"
-            >
-              <span aria-hidden="true" className="mr-2">📅</span> Prendre rendez-vous
-            </Button>
-          </Link>
-        </div>
+        <CallToAction />
       </div>
+    </main>
+  );
+}
+
+/* Bouton Retour */
+function BackButton() {
+  return (
+    <div className="mb-6">
+      <button
+        onClick={() => window.history.back()}
+        className="flex items-center text-primary hover:text-primary/80 transition-colors font-medium"
+        aria-label="Retour à la page précédente"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="mr-2"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="m12 19-7-7 7-7" />
+          <path d="M19 12H5" />
+        </svg>
+        Retour
+      </button>
     </div>
   );
 }
 
+/* Carte détaillée du service */
 interface ServiceProps {
   id: string;
-  icon: string; // URL or icon class name
+  icon?: string;
   title: string;
   description?: string;
 }
@@ -183,12 +85,15 @@ interface ServiceDetailCardProps {
   index: number;
 }
 
-const serviceDetails: Record<string, {
-  fullDescription: string;
-  uses: string[];
-  preparation: string;
-  image: string;
-}> = {
+const serviceDetails: Record<
+  string,
+  {
+    fullDescription: string;
+    uses: string[];
+    preparation: string;
+    image: string;
+  }
+> = {
   radiologie: {
     fullDescription:
       "Notre service de radiologie générale utilise des rayons X pour créer des images des structures internes du corps. Ces examens sont rapides, simples et peuvent diagnostiquer diverses conditions, des fractures aux infections pulmonaires.",
@@ -247,32 +152,160 @@ const serviceDetails: Record<string, {
   },
 };
 
-function ServiceDetailCard({ service, index }: ServiceDetailCardProps) {
+function ServiceDetailCard({ service }: ServiceDetailCardProps) {
   const detail = serviceDetails[service.id];
-
   if (!detail) return null;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+    <article className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" aria-labelledby={`${service.id}-title`}>
       <img
         src={detail.image}
         alt={`Image illustrant le service ${service.title}`}
         className="w-full h-48 object-cover"
+        loading="lazy"
+        decoding="async"
       />
       <div className="p-6 flex flex-col flex-grow">
-        <h3 className="text-2xl font-semibold text-primary mb-3">{service.title}</h3>
+        <h3 id={`${service.id}-title`} className="text-2xl font-semibold text-primary mb-3">
+          {service.title}
+        </h3>
         <p className="text-gray-700 mb-4">{detail.fullDescription}</p>
 
-        <h4 className="font-bold text-primary mb-2">Utilisations principales :</h4>
-        <ul className="list-disc list-inside mb-4 text-gray-700">
-          {detail.uses.map((use, i) => (
-            <li key={i}>{use}</li>
-          ))}
-        </ul>
+        <section aria-labelledby={`${service.id}-uses-title`}>
+          <h4 id={`${service.id}-uses-title`} className="font-bold text-primary mb-2">
+            Utilisations principales :
+          </h4>
+          <ul className="list-disc list-inside mb-4 text-gray-700">
+            {detail.uses.map((use, i) => (
+              <li key={i}>{use}</li>
+            ))}
+          </ul>
+        </section>
 
-        <h4 className="font-bold text-primary mb-2">Préparation :</h4>
-        <p className="text-gray-700">{detail.preparation}</p>
+        <section aria-labelledby={`${service.id}-prep-title`}>
+          <h4 id={`${service.id}-prep-title`} className="font-bold text-primary mb-2">
+            Préparation :
+          </h4>
+          <p className="text-gray-700">{detail.preparation}</p>
+        </section>
       </div>
+    </article>
+  );
+}
+
+/* Section équipement et technologie */
+function EquipmentTechnology() {
+  return (
+    <section className="bg-light rounded-lg shadow-lg overflow-hidden mb-16" aria-labelledby="equip-tech-title">
+      <div className="flex flex-col md:flex-row">
+        <div className="md:w-1/2">
+          <img
+            src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+            alt="Équipement d'imagerie médicale moderne"
+            className="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div className="md:w-1/2 p-8">
+          <h2 id="equip-tech-title" className="text-3xl font-bold text-primary font-heading mb-6">
+            Technologie de Pointe
+          </h2>
+          <p className="text-gray-700 mb-6">
+            Pour garantir des diagnostics précis et fiables, notre centre est équipé des technologies d&apos;imagerie médicale les plus récentes. Nos équipements sont régulièrement mis à jour pour rester à la pointe de l&apos;innovation en matière d&apos;imagerie médicale.
+          </p>
+          <ul className="space-y-4">
+            {equipmentBenefits.map((benefit, i) => (
+              <li key={i} className="flex items-start">
+                <CheckCircle className="text-secondary h-5 w-5 mt-1 mr-3 flex-shrink-0" aria-hidden="true" />
+                <span className="text-gray-700">{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* Section expérience patient */
+function PatientExperience() {
+  const experienceSections = [
+    {
+      title: "Avant votre examen",
+      items: [
+        "Instructions claires sur la préparation requise",
+        "Rappels de rendez-vous",
+        "Processus d'enregistrement simplifié",
+      ],
+    },
+    {
+      title: "Pendant votre examen",
+      items: [
+        "Personnel attentif et bienveillant",
+        "Explications détaillées sur les procédures",
+        "Environnement confortable et rassurant",
+      ],
+    },
+    {
+      title: "Après votre examen",
+      items: [
+        "Résultats rapides et précis",
+        "Consultation pour expliquer les résultats",
+        "Suivi personnalisé si nécessaire",
+      ],
+    },
+    {
+      title: "Notre engagement",
+      items: [
+        "Confidentialité et respect de votre vie privée",
+        "Coordination avec votre médecin traitant",
+        "Accessibilité pour tous les patients",
+      ],
+    },
+  ];
+
+  return (
+    <section className="bg-white rounded-lg shadow-lg p-8 mb-16" aria-labelledby="patient-exp-title">
+      <div className="max-w-3xl mx-auto">
+        <h2 id="patient-exp-title" className="text-3xl font-bold text-primary font-heading mb-6 text-center">
+          L&apos;Expérience Patient
+        </h2>
+        <p className="text-gray-700 mb-8 text-center">
+          Chez Centre D&apos;Imagerie Benameur, nous nous efforçons de rendre votre visite aussi confortable et sans stress que possible.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {experienceSections.map(({ title, items }, idx) => (
+            <article key={idx} className="bg-light rounded-lg p-6" aria-labelledby={`patient-exp-section-${idx}`}>
+              <h3 id={`patient-exp-section-${idx}`} className="text-xl font-bold text-primary mb-4">
+                {title}
+              </h3>
+              <ul className="space-y-2">
+                {items.map((item, i) => (
+                  <li key={i} className="flex items-start">
+                    <span className="text-secondary mr-3 mt-1" aria-hidden="true">✔</span>
+                    <span className="text-gray-700">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* Call To Action */
+function CallToAction() {
+  return (
+    <div className="text-center mb-24">
+      <Link href="/contact" aria-label="Prendre rendez-vous au Centre d'Imagerie Benameur">
+        <Button className="px-8 py-4 text-lg font-semibold">
+          Prendre Rendez-vous
+        </Button>
+      </Link>
     </div>
   );
 }
