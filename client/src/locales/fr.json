@@ -131,6 +131,17 @@
     "cta_description": "Notre équipe de professionnels est à votre disposition pour répondre à tous vos besoins en matière d'imagerie médicale.",
     "cta_button": "Prendre rendez-vous"
   },
+  "needs": {
+    "section_title": "Quels sont vos besoins ?",
+    "section_description": "Nous sommes là pour vous accompagner, que ce soit pour un examen de routine, une urgence ou un suivi médical spécifique.",
+    "list": [
+      "Examen médical prescrit",
+      "Contrôle ou dépistage préventif",
+      "Suivi d’une pathologie chronique",
+      "Deuxième avis médical",
+      "Consultation spécialisée en imagerie"
+    ]
+  },
   "footer": {
     "contact_info": {
       "address": "32 Boulevard Hammou Boutlelis, Oran, Algérie",
