@@ -6,19 +6,25 @@ import { fileURLToPath } from 'url';
 // Résoudre __dirname dans un module ESM
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Chemin absolu vers le dossier public du serveur où sera généré le build client
+const outDirPath = path.resolve(__dirname, '../server/public');
+
+console.log('vite root:', __dirname);
+console.log('vite outDir:', outDirPath);
+
 export default defineConfig({
-  root: __dirname, // Définit le dossier racine de Vite sur /client
+  root: __dirname, // Le dossier client comme racine
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),                  // Alias vers client/src
-      '@shared': path.resolve(__dirname, '../shared'),      // Alias vers shared à la racine
+      '@': path.resolve(__dirname, 'src'),                // Alias vers client/src
+      '@shared': path.resolve(__dirname, '../shared'),    // Alias vers shared à la racine
     },
   },
   build: {
-    outDir: path.resolve(__dirname, '../server/public'),    // Sortie build dans server/public
-    emptyOutDir: true,
-    sourcemap: true,
+    outDir: outDirPath,   // Sortie build dans server/public
+    emptyOutDir: true,    // Vide le dossier public avant build
+    sourcemap: true,      // Génère les sourcemaps pour debug
   },
   server: {
     port: 3000,
@@ -26,16 +32,16 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
+        target: 'http://localhost:4000',  // Proxy vers backend en dev
         changeOrigin: true,
         secure: false,
       },
     },
   },
   css: {
-    postcss: path.resolve(__dirname, './postcss.config.js'), // Résolu correctement
+    postcss: path.resolve(__dirname, './postcss.config.js'),
   },
   define: {
-    'process.env': {}, // Empêche les erreurs de process.env côté client
+    'process.env': {},  // Evite erreurs sur process.env côté client
   },
 });
