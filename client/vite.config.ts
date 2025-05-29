@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Chemin absolu vers server/public depuis client/vite.config.ts
-const outDirPath = path.resolve(__dirname, '../dist');
+const outDirPath = path.resolve(__dirname, '../server/public');
 
 export default defineConfig({
   root: __dirname, // client/
