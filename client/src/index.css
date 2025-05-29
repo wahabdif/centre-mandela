@@ -2,22 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ...tes variables et styles précédents... */
-
-/* Personnalisation du focus ring */
+/* =======================================
+   🎨 Variables CSS globales
+======================================= */
 :root {
-  --primary: 210 90% 34%; /* #0056b3 */
+  --primary: 210 90% 34%; /* Equivalent à #0056b3 */
 }
 
-/* Ajouter la couleur custom pour le ring */
-.focus-visible\:ring-primary:focus-visible {
-  --tw-ring-color: hsl(var(--primary));
-  box-shadow: 0 0 0 3px var(--tw-ring-color);
-}
-
-/* Assure aussi que les boutons et liens ont le ring avec une bonne visibilité */
+/* =======================================
+   🔍 Accessibilité : Anneaux de focus visibles
+======================================= */
 button:focus-visible,
+a:focus-visible,
+div[role="button"]:focus-visible,
 div[role="link"]:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px hsl(var(--primary));
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+/* Variante utilitaire personnalisée */
+.focus-visible\:ring-primary:focus-visible {
+  --tw-ring-color: hsl(var(--primary));
+  box-shadow: 0 0 0 3px var(--tw-ring-color);
 }
