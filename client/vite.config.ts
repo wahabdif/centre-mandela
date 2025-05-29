@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 
 // Paths absolus
 const outDirPath = path.resolve(__dirname, '../server/public');
-const postcssPath = path.resolve(__dirname, './postcss.config.js');
+const postcssPath = path.resolve(__dirname, './postcss.config.cjs');
 
 export default defineConfig({
   root: __dirname,
