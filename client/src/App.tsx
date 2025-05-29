@@ -11,6 +11,7 @@ import Testimonials from "./pages/Testimonials";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/not-found";
 
+import "@/lib/i18n"; // 👈 initialise i18next ici
 import { useTranslation } from "react-i18next";
 
 const rtlLanguages = ["ar", "he", "fa", "ur"];
@@ -19,13 +20,9 @@ function useLanguage() {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    // Récupère la langue active ou la langue du navigateur par défaut
     const lang = i18n.language || window.navigator.language;
-
-    // Applique la langue à l'attribut html lang
     document.documentElement.lang = lang;
 
-    // Gère la direction du texte via la classe 'rtl' sur <html>
     if (rtlLanguages.includes(lang.split("-")[0])) {
       document.documentElement.classList.add("rtl");
       document.documentElement.setAttribute("dir", "rtl");
