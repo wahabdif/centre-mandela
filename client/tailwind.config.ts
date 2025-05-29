@@ -5,15 +5,20 @@ import typography from "@tailwindcss/typography";
 import rtl from "tailwindcss-rtl";
 
 const config: Config = {
+  // Fichiers où Tailwind analysera les classes utilisées
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     "./shared/**/*.{js,ts,jsx,tsx}",
   ],
+
+  // Activation du mode sombre basé sur une classe CSS (darkMode: 'class')
   darkMode: "class",
+
   theme: {
     extend: {
       colors: {
+        // Couleurs basées sur variables CSS personnalisées pour une grande flexibilité
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -49,6 +54,7 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
 
+        // Palette de marque personnalisée
         brand: {
           50: "#f0faff",
           100: "#e0f4ff",
@@ -62,6 +68,7 @@ const config: Config = {
           900: "#00294a",
         },
 
+        // Couleurs sombres pour dark mode personnalisées
         dark: {
           100: "#1e1e2f",
           200: "#161625",
@@ -69,18 +76,20 @@ const config: Config = {
         },
       },
 
+      // Rayon de bordure centralisé via variable CSS
       borderRadius: {
         lg: "var(--radius)",
       },
 
+      // Configuration de l’anneau (focus ring) par défaut
       ringColor: {
         primary: "hsl(var(--primary))",
       },
-
       ringWidth: {
         DEFAULT: "3px",
       },
 
+      // Animation d'accordéon personnalisée
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -91,51 +100,71 @@ const config: Config = {
           to: { height: "0" },
         },
       },
-
       animation: {
         "accordion-down": "accordion-down 0.3s ease-out",
         "accordion-up": "accordion-up 0.3s ease-out",
       },
     },
   },
+
+  // Plugins Tailwind utilisés
   plugins: [
     animate,
     typography,
     rtl,
+
+    // Plugin personnalisé pour base styles (typographie, liens, code, blockquote, listes)
     plugin(({ addBase, theme }) => {
       addBase({
         ":root": {
           "--radius": "0.5rem",
         },
+
+        // Couleur de texte par défaut pour principaux éléments textuels
         "h1, h2, h3, p, a, code, blockquote, ul, ol": {
           color: theme("colors.foreground"),
         },
+
+        // Styles pour liens
         a: {
           textDecoration: "underline",
           fontWeight: "500",
+          transition: "color 0.3s ease",
         },
-        "a:hover": {
+        "a:hover, a:focus": {
           color: theme("colors.primary.foreground"),
+          outline: "none",
         },
+
+        // Styles pour code inline
         code: {
           backgroundColor: theme("colors.muted.DEFAULT"),
           padding: "0.25rem 0.375rem",
           borderRadius: "0.25rem",
           fontSize: "0.875em",
+          fontFamily: "Menlo, Monaco, Consolas, 'Courier New', monospace",
         },
+
+        // Citation blockquote
         blockquote: {
           fontStyle: "italic",
           borderLeft: `4px solid ${theme("colors.muted.DEFAULT")}`,
           paddingLeft: "1em",
           color: theme("colors.muted.foreground"),
         },
+
+        // Listes avec marges et styles définis
         ul: {
           listStyleType: "disc",
           paddingLeft: "1.5em",
+          marginTop: "0.5em",
+          marginBottom: "0.5em",
         },
         ol: {
           listStyleType: "decimal",
           paddingLeft: "1.5em",
+          marginTop: "0.5em",
+          marginBottom: "0.5em",
         },
       });
     }),
