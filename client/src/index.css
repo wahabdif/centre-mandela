@@ -2,14 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Variables CSS globales */
+/* Variables CSS globales pour mode clair */
 :root {
   --primary-hue: 210;
   --primary-saturation: 90%;
   --primary-lightness: 34%;
   --primary: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+  
+  --background: #ffffff;
+  --foreground: #111111;
+  
   --radius: 0.5rem;
   --focus-ring-width: 3px;
+  --focus-ring-color: var(--primary);
+}
+
+/* Variables CSS globales pour mode sombre */
+.dark {
+  --primary-lightness: 70%;
+  --primary: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+
+  --background: #111111;
+  --foreground: #eeeeee;
+
   --focus-ring-color: var(--primary);
 }
 
@@ -33,7 +48,7 @@ select:focus-visible {
 
 /* Typographie et styles globaux */
 body {
-  @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans leading-relaxed antialiased;
+  @apply font-sans leading-relaxed antialiased;
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 16px;
@@ -43,13 +58,16 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 /* Titres */
 h1, h2, h3, h4, h5, h6 {
   font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 600;
-  color: inherit;
+  color: var(--foreground);
   margin-top: 0;
   margin-bottom: 0.5rem;
   line-height: 1.2;
@@ -66,14 +84,18 @@ h6 { font-size: 1rem; }
 /* Paragraphes */
 p {
   margin-bottom: 1rem;
-  color: inherit;
+  color: var(--foreground);
 }
 
 /* Liens */
 a {
-  @apply underline text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200;
-  cursor: pointer;
+  @apply underline transition-colors duration-200 cursor-pointer;
+  color: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
   text-decoration-thickness: 2px;
+}
+
+a:hover {
+  color: hsl(var(--primary-hue), var(--primary-saturation), calc(var(--primary-lightness) + 15%));
 }
 
 a:focus-visible {
@@ -86,7 +108,7 @@ a:focus-visible {
 ul, ol {
   margin-bottom: 1rem;
   padding-left: 1.5rem;
-  color: inherit;
+  color: var(--foreground);
 }
 
 ul {
@@ -99,12 +121,26 @@ ol {
 
 /* Blocs citations */
 blockquote {
-  @apply italic border-l-4 border-gray-300 dark:border-gray-600 pl-4 text-gray-600 dark:text-gray-300 my-6;
+  @apply italic pl-4 my-6;
+  border-left: 4px solid rgba(0,0,0,0.1);
+  color: rgba(0,0,0,0.6);
+}
+
+.dark blockquote {
+  border-left-color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.7);
 }
 
 /* Code inline */
 code {
-  @apply bg-gray-100 dark:bg-gray-800 text-sm font-mono px-1.5 py-0.5 rounded;
+  @apply text-sm font-mono px-1.5 py-0.5 rounded;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #d6336c;
+}
+
+.dark code {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f87171;
 }
 
 /* Boutons */
@@ -130,6 +166,8 @@ input, select, textarea {
   border: 1px solid #ccc;
   padding: 0.5rem 0.75rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 input:focus, select:focus, textarea:focus {
@@ -138,9 +176,13 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
 }
 
-/* Dark mode optimisation */
+/* Support pour détection système si pas de choix utilisateur */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.dark) {
     --primary-lightness: 70%;
+    --primary: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+    --background: #111111;
+    --foreground: #eeeeee;
+    --focus-ring-color: var(--primary);
   }
 }
