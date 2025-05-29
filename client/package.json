@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint . --ext .ts,.tsx",
-    "format": "prettier --write .",
-    "check": "tsc --noEmit"
+  scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview",
+  "lint": "eslint . --ext .ts,.tsx",
+  "format": "prettier --write .",
+  "check": "tsc --noEmit",
+  "extract-i18n": "babel src --out-dir /dev/null --extensions '.js,.jsx,.ts,.tsx' --ignore 'node_modules'"
+}
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
