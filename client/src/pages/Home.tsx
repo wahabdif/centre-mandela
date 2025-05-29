@@ -1,4 +1,4 @@
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { services } from "@/lib/data/services";
@@ -7,6 +7,8 @@ import { practicalInfo } from "@/lib/data/practicalInfo";
 import { testimonials } from "@/lib/data/testimonials";
 
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
     <>
       {/* HERO SECTION */}
