@@ -11,7 +11,6 @@ import Testimonials from "./pages/Testimonials";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/not-found";
 
-import "@/lib/i18n"; // 👈 initialise i18next ici
 import { useTranslation } from "react-i18next";
 
 const rtlLanguages = ["ar", "he", "fa", "ur"];
