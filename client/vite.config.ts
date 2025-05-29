@@ -1,31 +1,34 @@
+// client/vite.config.ts
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// Résolution compatible ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Corriger les chemins absolus
-const clientDir = __dirname;
-const publicDir = path.resolve(__dirname, '../server/public');
+// Paths absolus
+const outDirPath = path.resolve(__dirname, '../server/public');
+const postcssPath = path.resolve(__dirname, './postcss.config.js');
 
 export default defineConfig({
-  root: clientDir,
+  root: __dirname,
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(clientDir, 'src'),
-      '@shared': path.resolve(clientDir, '../shared'),
+      '@': path.resolve(__dirname, 'src'),
+      '@shared': path.resolve(__dirname, '../shared'),
     },
   },
   build: {
-    outDir: publicDir,
+    outDir: outDirPath,
     emptyOutDir: true,
     sourcemap: true,
   },
   css: {
-    postcss: path.resolve(clientDir, './postcss.config.js'),
+    postcss: postcssPath,
   },
   server: {
     port: 3000,
