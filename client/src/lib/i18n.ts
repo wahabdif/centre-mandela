@@ -1,15 +1,14 @@
-// client/src/lib/i18n.ts
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import translationFR from "@/locales/fr/translation.json";
-import translationAR from "@/locales/ar/translation.json";
-import translationEN from "@/locales/en/translation.json";
+import fr from "@/locales/fr.json";
+import ar from "@/locales/ar.json";
+import en from "@/locales/en.json";
 
 const resources = {
-  fr: { translation: translationFR },
-  ar: { translation: translationAR },
-  en: { translation: translationEN },
+  fr: { translation: fr },
+  ar: { translation: ar },
+  en: { translation: en },
 };
 
 i18n
