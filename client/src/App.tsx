@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "wouter";
+import { Route, Switch } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,24 +13,25 @@ import NotFound from "./pages/not-found";
 
 import { useTranslation } from "react-i18next";
 
-// Hook personnalisé pour gérer langue et classe RTL
+const rtlLanguages = ["ar", "he", "fa", "ur"];
+
 function useLanguage() {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    const lang = i18n.language || navigator.language || "fr";
+    // Récupère la langue active ou la langue du navigateur par défaut
+    const lang = i18n.language || window.navigator.language;
 
-    // Appliquer la langue au <html>
+    // Applique la langue à l'attribut html lang
     document.documentElement.lang = lang;
 
-    // Liste des langues RTL
-    const rtlLanguages = new Set(["ar", "he", "fa", "ur"]);
-    const baseLang = lang.split("-")[0];
-
-    if (rtlLanguages.has(baseLang)) {
+    // Gère la direction du texte via la classe 'rtl' sur <html>
+    if (rtlLanguages.includes(lang.split("-")[0])) {
       document.documentElement.classList.add("rtl");
+      document.documentElement.setAttribute("dir", "rtl");
     } else {
       document.documentElement.classList.remove("rtl");
+      document.documentElement.setAttribute("dir", "ltr");
     }
   }, [i18n.language]);
 }
@@ -38,19 +39,19 @@ function useLanguage() {
 function Router() {
   return (
     <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/rendez-vous" element={<Appointment />} />
-        <Route path="/temoignages" element={<Testimonials />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/services" component={Services} />
+        <Route path="/rendez-vous" component={Appointment} />
+        <Route path="/temoignages" component={Testimonials} />
+        <Route path="/contact" component={Contact} />
+        <Route component={NotFound} />
+      </Switch>
     </Layout>
   );
 }
 
-export default function App() {
+function App() {
   useLanguage();
 
   return (
@@ -61,3 +62,5 @@ export default function App() {
     </QueryClientProvider>
   );
 }
+
+export default App;
