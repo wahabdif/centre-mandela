@@ -10,7 +10,7 @@
   "lint": "eslint . --ext .ts,.tsx",
   "format": "prettier --write .",
   "check": "tsc --noEmit",
-  "extract-i18n": "babel src --out-dir /dev/null --extensions '.js,.jsx,.ts,.tsx' --ignore 'node_modules'"
+  "extract-i18n": "babel src --out-dir /dev/null --extensions '.js,.jsx,.ts,.tsx' --ignore 'node_modules'
 }
   },
   "dependencies": {
