@@ -1,4 +1,6 @@
-// Services
+// src/lib/constants.ts
+
+// Services médicaux proposés
 export const services = [
   {
     id: "radiologie",
@@ -30,7 +32,7 @@ export const services = [
   }
 ];
 
-// Testimonials
+// Témoignages patients
 export const testimonials = [
   {
     id: 1,
@@ -61,34 +63,22 @@ export const testimonials = [
   }
 ];
 
-// Working hours
+// Horaires d'ouverture
 export const workingHours = [
-  {
-    days: "Lundi - Vendredi",
-    hours: "8h00 - 18h00"
-  },
-  {
-    days: "Samedi",
-    hours: "8h00 - 13h00"
-  },
-  {
-    days: "Dimanche",
-    hours: "Fermé"
-  }
+  { days: "Lundi - Vendredi", hours: "8h00 - 18h00" },
+  { days: "Samedi", hours: "8h00 - 13h00" },
+  { days: "Dimanche", hours: "Fermé" }
 ];
 
-// Contact information
+// Coordonnées du centre
 export const contactInfo = {
   address: "32 Boulevard Hammou Boutlelis, Oran 31000, Algérie",
   phone: "+213 41 56 78 90",
   email: "contact@imagerie-benameur.com",
-  location: {
-    lat: 35.6980, 
-    lng: -0.6435
-  }
+  location: { lat: 35.6980, lng: -0.6435 }
 };
 
-// Features/Benefits
+// Avantages / caractéristiques du centre
 export const features = [
   {
     icon: "users",
@@ -110,7 +100,7 @@ export const features = [
   }
 ];
 
-// Equipment benefits
+// Avantages liés aux équipements modernes (ajouté ici)
 export const equipmentBenefits = [
   "Appareils dernière génération",
   "Environnement confortable et rassurant",
@@ -118,7 +108,7 @@ export const equipmentBenefits = [
   "Résultats rapides et précis"
 ];
 
-// Medical team benefits
+// Avantages de l'équipe médicale
 export const teamBenefits = [
   {
     icon: "user-md",
@@ -134,26 +124,14 @@ export const teamBenefits = [
   }
 ];
 
-// Social media links
+// Liens réseaux sociaux
 export const socialLinks = [
-  {
-    platform: "facebook",
-    url: "#",
-    icon: "facebook"
-  },
-  {
-    platform: "instagram",
-    url: "#",
-    icon: "instagram"
-  },
-  {
-    platform: "linkedin",
-    url: "#",
-    icon: "linkedin"
-  }
+  { platform: "facebook", url: "#", icon: "facebook" },
+  { platform: "instagram", url: "#", icon: "instagram" },
+  { platform: "linkedin", url: "#", icon: "linkedin" }
 ];
 
-// Hero images for different pages
+// Images pour les héros (bannières) des pages
 export const heroImages = {
   home: "https://images.pexels.com/photos/4033148/pexels-photo-4033148.jpeg?auto=compress&cs=tinysrgb&w=1800",
   services: "https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=1800",
@@ -162,7 +140,7 @@ export const heroImages = {
   contact: "https://images.pexels.com/photos/6129507/pexels-photo-6129507.jpeg?auto=compress&cs=tinysrgb&w=1800"
 };
 
-// Equipment images
+// Images et descriptions des équipements
 export const equipmentImages = [
   {
     title: "IRM dernière génération",
