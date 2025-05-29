@@ -5,11 +5,10 @@ module.exports = {
   ],
   plugins: [
     ['i18next-extract', {
-      // Dossier où les fichiers de traductions seront générés
-      outputPath: 'locales/{{locale}}/{{ns}}.json',
+      outputPath: 'src/locales/{{locale}}/{{ns}}.json',
       locales: ['fr', 'en', 'ar'],
-      keyAsDefaultValue: true, // pour que la valeur soit la clé si pas trouvée
-      useI18nextDefaultValue: ['fr'], // langue source (français ici)
+      keyAsDefaultValue: true,
+      useI18nextDefaultValue: ['fr'],
       discardOldKeys: true,
       failOnMissing: false,
     }]
