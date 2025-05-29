@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Switch } from "wouter";
+import { Route, Routes } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,21 +12,22 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/not-found";
 
 import { useTranslation } from "react-i18next";
-import i18n from "./i18n"; // ton fichier i18n config
 
-// Hook simple pour la langue et RTL
+// Hook personnalisé pour gérer langue et classe RTL
 function useLanguage() {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    const lang = i18n.language || window.navigator.language;
+    const lang = i18n.language || navigator.language || "fr";
 
-    // Appliquer la langue au html
+    // Appliquer la langue au <html>
     document.documentElement.lang = lang;
 
-    // Si langue RTL (ex: arabe), ajouter classe 'rtl' sur <html>
-    const rtlLanguages = ["ar", "he", "fa", "ur"];
-    if (rtlLanguages.includes(lang.split("-")[0])) {
+    // Liste des langues RTL
+    const rtlLanguages = new Set(["ar", "he", "fa", "ur"]);
+    const baseLang = lang.split("-")[0];
+
+    if (rtlLanguages.has(baseLang)) {
       document.documentElement.classList.add("rtl");
     } else {
       document.documentElement.classList.remove("rtl");
@@ -37,19 +38,19 @@ function useLanguage() {
 function Router() {
   return (
     <Layout>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/services" component={Services} />
-        <Route path="/rendez-vous" component={Appointment} />
-        <Route path="/temoignages" component={Testimonials} />
-        <Route path="/contact" component={Contact} />
-        <Route component={NotFound} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/rendez-vous" element={<Appointment />} />
+        <Route path="/temoignages" element={<Testimonials />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </Layout>
   );
 }
 
-function App() {
+export default function App() {
   useLanguage();
 
   return (
@@ -60,5 +61,3 @@ function App() {
     </QueryClientProvider>
   );
 }
-
-export default App;
