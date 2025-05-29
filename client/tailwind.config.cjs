@@ -1,10 +1,10 @@
-import type { Config } from "tailwindcss";
-import plugin from "tailwindcss/plugin";
-import animate from "tailwindcss-animate";
-import typography from "@tailwindcss/typography";
-import rtl from "tailwindcss-rtl";
+const plugin = require("tailwindcss/plugin");
+const animate = require("tailwindcss-animate");
+const typography = require("@tailwindcss/typography");
+const rtl = require("tailwindcss-rtl");
 
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -140,5 +140,3 @@ const config: Config = {
     }),
   ],
 };
-
-export default config;
