@@ -1,1 +1,157 @@
-
+{
+  "hero": {
+    "subtitle": "Center of Excellence in Medical Imaging",
+    "title": "Excellence in medical imaging in Oran",
+    "description": "Accurate and reliable diagnoses by our team of specialists using state-of-the-art equipment.",
+    "cta_appointment": "Book an appointment",
+    "cta_services": "Our services"
+  },
+  "services": {
+    "section_title": "Our Services",
+    "section_subtitle": "Medical imaging services",
+    "section_description": "We offer a full range of medical imaging services using the latest equipment for accurate diagnoses.",
+    "list": [
+      "Conventional radiology",
+      "General and specialized ultrasound",
+      "High-resolution CT scan",
+      "MRI (Magnetic Resonance Imaging)",
+      "Mammography",
+      "Dental radiology"
+    ]
+  },
+  "equipment": {
+    "section_title": "Cutting-edge technology",
+    "section_subtitle": "Advanced medical equipment",
+    "section_description": "Our center is equipped with the latest medical imaging technologies to ensure accurate and reliable diagnoses, with special attention to patient comfort.",
+    "benefits": [
+      "High-resolution imaging",
+      "Reduced waiting times",
+      "Optimal patient comfort",
+      "Regular maintenance to ensure quality",
+      "Strict safety protocols"
+    ]
+  },
+  "team": {
+    "section_title": "Our Team",
+    "section_subtitle": "A highly qualified medical team",
+    "section_description": "The Benameur Imaging Center brings together radiologists and healthcare professionals to offer you exceptional medical imaging services.",
+    "section_description_2": "Our team is committed to delivering accurate diagnoses in a welcoming environment, with the patient's well-being at the heart of our mission.",
+    "benefits": [
+      {
+        "title": "Experienced professionals",
+        "subtitle": "Years of experience in medical imaging"
+      },
+      {
+        "title": "Patient-centered approach",
+        "subtitle": "Personalized care for every patient"
+      },
+      {
+        "title": "Continuous training",
+        "subtitle": "Our specialists stay up to date with the latest advancements"
+      }
+    ],
+    "members": [
+      {
+        "name": "Dr. Samir Benameur",
+        "specialty": "Radiologist",
+        "bio": "Expert in conventional radiology with over 15 years of experience.",
+        "image": "/images/doctors/dr-benameur.jpg"
+      },
+      {
+        "name": "Dr. Nadia Haddad",
+        "specialty": "Medical Imaging",
+        "bio": "Specialist in MRI and ultrasound with a patient-centered approach.",
+        "image": "/images/doctors/dr-haddad.jpg"
+      }
+    ]
+  },
+  "practicalInfo": {
+    "section_title": "Practical Information",
+    "items": [
+      {
+        "title": "Opening hours",
+        "detail": "Monday to Friday, from 8:00 AM to 5:30 PM"
+      },
+      {
+        "title": "Address",
+        "detail": "10 Rue des Frères Amirouche, Oran, Algeria"
+      },
+      {
+        "title": "Contact",
+        "detail": "+213 41 123 4567"
+      }
+    ]
+  },
+  "testimonials": {
+    "section_title": "Testimonials",
+    "section_subtitle": "What our patients say",
+    "section_description": "Discover what our patients say about our services and team.",
+    "reviews": [
+      {
+        "name": "Fatima B.",
+        "comment": "Warm welcome and fast results. Very satisfied with the services.",
+        "rating": 5
+      },
+      {
+        "name": "Ahmed K.",
+        "comment": "Professional team and modern equipment. Highly recommended.",
+        "rating": 5
+      },
+      {
+        "name": "Nadia M.",
+        "comment": "Attentive doctors and accurate diagnosis. Thank you to the whole team.",
+        "rating": 4
+      }
+    ],
+    "cta": "See more testimonials"
+  },
+  "why_us": {
+    "section_title": "Why Choose Us",
+    "section_subtitle": "Our commitment to you",
+    "section_description": "We are committed to providing high-quality medical imaging services with special attention to each patient.",
+    "features": [
+      {
+        "title": "Dedicated team",
+        "description": "Passionate and experienced professionals"
+      },
+      {
+        "title": "Advanced technology",
+        "description": "State-of-the-art imaging equipment"
+      },
+      {
+        "title": "Quick availability",
+        "description": "Appointments available quickly"
+      },
+      {
+        "title": "Guaranteed confidentiality",
+        "description": "Full respect for privacy and medical data"
+      }
+    ],
+    "cta_title": "Ready to book an appointment?",
+    "cta_description": "Our professional team is here to meet all your medical imaging needs.",
+    "cta_button": "Book now"
+  },
+  "needs": {
+    "section_title": "What are your needs?",
+    "section_description": "We’re here to assist you, whether for a routine check-up, urgent case, or follow-up.",
+    "list": [
+      "Prescribed medical imaging",
+      "Preventive screening or monitoring",
+      "Chronic condition follow-up",
+      "Second medical opinion",
+      "Specialized imaging consultation"
+    ]
+  },
+  "footer": {
+    "contact_info": {
+      "address": "32 Hammou Boutlelis Boulevard, Oran, Algeria",
+      "phone": "+213 661 59 81 32",
+      "email": "cherif.benameur@gmail.com"
+    },
+    "social_media": {
+      "facebook": "https://facebook.com/centrebenameur",
+      "instagram": "https://instagram.com/centrebenameur"
+    },
+    "copyright": "© 2025 Benameur Imaging Center. All rights reserved."
+  }
+}
