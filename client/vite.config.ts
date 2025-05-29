@@ -6,25 +6,22 @@ import { fileURLToPath } from 'url';
 // Résoudre __dirname dans un module ESM
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Chemin absolu vers le dossier public du serveur où sera généré le build client
+// Chemin absolu vers server/public depuis client/vite.config.ts
 const outDirPath = path.resolve(__dirname, '../server/public');
 
-console.log('vite root:', __dirname);
-console.log('vite outDir:', outDirPath);
-
 export default defineConfig({
-  root: __dirname, // Le dossier client comme racine
+  root: __dirname, // client/
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),                // Alias vers client/src
-      '@shared': path.resolve(__dirname, '../shared'),    // Alias vers shared à la racine
+      '@': path.resolve(__dirname, 'src'),                  // client/src
+      '@shared': path.resolve(__dirname, '../shared'),      // shared à la racine
     },
   },
   build: {
-    outDir: outDirPath,   // Sortie build dans server/public
-    emptyOutDir: true,    // Vide le dossier public avant build
-    sourcemap: true,      // Génère les sourcemaps pour debug
+    outDir: outDirPath,    // build client -> server/public
+    emptyOutDir: true,     // vider server/public avant build
+    sourcemap: true,
   },
   server: {
     port: 3000,
@@ -32,7 +29,7 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',  // Proxy vers backend en dev
+        target: 'http://localhost:4000',
         changeOrigin: true,
         secure: false,
       },
@@ -42,6 +39,6 @@ export default defineConfig({
     postcss: path.resolve(__dirname, './postcss.config.js'),
   },
   define: {
-    'process.env': {},  // Evite erreurs sur process.env côté client
+    'process.env': {},
   },
 });
