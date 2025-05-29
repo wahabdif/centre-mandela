@@ -98,12 +98,6 @@ const config: Config = {
       },
     },
   },
-  variants: {
-    extend: {
-      ringColor: ["focus-visible"],
-      ringWidth: ["focus-visible"],
-    },
-  },
   plugins: [
     animate,
     typography,
