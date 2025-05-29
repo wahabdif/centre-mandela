@@ -3,25 +3,29 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Résoudre __dirname dans un module ESM
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Chemin absolu vers server/public depuis client/vite.config.ts
-const outDirPath = path.resolve(__dirname, '../server/public');
+// Corriger les chemins absolus
+const clientDir = __dirname;
+const publicDir = path.resolve(__dirname, '../server/public');
 
 export default defineConfig({
-  root: __dirname, // client/
+  root: clientDir,
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),                  // client/src
-      '@shared': path.resolve(__dirname, '../shared'),      // shared à la racine
+      '@': path.resolve(clientDir, 'src'),
+      '@shared': path.resolve(clientDir, '../shared'),
     },
   },
   build: {
-    outDir: outDirPath,    // build client -> server/public
-    emptyOutDir: true,     // vider server/public avant build
+    outDir: publicDir,
+    emptyOutDir: true,
     sourcemap: true,
+  },
+  css: {
+    postcss: path.resolve(clientDir, './postcss.config.js'),
   },
   server: {
     port: 3000,
@@ -34,9 +38,6 @@ export default defineConfig({
         secure: false,
       },
     },
-  },
-  css: {
-    postcss: path.resolve(__dirname, './postcss.config.js'),
   },
   define: {
     'process.env': {},
