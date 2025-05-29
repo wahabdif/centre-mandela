@@ -1,17 +1,13 @@
 // client/vite.config.ts
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Résolution compatible ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Paths absolus
 const outDirPath = path.resolve(__dirname, '../server/public');
-const postcssPath = path.resolve(__dirname, './postcss.config.cjs');
 
 export default defineConfig({
   root: __dirname,
@@ -26,9 +22,6 @@ export default defineConfig({
     outDir: outDirPath,
     emptyOutDir: true,
     sourcemap: true,
-  },
-  css: {
-    postcss: postcssPath,
   },
   server: {
     port: 3000,
