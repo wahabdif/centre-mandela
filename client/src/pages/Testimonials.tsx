@@ -1,33 +1,35 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import TestimonialCard from "@/components/TestimonialCard";
+import { useTranslation } from "react-i18next";
 import { testimonials } from "@/lib/constants";
 
 export default function Testimonials() {
-  // Extended testimonials for the dedicated page
+  const { t } = useTranslation();
+
   const extendedTestimonials = [
     ...testimonials,
     {
       id: 4,
-      text: "L'équipe du Centre Benameur est extrêmement professionnelle et attentionnée. Mon examen s'est déroulé dans d'excellentes conditions.",
-      author: "Samira L.",
-      role: "Patient",
+      text: t("testimonials.extended.0.text"),
+      author: t("testimonials.extended.0.author"),
+      role: t("testimonials.extended.0.role"),
       initials: "SL",
       rating: 5
     },
     {
       id: 5,
-      text: "Impressionné par la qualité des équipements et la clarté des explications. Les résultats ont été disponibles très rapidement.",
-      author: "Mohamed A.",
-      role: "Patient",
+      text: t("testimonials.extended.1.text"),
+      author: t("testimonials.extended.1.author"),
+      role: t("testimonials.extended.1.role"),
       initials: "MA",
       rating: 5
     },
     {
       id: 6,
-      text: "Un grand merci au Dr. Benameur pour sa patience et son expertise. Il a pris le temps de m'expliquer les résultats en détail.",
-      author: "Fatima Z.",
-      role: "Patient",
+      text: t("testimonials.extended.2.text"),
+      author: t("testimonials.extended.2.author"),
+      role: t("testimonials.extended.2.role"),
       initials: "FZ",
       rating: 5
     }
@@ -35,11 +37,13 @@ export default function Testimonials() {
 
   return (
     <div className="pt-28">
-      <section className="py-16 bg-gradient-to-r from-primary to-secondary text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold font-heading mb-6">Témoignages de nos patients</h1>
+      <section className="py-16 bg-gradient-to-r from-primary to-secondary text-white text-center">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl font-bold font-heading mb-6">
+            {t("testimonials.title")}
+          </h1>
           <p className="text-xl max-w-2xl mx-auto">
-            Découvrez ce que nos patients disent de leur expérience au Centre D'Imagerie Benameur.
+            {t("testimonials.intro")}
           </p>
         </div>
       </section>
@@ -61,87 +65,75 @@ export default function Testimonials() {
         </div>
       </section>
 
-      <section className="py-16 bg-light">
-        <div className="container mx-auto px-4 text-center">
+      <section className="py-16 bg-light text-center">
+        <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-primary font-heading mb-8">
-            Votre expérience compte pour nous
+            {t("testimonials.ctaTitle")}
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
-            Nous nous efforçons constamment d'améliorer nos services et votre retour d'expérience nous est précieux.
-            Si vous avez récemment visité notre centre, nous serions ravis de connaître votre opinion.
+            {t("testimonials.ctaText")}
           </p>
-          
+
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <Link href="/contact">
-              <Button 
+              <Button
                 className="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-lg shadow-lg"
                 size="lg"
               >
-                Partagez votre expérience
+                {t("testimonials.ctaButton")}
               </Button>
             </Link>
-            
             <Link href="/rendez-vous">
-              <Button 
+              <Button
                 className="bg-accent hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg"
                 size="lg"
               >
-                <i className="far fa-calendar-alt mr-2">📅</i> Prendre rendez-vous
+                📅 {t("testimonials.appointment")}
               </Button>
             </Link>
           </div>
         </div>
       </section>
-      
+
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-primary font-heading mb-8 text-center">
-              Notre engagement envers les patients
+              {t("testimonials.commitmentTitle")}
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-light rounded-lg p-6 shadow">
-                <h3 className="text-xl font-bold text-primary mb-4">Excellence médicale</h3>
+                <h3 className="text-xl font-bold text-primary mb-4">
+                  {t("testimonials.excellence.title")}
+                </h3>
                 <p className="text-gray-600 mb-4">
-                  Nous nous engageons à fournir des services d'imagerie médicale de la plus haute qualité en utilisant des 
-                  équipements de pointe et en employant des professionnels hautement qualifiés.
+                  {t("testimonials.excellence.text")}
                 </p>
                 <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Diagnostics précis et fiables</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Formation continue de notre personnel</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Protocoles médicaux rigoureux</span>
-                  </li>
+                  {t("testimonials.excellence.points", { returnObjects: true }).map((point: string, i: number) => (
+                    <li key={i} className="flex items-start">
+                      <span className="text-secondary font-bold mr-2">•</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
-              
+
               <div className="bg-light rounded-lg p-6 shadow">
-                <h3 className="text-xl font-bold text-primary mb-4">Soins centrés sur le patient</h3>
+                <h3 className="text-xl font-bold text-primary mb-4">
+                  {t("testimonials.care.title")}
+                </h3>
                 <p className="text-gray-600 mb-4">
-                  Chaque patient mérite d'être traité avec respect, dignité et compassion. Nous nous efforçons de rendre 
-                  votre expérience aussi confortable et sans stress que possible.
+                  {t("testimonials.care.text")}
                 </p>
                 <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Prise en charge personnalisée</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Communication claire et transparente</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-secondary font-bold mr-2">•</span>
-                    <span>Écoute attentive de vos préoccupations</span>
-                  </li>
+                  {t("testimonials.care.points", { returnObjects: true }).map((point: string, i: number) => (
+                    <li key={i} className="flex items-start">
+                      <span className="text-secondary font-bold mr-2">•</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
