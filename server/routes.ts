@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from 'express';
 import { z } from 'zod';
-import db from './db/db.js';
+import db from './db/db.js'; // ✅ extension .js obligatoire en NodeNext
 
 const router = Router();
 
@@ -54,8 +54,7 @@ router.post('/contact', (req: Request, res: Response) => {
 
 // === PATCH /api/contact/:id/status ===
 router.patch('/contact/:id/status', (req: Request, res: Response) => {
-  // ✅ Correction : forcer Number() natif avec const id
-  const id = globalThis.Number(req.params.id);
+  const id = Number(req.params.id); // ✅ TypeScript confond parfois avec Number global
   const { status } = req.body as { status: string };
 
   const validStatuses = ['pending', 'read', 'archived'] as const;
