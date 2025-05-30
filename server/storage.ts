@@ -1,9 +1,13 @@
 import Database from 'better-sqlite3';
 import path from 'path';
 
-const db = new Database(path.resolve(__dirname, 'data.db'));
+// Création du chemin absolu vers la base SQLite dans le dossier actuel
+const dbPath = path.resolve(__dirname, 'data.db');
 
-// Exemple : créer une table si elle n'existe pas
+// Initialisation de la connexion à la base SQLite
+const db = new Database(dbPath, { verbose: console.log });
+
+// Création de la table 'items' si elle n'existe pas déjà
 db.prepare(`
   CREATE TABLE IF NOT EXISTS items (
     id TEXT PRIMARY KEY,
