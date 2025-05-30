@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
-import db from './db.js';
+import db from './db/db.js';
 
 const router = Router();
 
@@ -39,7 +39,6 @@ router.post('/contact', (req: Request, res: Response) => {
       INSERT INTO contact (name, email, phone, service, message, status, createdAt)
       VALUES (?, ?, ?, ?, ?, 'pending', datetime('now'))
     `);
-
     const info = stmt.run(
       data.name,
       data.email,
@@ -48,10 +47,10 @@ router.post('/contact', (req: Request, res: Response) => {
       data.message ?? null
     );
 
-    // Récupérer le nouveau message inséré
-    const newMessage = db.prepare('SELECT * FROM contact WHERE id = ?').get(info.lastInsertRowid);
+    // Récupérer l'entrée insérée
+    const inserted = db.prepare('SELECT * FROM contact WHERE id = ?').get(info.lastInsertRowid);
 
-    res.status(200).json(newMessage);
+    res.status(200).json(inserted);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erreur serveur' });
@@ -69,22 +68,20 @@ router.patch('/contact/:id/status', (req: Request, res: Response) => {
   }
 
   try {
-    const stmt = db.prepare(`
+    const updateStmt = db.prepare(`
       UPDATE contact
       SET status = ?
       WHERE id = ?
     `);
-
-    const info = stmt.run(status, id);
+    const info = updateStmt.run(status, id);
 
     if (info.changes === 0) {
       res.status(404).json({ error: 'Message non trouvé' });
       return;
     }
 
-    const updatedMessage = db.prepare('SELECT * FROM contact WHERE id = ?').get(id);
-
-    res.status(200).json(updatedMessage);
+    const updated = db.prepare('SELECT * FROM contact WHERE id = ?').get(id);
+    res.status(200).json(updated);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erreur serveur' });
