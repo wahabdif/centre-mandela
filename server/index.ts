@@ -1,4 +1,5 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
+import type { NextFunction } from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import routes from './routes.js';
@@ -6,7 +7,7 @@ import routes from './routes.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 app.use(express.json());
 app.use('/api', routes);
@@ -20,7 +21,8 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
 // Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('*', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  // Forcer l'utilisation de sendFile via un cast si nécessaire
+  (res as any).sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(PORT, () => {
