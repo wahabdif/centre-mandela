@@ -54,7 +54,8 @@ router.post('/contact', (req: Request, res: Response) => {
 
 // === PATCH /api/contact/:id/status ===
 router.patch('/contact/:id/status', (req: Request, res: Response) => {
-  const id = Number(req.params.id);
+  // ✅ Correction : forcer Number() natif avec const id
+  const id = globalThis.Number(req.params.id);
   const { status } = req.body as { status: string };
 
   const validStatuses = ['pending', 'read', 'archived'] as const;
