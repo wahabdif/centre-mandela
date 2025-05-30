@@ -12,9 +12,9 @@ app.use(express.json());
 app.use('/api', routes);
 
 // Middleware de gestion des erreurs
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ error: err.message || 'Erreur serveur' });
+app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
+  console.error(err instanceof Error ? err.stack : err);
+  res.status(500).json({ error: err instanceof Error ? err.message : 'Erreur serveur' });
 });
 
 // Servir les fichiers statiques
