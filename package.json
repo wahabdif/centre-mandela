@@ -6,17 +6,19 @@
   "type": "module",
   "main": "server/dist/index.js",
   "scripts": {
-    "dev": "vite",
-    "dev:server": "tsx server/index.ts",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "cd client && npm install && npm run build",
-    "build:server": "tsc -p ./server/tsconfig.server.json",
-    "start": "node server/dist/index.js",
-    "preview": "vite preview",
-    "check": "tsc --noEmit",
-    "lint": "eslint . --ext .ts,.tsx",
-    "format": "prettier --write .",
-    "test": "jest"
+    "scripts": {
+  "dev": "vite",
+  "dev:server": "tsx server/src/index.ts",
+  "build": "npm run build:client && npm run build:server",
+  "build:client": "cd client && npm install && npm run build",
+  "build:server": "tsc -p server/tsconfig.server.json",
+  "check": "tsc --noEmit",
+  "clean": "rm -rf dist && rm -rf client/dist",
+  "lint": "eslint . --ext .ts,.tsx",
+  "format": "prettier --write .",
+  "start": "node dist/server/index.js",
+  "preview": "vite preview",
+  "test": "jest"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
