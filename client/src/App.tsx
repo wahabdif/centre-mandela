@@ -1,62 +1,41 @@
-import React, { useEffect } from "react";
-import { Route, Switch } from "wouter";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./lib/queryClient";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import Layout from "./components/Layout";
-import Home from "./pages/Home";
-import Services from "./pages/Services";
-import Appointment from "./pages/Appointment";
-import Testimonials from "./pages/Testimonials";
-import Contact from "./pages/Contact";
-import NotFound from "./pages/not-found";
-
+// pages/Services.tsx
+import React from "react";
+import { services } from "@/lib/data/services";
 import { useTranslation } from "react-i18next";
 
-const rtlLanguages = ["ar", "he", "fa", "ur"];
-
-function useLanguage() {
-  const { i18n } = useTranslation();
-
-  useEffect(() => {
-    const lang = i18n.language || window.navigator.language;
-    document.documentElement.lang = lang;
-
-    if (rtlLanguages.includes(lang.split("-")[0])) {
-      document.documentElement.classList.add("rtl");
-      document.documentElement.setAttribute("dir", "rtl");
-    } else {
-      document.documentElement.classList.remove("rtl");
-      document.documentElement.setAttribute("dir", "ltr");
-    }
-  }, [i18n.language]);
-}
-
-function Router() {
-  return (
-    <Layout>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/services" component={Services} />
-        <Route path="/rendez-vous" component={Appointment} />
-        <Route path="/temoignages" component={Testimonials} />
-        <Route path="/contact" component={Contact} />
-        <Route component={NotFound} />
-      </Switch>
-    </Layout>
-  );
-}
-
-function App() {
-  useLanguage();
+const Services = () => {
+  const { t, i18n } = useTranslation();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Router />
-      </TooltipProvider>
-    </QueryClientProvider>
-  );
-}
+    <section className="py-12 px-4 max-w-7xl mx-auto">
+      <h1 className="text-3xl font-bold text-center mb-10">
+        {t("services.title", "Nos Services")}
+      </h1>
 
-export default App;
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((service) => (
+          <div
+            key={service.id}
+            className="border rounded-lg shadow hover:shadow-lg transition bg-white overflow-hidden"
+          >
+            <img
+              src={service.image}
+              alt={service.title}
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h2 className="text-xl font-semibold mb-2">
+                {t(`services.items.${service.id}.title`, service.title)}
+              </h2>
+              <p className="text-gray-600 text-sm">
+                {t(`services.items.${service.id}.description`, "")}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default Services;
