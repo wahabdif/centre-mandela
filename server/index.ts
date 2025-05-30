@@ -1,12 +1,12 @@
 import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
-import routes from './routes.js';
+import routes from './routes.js'; // Extension .js requise en NodeNext
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 app.use(express.json());
 app.use('/api', routes);
@@ -26,3 +26,4 @@ app.get('*', (req: Request, res: Response) => {
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
+
