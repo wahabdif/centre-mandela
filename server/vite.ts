@@ -1,46 +1,50 @@
-import type { Express, Request, Response, NextFunction } from 'express';
 import { createServer, type ViteDevServer } from 'vite';
-import fs from 'fs/promises';
+import express from 'express';
+import type { Express, Request, Response, NextFunction } from 'express';
+import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { nanoid } from 'nanoid';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export async function setupVite(app: Express, server: any): Promise<void> {
   const vite: ViteDevServer = await createServer({
     server: {
       middlewareMode: true,
       hmr: { server },
-      allowedHosts: 'all',
+      allowedHosts: true
     },
-    appType: 'custom',
+    appType: 'custom'
   });
 
   app.use(vite.middlewares);
 
   app.use('*', async (req: Request, res: Response, next: NextFunction) => {
+    const url = req.originalUrl;
     try {
-      const indexPath = path.resolve('client/index.html');
-      let template = await fs.readFile(indexPath, 'utf-8');
-
-      template = template.replace(
-        `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`
-      );
-
-      const html = await vite.transformIndexHtml(req.originalUrl, template);
+      const indexPath = path.resolve(__dirname, '..', '..', 'client', 'index.html');
+      let template = await fs.promises.readFile(indexPath, 'utf-8');
+      template = template.replace('src="/src/main.tsx"', `src="/src/main.tsx?v=${nanoid()}`);
+      const html = await vite.transformIndexHtml(url, template);
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
-    } catch (e) {
-      vite.ssrFixStacktrace(e as Error);
-      next(e);
+    } catch (error) {
+      vite.ssrFixStacktrace(error as Error);
+      next(error);
     }
   });
 }
 
-export function serveStatic(app: Express, dirname: string): void {
-  const publicPath = path.resolve(dirname, '../public');
-  const indexPath = path.resolve(publicPath, 'index.html');
+export function serveStatic(app: Express, baseDir: string): void {
+  const publicDir = path.resolve(baseDir, 'public');
+  if (!fs.existsSync(publicDir)) {
+    throw new Error(`❌ Dossier 'public' manquant : ${publicDir}`);
+  }
 
-  app.use(express.static(publicPath));
+  app.use(express.static(publicDir));
+
   app.use('*', (_req: Request, res: Response) => {
-    res.sendFile(indexPath);
+    res.sendFile(path.resolve(publicDir, 'index.html'));
   });
 }
