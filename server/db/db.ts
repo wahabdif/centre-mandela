@@ -3,11 +3,11 @@ import { z } from 'zod';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Pour ESM (__dirname simulation)
+// Simulation de __dirname en ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Initialise SQLite (base de données dans le même dossier)
+// Initialise SQLite (base de données locale)
 const dbPath = path.resolve(__dirname, 'data.sqlite');
 const db = new Database(dbPath, { verbose: console.log });
 
@@ -37,7 +37,7 @@ export type ContactMessage = {
   createdAt: string;
 };
 
-// === Schéma Zod (validation interne) ===
+// === Schéma Zod (validation) ===
 export const ContactInputSchema = z.object({
   name: z.string().min(1, "Le nom est requis"),
   email: z.string().email("Email invalide"),
@@ -50,12 +50,12 @@ export const ContactInputSchema = z.object({
 
 // Récupérer tous les messages
 export function getAllContactMessages(): ContactMessage[] {
-  return db.prepare(`SELECT * FROM contact ORDER BY datetime(createdAt) DESC`).all();
+  return db.prepare(`SELECT * FROM contact ORDER BY datetime(createdAt) DESC`).all() as ContactMessage[];
 }
 
 // Récupérer un message par ID
 export function getContactMessageById(id: number): ContactMessage | undefined {
-  return db.prepare(`SELECT * FROM contact WHERE id = ?`).get(id);
+  return db.prepare(`SELECT * FROM contact WHERE id = ?`).get(id) as ContactMessage | undefined;
 }
 
 // Créer un message
@@ -65,7 +65,6 @@ export function createContactMessage(data: z.infer<typeof ContactInputSchema>): 
     VALUES (?, ?, ?, ?, ?, 'pending', datetime('now'))
   `).run(data.name, data.email, data.phone, data.service, data.message ?? null);
 
-  // Récupérer le dernier message créé
   return getContactMessageById(Number(info.lastInsertRowid))!;
 }
 
@@ -76,8 +75,7 @@ export function updateContactMessageStatus(
 ): ContactMessage | undefined {
   const result = db.prepare(`UPDATE contact SET status = ? WHERE id = ?`).run(status, id);
 
-  if (result.changes === 0) return undefined;
-  return getContactMessageById(id);
+  return result.changes > 0 ? getContactMessageById(id) : undefined;
 }
 
 export default db;
