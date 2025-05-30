@@ -1,10 +1,10 @@
 import express from 'express';
-import { Express, Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import fs from 'fs';
-import { createServer as createViteServer, ViteDevServer } from 'vite';
+import { createServer as createViteServer } from 'vite';
 
-export async function setupVite(app: Express, root = process.cwd(), isDev = true) {
+export async function setupVite(app: express.Express, root = process.cwd(), isDev = true) {
   const resolve = (p: string) => path.resolve(root, p);
 
   if (isDev) {
@@ -40,8 +40,9 @@ export async function setupVite(app: Express, root = process.cwd(), isDev = true
     const distPath = resolve('dist/client');
     const ssrManifestPath = resolve('dist/client/ssr-manifest.json');
     const template = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8');
-    const { render } = require('./dist/server/entry-server.js');
-    const manifest = require(ssrManifestPath);
+
+    const { render } = await import('./dist/server/entry-server.js'); // ✅ utilisation de import() pour compatibilité ESModules
+    const manifest = JSON.parse(fs.readFileSync(ssrManifestPath, 'utf-8')); // ✅ éviter require en mode node16
 
     app.use('/assets', express.static(path.join(distPath, 'assets')));
 
