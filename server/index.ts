@@ -1,43 +1,41 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
-import type { Express, Request, Response, NextFunction } from 'express';
-import { createServer } from 'http';
-import { config } from 'dotenv';
+import type { Request, Response, NextFunction } from 'express';
+import { Server } from 'http';
+import { setupVite, serveStatic } from './vite.js';
+import router from './routes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { setupVite, serveStatic } from './vite.js';
-import apiRoutes from './routes.js';
 
-config();
-
+// ESM dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app: Express = express();
-const server = createServer(app);
+const app = express();
+const server = new Server(app);
 
 app.use(express.json());
 
-// Routes API
-app.use('/api', apiRoutes);
+// Routes
+app.use('/api', router);
 
-// En dev : Vite
+// Vite middleware ou fichiers statiques
 if (process.env.NODE_ENV === 'development') {
-  setupVite(app, server).catch((err) => {
-    console.error('Erreur setup Vite:', err);
-  });
+  setupVite(app, server).catch(console.error);
 } else {
-  // En prod : statique
   serveStatic(app, __dirname);
 }
 
-// Middleware erreur global
+// Middleware erreur
 app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err);
-  res.status(500).json({ error: 'Erreur serveur' });
+  res.status(500).json({ error: 'Erreur serveur interne' });
 });
 
 // Lancement serveur
 const PORT = Number(process.env.PORT) || 3000;
 server.listen(PORT, () => {
-  console.log(`🚀 Serveur lancé sur http://localhost:${PORT}`);
+  console.log(`✅ Serveur en ligne : http://localhost:${PORT}`);
 });
