@@ -10,9 +10,11 @@ import path from 'path';
 import { nanoid } from 'nanoid';
 import { fileURLToPath } from 'url';
 
+// ✅ Récupération du __dirname compatible ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// ✅ Fonction pour setup Vite en développement
 export async function setupVite(app: Express, server: any): Promise<void> {
   const vite: ViteDevServer = await createServer({
     server: {
@@ -23,8 +25,10 @@ export async function setupVite(app: Express, server: any): Promise<void> {
     appType: 'custom',
   });
 
+  // Injection des middlewares Vite
   app.use(vite.middlewares);
 
+  // Remplacement dynamique pour éviter le cache
   app.use('*', async (req: Request, res: Response, next: NextFunction) => {
     const url = req.originalUrl;
     try {
@@ -45,6 +49,7 @@ export async function setupVite(app: Express, server: any): Promise<void> {
   });
 }
 
+// ✅ Fonction pour servir les fichiers statiques en production
 export function serveStatic(app: Express): void {
   const distPath = path.resolve(__dirname, '..', 'public');
 
