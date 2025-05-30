@@ -7,9 +7,23 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Initialise SQLite
+// Initialise SQLite (base de données dans le même dossier)
 const dbPath = path.resolve(__dirname, 'data.sqlite');
-const db = new Database(dbPath);
+const db = new Database(dbPath, { verbose: console.log });
+
+// Création de la table 'contact' si elle n'existe pas
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS contact (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    service TEXT NOT NULL,
+    message TEXT,
+    status TEXT NOT NULL CHECK (status IN ('pending', 'read', 'archived')) DEFAULT 'pending',
+    createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+  )
+`).run();
 
 // === Typage TypeScript ===
 export type ContactMessage = {
@@ -23,43 +37,44 @@ export type ContactMessage = {
   createdAt: string;
 };
 
-// === Schéma Zod (optionnel si besoin en interne) ===
+// === Schéma Zod (validation interne) ===
 export const ContactInputSchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  phone: z.string(),
-  service: z.string(),
+  name: z.string().min(1, "Le nom est requis"),
+  email: z.string().email("Email invalide"),
+  phone: z.string().min(1, "Le téléphone est requis"),
+  service: z.string().min(1, "Le service est requis"),
   message: z.string().nullable().optional(),
 });
 
 // === Fonctions CRUD ===
 
-// Tous les messages
+// Récupérer tous les messages
 export function getAllContactMessages(): ContactMessage[] {
-  return db.prepare(`SELECT * FROM contact ORDER BY createdAt DESC`).all();
+  return db.prepare(`SELECT * FROM contact ORDER BY datetime(createdAt) DESC`).all();
 }
 
-// Message par ID
+// Récupérer un message par ID
 export function getContactMessageById(id: number): ContactMessage | undefined {
   return db.prepare(`SELECT * FROM contact WHERE id = ?`).get(id);
 }
 
 // Créer un message
 export function createContactMessage(data: z.infer<typeof ContactInputSchema>): ContactMessage {
-  const stmt = db.prepare(`
+  const info = db.prepare(`
     INSERT INTO contact (name, email, phone, service, message, status, createdAt)
     VALUES (?, ?, ?, ?, ?, 'pending', datetime('now'))
-  `);
+  `).run(data.name, data.email, data.phone, data.service, data.message ?? null);
 
-  const info = stmt.run(data.name, data.email, data.phone, data.service, data.message ?? null);
-
+  // Récupérer le dernier message créé
   return getContactMessageById(Number(info.lastInsertRowid))!;
 }
 
-// Mettre à jour le statut
-export function updateContactMessageStatus(id: number, status: 'pending' | 'read' | 'archived'): ContactMessage | undefined {
-  const stmt = db.prepare(`UPDATE contact SET status = ? WHERE id = ?`);
-  const result = stmt.run(status, id);
+// Mettre à jour le statut d'un message
+export function updateContactMessageStatus(
+  id: number,
+  status: 'pending' | 'read' | 'archived'
+): ContactMessage | undefined {
+  const result = db.prepare(`UPDATE contact SET status = ? WHERE id = ?`).run(status, id);
 
   if (result.changes === 0) return undefined;
   return getContactMessageById(id);
