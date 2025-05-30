@@ -4,7 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 
-export async function setupVite(app: express.Application, root = process.cwd(), isDev = true) {
+export async function setupVite(app: express.Express, root = process.cwd(), isDev = true) {
   const resolve = (p: string) => path.resolve(root, p);
 
   if (isDev) {
@@ -18,7 +18,9 @@ export async function setupVite(app: express.Application, root = process.cwd(), 
 
     app.use('*', async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const url = req.originalUrl || req.url;
+        // Certains environnements ne reconnaissent pas "originalUrl" sur Request,
+        // on le récupère via un cast :
+        const url = (req as any).originalUrl || req.url;
 
         const templatePath = resolve('index.html');
         let template = fs.readFileSync(templatePath, 'utf-8');
@@ -41,14 +43,15 @@ export async function setupVite(app: express.Application, root = process.cwd(), 
     const ssrManifestPath = resolve('dist/client/ssr-manifest.json');
     const template = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8');
 
-    // @ts-ignore: Ignorer temporairement l'absence de déclaration pour ce module
-    const { render } = await import('./dist/server/entry-server.js'); 
+    // Si le module SSR n'a pas de déclaration de types, ajoute un @ts-ignore ou crée un fichier .d.ts
+    // @ts-ignore
+    const { render } = await import('./dist/server/entry-server.js');
     const manifest = JSON.parse(fs.readFileSync(ssrManifestPath, 'utf-8'));
 
     app.use('/assets', express.static(path.join(distPath, 'assets')));
 
     app.use('*', async (req: Request, res: Response) => {
-      const url = req.originalUrl || req.url;
+      const url = (req as any).originalUrl || req.url;
       const appHtml = await render(url, manifest);
       const html = template.replace(`<!--app-html-->`, appHtml);
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
