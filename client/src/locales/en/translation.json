@@ -1,157 +1,81 @@
 {
-  "hero": {
-    "subtitle": "Center of Excellence in Medical Imaging",
-    "title": "Excellence in medical imaging in Oran",
-    "description": "Accurate and reliable diagnoses by our team of specialists using state-of-the-art equipment.",
-    "cta_appointment": "Book an appointment",
-    "cta_services": "Our services"
-  },
-  "services": {
-    "section_title": "Our Services",
-    "section_subtitle": "Medical imaging services",
-    "section_description": "We offer a full range of medical imaging services using the latest equipment for accurate diagnoses.",
-    "list": [
-      "Conventional radiology",
-      "General and specialized ultrasound",
-      "High-resolution CT scan",
-      "MRI (Magnetic Resonance Imaging)",
-      "Mammography",
-      "Dental radiology"
-    ]
-  },
-  "equipment": {
-    "section_title": "Cutting-edge technology",
-    "section_subtitle": "Advanced medical equipment",
-    "section_description": "Our center is equipped with the latest medical imaging technologies to ensure accurate and reliable diagnoses, with special attention to patient comfort.",
-    "benefits": [
-      "High-resolution imaging",
-      "Reduced waiting times",
-      "Optimal patient comfort",
-      "Regular maintenance to ensure quality",
-      "Strict safety protocols"
-    ]
-  },
-  "team": {
-    "section_title": "Our Team",
-    "section_subtitle": "A highly qualified medical team",
-    "section_description": "The Benameur Imaging Center brings together radiologists and healthcare professionals to offer you exceptional medical imaging services.",
-    "section_description_2": "Our team is committed to delivering accurate diagnoses in a welcoming environment, with the patient's well-being at the heart of our mission.",
-    "benefits": [
-      {
-        "title": "Experienced professionals",
-        "subtitle": "Years of experience in medical imaging"
-      },
-      {
-        "title": "Patient-centered approach",
-        "subtitle": "Personalized care for every patient"
-      },
-      {
-        "title": "Continuous training",
-        "subtitle": "Our specialists stay up to date with the latest advancements"
-      }
-    ],
-    "members": [
-      {
-        "name": "Dr. Samir Benameur",
-        "specialty": "Radiologist",
-        "bio": "Expert in conventional radiology with over 15 years of experience.",
-        "image": "/images/doctors/dr-benameur.jpg"
-      },
-      {
-        "name": "Dr. Nadia Haddad",
-        "specialty": "Medical Imaging",
-        "bio": "Specialist in MRI and ultrasound with a patient-centered approach.",
-        "image": "/images/doctors/dr-haddad.jpg"
-      }
-    ]
-  },
-  "practicalInfo": {
-    "section_title": "Practical Information",
-    "items": [
-      {
-        "title": "Opening hours",
-        "detail": "Monday to Friday, from 8:00 AM to 5:30 PM"
-      },
-      {
-        "title": "Address",
-        "detail": "10 Rue des Frères Amirouche, Oran, Algeria"
-      },
-      {
-        "title": "Contact",
-        "detail": "+213 41 123 4567"
-      }
-    ]
-  },
-  "testimonials": {
-    "section_title": "Testimonials",
-    "section_subtitle": "What our patients say",
-    "section_description": "Discover what our patients say about our services and team.",
-    "reviews": [
-      {
-        "name": "Fatima B.",
-        "comment": "Warm welcome and fast results. Very satisfied with the services.",
-        "rating": 5
-      },
-      {
-        "name": "Ahmed K.",
-        "comment": "Professional team and modern equipment. Highly recommended.",
-        "rating": 5
-      },
-      {
-        "name": "Nadia M.",
-        "comment": "Attentive doctors and accurate diagnosis. Thank you to the whole team.",
-        "rating": 4
-      }
-    ],
-    "cta": "See more testimonials"
-  },
-  "why_us": {
-    "section_title": "Why Choose Us",
-    "section_subtitle": "Our commitment to you",
-    "section_description": "We are committed to providing high-quality medical imaging services with special attention to each patient.",
-    "features": [
-      {
-        "title": "Dedicated team",
-        "description": "Passionate and experienced professionals"
-      },
-      {
-        "title": "Advanced technology",
-        "description": "State-of-the-art imaging equipment"
-      },
-      {
-        "title": "Quick availability",
-        "description": "Appointments available quickly"
-      },
-      {
-        "title": "Guaranteed confidentiality",
-        "description": "Full respect for privacy and medical data"
-      }
-    ],
-    "cta_title": "Ready to book an appointment?",
-    "cta_description": "Our professional team is here to meet all your medical imaging needs.",
-    "cta_button": "Book now"
-  },
-  "needs": {
-    "section_title": "What are your needs?",
-    "section_description": "We’re here to assist you, whether for a routine check-up, urgent case, or follow-up.",
-    "list": [
-      "Prescribed medical imaging",
-      "Preventive screening or monitoring",
-      "Chronic condition follow-up",
-      "Second medical opinion",
-      "Specialized imaging consultation"
-    ]
-  },
-  "footer": {
-    "contact_info": {
-      "address": "32 Hammou Boutlelis Boulevard, Oran, Algeria",
-      "phone": "+213 661 59 81 32",
-      "email": "cherif.benameur@gmail.com"
-    },
-    "social_media": {
-      "facebook": "https://facebook.com/centrebenameur",
-      "instagram": "https://instagram.com/centrebenameur"
-    },
-    "copyright": "© 2025 Benameur Imaging Center. All rights reserved."
-  }
+  "appointment.back": "Back",
+  "appointment.description": "Easily book an appointment with our medical team online.",
+  "appointment.finalNote": "We will contact you shortly to confirm your appointment.",
+  "appointment.preparationDescription": "Please arrive 15 minutes early and bring your medical documents.",
+  "appointment.preparationTitle": "Preparation",
+  "appointment.stepsDescription": "Fill in the form, choose a service, and submit your request.",
+  "appointment.stepsTitle": "Steps",
+  "appointment.title": "Book an Appointment",
+  "doctors.section_title": "Our Medical Team",
+  "footer.rights": "All rights reserved.",
+  "footer.subtitle": "Excellence in medical imaging in Oran",
+  "footer.title": "Benameur Imaging Center",
+  "form.back": "Back",
+  "form.contactUsLabel": "Contact Us",
+  "form.email": "Email",
+  "form.emailLabel": "Email Address",
+  "form.emailPlaceholder": "your.email@example.com",
+  "form.error.message": "An error occurred. Please try again.",
+  "form.error.title": "Error",
+  "form.fastResponseDesc": "Quick responses to your online requests.",
+  "form.fastResponseTitle": "Responsiveness",
+  "form.loading": "Loading...",
+  "form.message": "Message",
+  "form.messageLabel": "Your Message",
+  "form.messagePlaceholder": "Detail your request or questions",
+  "form.name": "Name",
+  "form.nameLabel": "Full Name",
+  "form.namePlaceholder": "Your full name",
+  "form.phone": "Phone",
+  "form.phoneLabel": "Phone Number",
+  "form.phonePlaceholder": "Your phone number",
+  "form.qualityServiceDesc": "High-quality imaging care with professionalism.",
+  "form.qualityServiceTitle": "Service Quality",
+  "form.sendButton": "Send",
+  "form.sending": "Sending...",
+  "form.sendMessageSubtitle": "We will reply as soon as possible.",
+  "form.sendMessageTitle": "Message Sent",
+  "form.service": "Service",
+  "form.servicePlaceholder": "Select a service",
+  "form.submit": "Submit",
+  "form.success.message": "Your request has been sent successfully.",
+  "form.success.title": "Request Sent",
+  "hero.cta": "Book an Appointment",
+  "hero.description": "Advanced imaging exams performed by experts in Oran.",
+  "hero.title": "Your Health in Good Hands",
+  "nav.appointment": "Appointment",
+  "nav.contact": "Contact",
+  "nav.home": "Home",
+  "nav.services": "Services",
+  "nav.testimonials": "Testimonials",
+  "practicalInfo.section_title": "Practical Information",
+  "services.section_title": "Our Services",
+  "testimonials.appointment": "Book your exam now",
+  "testimonials.care.points": "Listening, support, personalized follow-up",
+  "testimonials.care.text": "We put patients at the center of our focus.",
+  "testimonials.care.title": "Caring Care",
+  "testimonials.commitmentTitle": "Commitment and Transparency",
+  "testimonials.ctaButton": "Book an Appointment",
+  "testimonials.ctaText": "See why our patients recommend us.",
+  "testimonials.ctaTitle": "They Trust Us",
+  "testimonials.excellence.points": "Modern technology, recognized expertise",
+  "testimonials.excellence.text": "Accurate exams for reliable diagnosis.",
+  "testimonials.excellence.title": "Medical Excellence",
+  "testimonials.extended.0.author": "Nadia K.",
+  "testimonials.extended.0.role": "Patient",
+  "testimonials.extended.0.text": "Very professional and welcoming team.",
+  "testimonials.extended.1.author": "Dr. Lounis",
+  "testimonials.extended.1.role": "Referring Doctor",
+  "testimonials.extended.1.text": "Reliable results and fast service.",
+  "testimonials.extended.2.author": "Ahmed Z.",
+  "testimonials.extended.2.role": "Patient",
+  "testimonials.extended.2.text": "I was taken care of quickly and respectfully.",
+  "testimonials.intro": "What our patients say",
+  "testimonials.section_title": "They Talk About Us",
+  "testimonials.title": "Testimonials",
+  "toast.errorDescription": "Could not send the message.",
+  "toast.errorTitle": "Failed",
+  "toast.messageSentDescription": "We have received your message.",
+  "toast.messageSentTitle": "Message Sent"
 }
