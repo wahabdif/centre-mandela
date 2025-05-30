@@ -1,5 +1,4 @@
-import express from 'express';
-import { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
@@ -18,7 +17,7 @@ export async function setupVite(app: express.Express, root = process.cwd(), isDe
 
     app.use('*', async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const url = req.originalUrl;
+        const url = req.originalUrl ?? '/'; // ✅ Ajout d'une valeur par défaut
 
         const templatePath = resolve('index.html');
         let template = fs.readFileSync(templatePath, 'utf-8');
@@ -32,7 +31,7 @@ export async function setupVite(app: express.Express, root = process.cwd(), isDe
 
         res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
       } catch (e) {
-        vite.ssrFixStacktrace(e as Error);
+        vite.ssrFixStacktrace(e instanceof Error ? e : new Error(String(e))); // ✅ Vérification du typage de l'erreur
         next(e);
       }
     });
@@ -41,13 +40,14 @@ export async function setupVite(app: express.Express, root = process.cwd(), isDe
     const ssrManifestPath = resolve('dist/client/ssr-manifest.json');
     const template = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8');
 
-    const { render } = await import('./dist/server/entry-server.js'); // ✅ utilisation de import() pour compatibilité ESModules
-    const manifest = JSON.parse(fs.readFileSync(ssrManifestPath, 'utf-8')); // ✅ éviter require en mode node16
+    const { render } = await import('./dist/server/entry-server.js'); // ✅ Utilisation de `import()` pour compatibilité ESModules
+    const manifest = JSON.parse(fs.readFileSync(ssrManifestPath, 'utf-8')); // ✅ Suppression de `require`
 
     app.use('/assets', express.static(path.join(distPath, 'assets')));
 
     app.use('*', async (req: Request, res: Response) => {
-      const appHtml = await render(req.originalUrl, manifest);
+      const url = req.originalUrl ?? '/'; // ✅ Ajout d'une valeur par défaut
+      const appHtml = await render(url, manifest);
       const html = template.replace(`<!--app-html-->`, appHtml);
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     });
