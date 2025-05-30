@@ -7,13 +7,16 @@
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "typeRoots": ["./node_modules/@types", "./server/types"],
     "resolveJsonModule": true,
     "strict": true,
-    "baseUrl": ".",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ],
+    "types": ["node"],
+    "baseUrl": "."
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules", "dist"]
