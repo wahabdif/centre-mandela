@@ -309,3 +309,16 @@ export const socialLinks: SocialLink[] = [
   {
     platform: "instagram",
     url: "#",
+    icon: "instagram"
+  },
+  {
+    platform: "twitter",
+    url: "#",
+    icon: "twitter"
+  },
+  {
+    platform: "linkedin",
+    url: "#",
+    icon: "linkedin"
+  }
+];
