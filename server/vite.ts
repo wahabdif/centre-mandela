@@ -1,3 +1,4 @@
+import express from 'express';
 import { Express, Request, Response, NextFunction } from 'express';
 import path from 'path';
 import fs from 'fs';
