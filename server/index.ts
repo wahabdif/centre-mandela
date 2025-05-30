@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
-import routes from './routes';
+import routes from './routes.js';
 
 dotenv.config();
 
