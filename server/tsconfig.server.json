@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./",
-    "types": ["node", "express"],
+    "types": ["node"],       // enlever "express" ici
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
