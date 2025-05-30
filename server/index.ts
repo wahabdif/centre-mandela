@@ -19,8 +19,11 @@ app.use((err: unknown, req: Request, res: Response, next: (err?: any) => void) =
 
 // Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Ajout explicite du Content-Type pour éviter le téléchargement du fichier au lieu de l'affichage
 app.get('*', (req: Request, res: Response) => {
-  (res as any).sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.setHeader('Content-Type', 'text/html'); // Définit le bon type MIME
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(PORT, () => {
