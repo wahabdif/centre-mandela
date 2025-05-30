@@ -1,35 +1,52 @@
-import express, { type Request, type Response, type NextFunction } from 'express';
+import express, {
+  type Express,
+  type Request,
+  type Response,
+  type NextFunction,
+} from 'express';
+import { createServer, type ViteDevServer } from 'vite';
+import fs from 'fs';
 import path from 'path';
+import { Server } from 'http';
+import { nanoid } from 'nanoid';
 import { fileURLToPath } from 'url';
-import contactRoutes from './routes.js';
-import viteServer from './vite.js';
+import { setupVite, serveStatic } from './vite';
 
+// Permet d'obtenir __dirname dans un module ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
+const app: Express = express();
+const server = new Server(app);
 
+// Middleware pour parser le JSON
 app.use(express.json());
-app.use('/api', contactRoutes);
 
-// Middleware Vite pour le SSR/dev
-viteServer(app);
+// Utiliser Vite en mode dev ou servir les fichiers statiques en prod
+if (process.env.NODE_ENV === 'development') {
+  setupVite(app, server).catch((err) => {
+    console.error('Erreur lors du setup Vite:', err);
+  });
+} else {
+  serveStatic(app);
+}
 
-// Serveur statique
-app.use(express.static(path.resolve(__dirname, '..', 'client', 'dist')));
-
-// Pour toutes les autres routes, renvoyer index.html (cas SPA)
-app.get('*', (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, '..', 'client', 'dist', 'index.html'));
+// Exemple route simple
+app.get('/api/ping', (_req: Request, res: Response) => {
+  res.json({ message: 'pong' });
 });
 
-// Middleware d'erreur
-app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-  console.error('Erreur serveur :', err);
-  res.status(500).json({ error: 'Erreur interne du serveur' });
-});
+// Middleware de gestion des erreurs
+app.use(
+  (err: unknown, _req: Request, res: Response, next: NextFunction) => {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+    next();
+  }
+);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`✅ Serveur démarré sur http://localhost:${PORT}`);
+// Démarrage du serveur
+const PORT = Number(process.env.PORT) || 3000;
+server.listen(PORT, () => {
+  console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });
