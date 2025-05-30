@@ -1,22 +1,28 @@
-import express, { type Express, type Request, type Response, type NextFunction } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
+import path from 'path';
+import routes from './routes';
+
 dotenv.config();
 
-const app: Express = express();
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use('/api', routes);
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
-});
-
-// Exemple middleware avec next()
+// Middleware d'erreur
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err);
+  console.error(err.stack);
   res.status(500).json({ error: err.message });
 });
 
-const PORT = process.env.PORT ?? 3000;
+// Serve fichiers statiques si buildé
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
