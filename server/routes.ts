@@ -3,30 +3,25 @@ import type { Request, Response } from 'express';
 
 const router = Router();
 
-// Exemple GET
+// GET item by ID
 router.get('/items/:id', (req: Request<{ id: string }>, res: Response) => {
-  const item = { id: req.params.id, name: `Item ${req.params.id}` };
+  const id = req.params.id;
+  const item = { id, name: `Item ${id}` };
   res.json(item);
 });
 
-// POST avec typage du body
+// POST new item
 interface NewItem {
   name: string;
   description?: string;
 }
 
 router.post('/items', (req: Request<{}, {}, NewItem>, res: Response) => {
-  const { name, description } = req.body;
-  if (!name) {
+  const body = req.body;
+  if (!body.name) {
     return res.status(400).json({ error: 'Le champ "name" est requis.' });
   }
-
-  const newItem = {
-    id: Date.now().toString(),
-    name,
-    description,
-  };
-
+  const newItem = { id: Date.now().toString(), ...body };
   res.status(201).json(newItem);
 });
 
