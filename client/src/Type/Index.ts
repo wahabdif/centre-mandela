@@ -1,103 +1,138 @@
 // types.ts
 
-// Type des services proposés
-export interface ServiceProps {
-  id: string;
-  icon: string;
+// Section Rendez-vous (Appointment)
+export interface AppointmentTranslation {
+  back: string;
+  description: string;
+  finalNote: string;
+  preparationDescription: string;
+  preparationTitle: string;
+  stepsDescription: string;
+  stepsTitle: string;
   title: string;
-  image: string;
 }
 
-// Type des témoignages clients
-export interface Testimonial {
-  id: number;
-  text: string;
-  author: string;
-  role: string;
-  initials: string;
-  rating: number;  // Note sur 5 par exemple
-  avatar: string;
-}
-
-// Horaires d'ouverture
-export interface WorkingHour {
-  days: string;    // Ex: "Lundi - Vendredi"
-  hours: string;   // Ex: "8h00 - 18h00"
-}
-
-// Informations de contact du centre
-export interface ContactInfo {
-  address: string;
-  phone: string;
+// Section Formulaire
+export interface FormTranslation {
+  back: string;
+  contactUsLabel: string;
   email: string;
-  location: {
-    lat: number;
-    lng: number;
+  emailLabel: string;
+  emailPlaceholder: string;
+  error: {
+    message: string;
+    title: string;
+  };
+  fastResponseDesc: string;
+  fastResponseTitle: string;
+  loading: string;
+  message: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  name: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  phone: string;
+  phoneLabel: string;
+  phonePlaceholder: string;
+  qualityServiceDesc: string;
+  qualityServiceTitle: string;
+  sendButton: string;
+  sending: string;
+  sendMessageSubtitle: string;
+  sendMessageTitle: string;
+  service: string;
+  servicePlaceholder: string;
+  submit: string;
+  success: {
+    message: string;
+    title: string;
   };
 }
 
-// Caractéristiques / avantages du centre
-export interface Feature {
-  icon: string;
-  title: string;
+// Section Héros
+export interface HeroTranslation {
+  cta: string;
   description: string;
-  image: string;
-}
-
-// Bénéfices spécifiques de l'équipe
-export interface TeamBenefit {
-  icon: string;
   title: string;
-  subtitle: string;
-  image: string;
 }
 
-// Liens vers les réseaux sociaux
-export interface SocialLink {
-  platform: string;  // ex: facebook, instagram
-  url: string;
-  icon: string;      // nom de l'icône à afficher
-}
-
-// Images héro pour différentes sections
-export interface HeroImages {
+// Navigation principale
+export interface NavTranslation {
+  appointment: string;
+  contact: string;
   home: string;
   services: string;
-  appointment: string;
   testimonials: string;
-  contact: string;
 }
 
-// Images et descriptions du matériel médical
-export interface EquipmentImage {
+// Pied de page
+export interface FooterTranslation {
+  rights: string;
+  subtitle: string;
   title: string;
-  image: string;
-  description: string;
 }
 
-// *** Types pour traductions complexes, ici exemple pour la section Testimonials ***
+// Équipe médicale
+export interface DoctorsTranslation {
+  section_title: string;
+}
 
+// Informations pratiques
+export interface PracticalInfoTranslation {
+  section_title: string;
+}
+
+// Services
+export interface ServicesTranslation {
+  section_title: string;
+}
+
+// Témoignages (Testimonial)
 export interface TestimonialsTranslation {
-  title: string;
-  intro: string;
-  extended: {
+  appointment: string;
+  care: {
+    points: string;
     text: string;
+    title: string;
+  };
+  commitmentTitle: string;
+  ctaButton: string;
+  ctaText: string;
+  ctaTitle: string;
+  excellence: {
+    points: string;
+    text: string;
+    title: string;
+  };
+  extended: Array<{
     author: string;
     role: string;
-  }[];
-  ctaTitle: string;
-  ctaText: string;
-  ctaButton: string;
-  appointment: string;
-  commitmentTitle: string;
-  excellence: {
-    title: string;
     text: string;
-    points: string[];
-  };
-  care: {
-    title: string;
-    text: string;
-    points: string[];
-  };
+  }>;
+  intro: string;
+  section_title: string;
+  title: string;
+}
+
+// Toast notifications
+export interface ToastTranslation {
+  errorDescription: string;
+  errorTitle: string;
+  messageSentDescription: string;
+  messageSentTitle: string;
+}
+
+// Type global pour les traductions générales utilisées dans le site
+export interface Translations {
+  appointment: AppointmentTranslation;
+  form: FormTranslation;
+  hero: HeroTranslation;
+  nav: NavTranslation;
+  footer: FooterTranslation;
+  doctors: DoctorsTranslation;
+  practicalInfo: PracticalInfoTranslation;
+  services: ServicesTranslation;
+  testimonials: TestimonialsTranslation;
+  toast: ToastTranslation;
 }
