@@ -1,21 +1,26 @@
 import { Router, Request, Response } from 'express';
+import db from './db/database';
 
 const router = Router();
 
-// Interface pour la validation partielle du corps de requête POST /items
 interface NewItem {
   name: string;
   description?: string;
 }
 
-// GET /items/:id — récupère un item fictif par son id
+// GET /items/:id - récupérer item depuis la DB SQLite
 router.get('/items/:id', (req: Request<{ id: string }>, res: Response) => {
   const { id } = req.params;
-  const item = { id, name: `Item ${id}` };
+  const item = db.prepare('SELECT * FROM items WHERE id = ?').get(id);
+
+  if (!item) {
+    return res.status(404).json({ error: 'Item non trouvé.' });
+  }
+
   res.json(item);
 });
 
-// POST /items — création d’un nouvel item avec validation simple
+// POST /items - insérer un nouvel item en DB SQLite
 router.post('/items', (req: Request<{}, {}, NewItem>, res: Response) => {
   const { name, description } = req.body;
 
@@ -23,12 +28,12 @@ router.post('/items', (req: Request<{}, {}, NewItem>, res: Response) => {
     return res.status(400).json({ error: 'Le champ name est requis.' });
   }
 
-  const newItem = {
-    id: Date.now().toString(),
-    name,
-    description,
-  };
+  const id = Date.now().toString();
 
+  const stmt = db.prepare('INSERT INTO items (id, name, description) VALUES (?, ?, ?)');
+  stmt.run(id, name, description ?? null);
+
+  const newItem = { id, name, description };
   res.status(201).json(newItem);
 });
 
