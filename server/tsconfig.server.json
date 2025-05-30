@@ -1,7 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist",  
+    "outDir": "./dist",
     "target": "ES2020",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
@@ -12,8 +12,8 @@
     "baseUrl": ".",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "types": ["node", "express", "cors"]
   },
-  "include": ["./**/*.ts"],  
-  "exclude": ["node_modules", "dist"]  
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
