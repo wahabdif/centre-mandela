@@ -309,37 +309,3 @@ export const socialLinks: SocialLink[] = [
   {
     platform: "instagram",
     url: "#",
-    icon: "instagram"
-  },
-  {
-    platform: "linkedin",
-    url: "#",
-    icon: "linkedin"
-  }
-];
-
-export const heroImages = {
-  home: "https://images.pexels.com/photos/4033148/pexels-photo-4033148.jpeg?auto=compress&cs=tinysrgb&w=1800",
-  services: "https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=1800",
-  appointment: "https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg?auto=compress&cs=tinysrgb&w=1800",
-  testimonials: "https://images.pexels.com/photos/7088530/pexels-photo-7088530.jpeg?auto=compress&cs=tinysrgb&w=1800",
-  contact: "https://images.pexels.com/photos/6129507/pexels-photo-6129507.jpeg?auto=compress&cs=tinysrgb&w=1800"
-};
-
-export const equipmentImages: EquipmentImage[] = [
-  {
-    title: {
-      fr: "IRM dernière génération",
-      ar: "الرنين المغناطيسي الأحدث",
-      en: "Latest Generation MRI"
-    },
-    image: "https://images.pexels.com/photos/6749773/pexels-photo-6749773.jpeg?auto=compress&cs=tinysrgb&w=800",
-    description: {
-      fr: "Système IRM 3 Tesla avec logiciels avancés pour des examens détaillés",
-      ar: "نظام رنين مغناطيسي 3 تسلا مع برامج متقدمة لفحوصات مفصلة",
-      en: "3 Tesla MRI system with advanced software for detailed exams"
-    }
-  },
-  {
-    title: {
-     
