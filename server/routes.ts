@@ -58,8 +58,11 @@ router.post('/contact', async (req: Request, res: Response): Promise<void> => {
 
 // PATCH /api/contact/:id/status
 router.patch('/contact/:id/status', async (req: Request, res: Response): Promise<void> => {
+  // Convertir paramètre id en nombre
   const id = Number(req.params.id);
-  const { status } = req.body;
+
+  // Typage strict du statut attendu
+  const { status }: { status: 'pending' | 'read' | 'archived' } = req.body;
 
   if (!['pending', 'read', 'archived'].includes(status)) {
     res.status(400).json({ error: 'Statut invalide' });
