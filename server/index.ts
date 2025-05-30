@@ -2,8 +2,8 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import contactRoutes from './routes.js'; // Nécessaire avec module: "NodeNext"
-
+import contactRoutes from './routes'; // sans extension si supportée  
+// Nécessaire avec module: "NodeNext"
 // Permet d'obtenir __dirname dans un contexte ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
