@@ -2,7 +2,7 @@ import { Router, type Request, type Response } from 'express';
 
 const router = Router();
 
-// Exemple route GET avec paramètre
+// ✅ Exemple route GET avec paramètre typé
 router.get('/items/:id', (req: Request<{ id: string }>, res: Response) => {
   const id = req.params.id;
   // Simuler une récupération d'élément
@@ -10,19 +10,24 @@ router.get('/items/:id', (req: Request<{ id: string }>, res: Response) => {
   res.json(item);
 });
 
-// Exemple route POST avec body typé
+// ✅ Interface pour le corps de la requête POST
 interface NewItem {
   name: string;
   description?: string;
 }
 
+// ✅ Route POST avec typage explicite
 router.post('/items', (req: Request<{}, {}, NewItem>, res: Response) => {
   const body = req.body;
+
   if (!body?.name) {
     return res.status(400).json({ error: 'Le champ name est requis.' });
   }
-  // Simuler création d'item avec ID aléatoire
-  const newItem = { id: Date.now().toString(), ...body };
+
+  // Ne pas utiliser `Number` comme nom de variable
+  const generatedId = Date.now().toString();
+  const newItem = { id: generatedId, ...body };
+
   res.status(201).json(newItem);
 });
 
