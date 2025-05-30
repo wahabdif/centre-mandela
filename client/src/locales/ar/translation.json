@@ -1,157 +1,81 @@
 {
-  "hero": {
-    "subtitle": "مركز التميز في التصوير الطبي",
-    "title": "التميز في التصوير الطبي بوهران",
-    "description": "تشخيصات دقيقة وموثوقة يقدمها فريقنا المختص باستخدام أحدث الأجهزة الطبية.",
-    "cta_appointment": "حجز موعد",
-    "cta_services": "خدماتنا"
-  },
-  "services": {
-    "section_title": "خدماتنا",
-    "section_subtitle": "خدمات التصوير الطبي",
-    "section_description": "نقدم مجموعة شاملة من خدمات التصوير الطبي بأحدث الأجهزة لضمان تشخيصات دقيقة.",
-    "list": [
-      "الأشعة التقليدية",
-      "فحص الصدى العام والمتخصص",
-      "جهاز السكانير عالي الدقة",
-      "الرنين المغناطيسي (IRM)",
-      "تصوير الثدي الشعاعي",
-      "الأشعة السنية"
-    ]
-  },
-  "equipment": {
-    "section_title": "تقنيات متقدمة",
-    "section_subtitle": "معدات طبية حديثة",
-    "section_description": "يضم مركزنا أحدث تقنيات التصوير الطبي لضمان دقة التشخيص مع مراعاة راحة المرضى.",
-    "benefits": [
-      "صور عالية الدقة",
-      "تقليص أوقات الانتظار",
-      "راحة مثالية للمريض",
-      "صيانة منتظمة لضمان الجودة",
-      "بروتوكولات أمان صارمة"
-    ]
-  },
-  "team": {
-    "section_title": "فريقنا",
-    "section_subtitle": "فريق طبي عالي الكفاءة",
-    "section_description": "يضم مركز بن عامر للتصوير نخبة من الأطباء المتخصصين لتقديم خدمات استثنائية.",
-    "section_description_2": "نلتزم بتوفير تشخيصات دقيقة في بيئة مريحة تضع المريض في صميم اهتمامنا.",
-    "benefits": [
-      {
-        "title": "مهنيون متمرسون",
-        "subtitle": "سنوات من الخبرة في التصوير الطبي"
-      },
-      {
-        "title": "مقاربة إنسانية",
-        "subtitle": "خدمة مخصصة لكل مريض"
-      },
-      {
-        "title": "تكوين مستمر",
-        "subtitle": "خبراؤنا يتابعون آخر التطورات بانتظام"
-      }
-    ],
-    "members": [
-      {
-        "name": "د. سمير بن عامر",
-        "specialty": "أخصائي أشعة",
-        "bio": "خبير في الأشعة التقليدية لأكثر من 15 سنة.",
-        "image": "/images/doctors/dr-benameur.jpg"
-      },
-      {
-        "name": "د. نادية حداد",
-        "specialty": "تصوير طبي",
-        "bio": "متخصصة في الرنين المغناطيسي والصدى، ونهج إنساني مع المرضى.",
-        "image": "/images/doctors/dr-haddad.jpg"
-      }
-    ]
-  },
-  "practicalInfo": {
-    "section_title": "معلومات عملية",
-    "items": [
-      {
-        "title": "ساعات العمل",
-        "detail": "من الإثنين إلى الجمعة، من 08:00 إلى 17:30"
-      },
-      {
-        "title": "العنوان",
-        "detail": "10 شارع الإخوة عميروش، وهران، الجزائر"
-      },
-      {
-        "title": "الاتصال",
-        "detail": "+213 41 123 4567"
-      }
-    ]
-  },
-  "testimonials": {
-    "section_title": "شهادات",
-    "section_subtitle": "آراء مرضانا",
-    "section_description": "اطلع على تجارب مرضانا مع خدماتنا وفريقنا الطبي.",
-    "reviews": [
-      {
-        "name": "فاطمة ب.",
-        "comment": "استقبال رائع ونتائج سريعة. راضية جدًا عن الخدمات.",
-        "rating": 5
-      },
-      {
-        "name": "أحمد ك.",
-        "comment": "فريق محترف وأجهزة حديثة. أنصح بشدة.",
-        "rating": 5
-      },
-      {
-        "name": "نادية م.",
-        "comment": "أطباء يستمعون جيدًا وتشخيص دقيق. شكرًا للفريق.",
-        "rating": 4
-      }
-    ],
-    "cta": "عرض المزيد من الشهادات"
-  },
-  "why_us": {
-    "section_title": "لماذا نحن؟",
-    "section_subtitle": "التزامنا نحوكم",
-    "section_description": "نلتزم بتقديم خدمات تصوير طبي عالية الجودة مع اهتمام خاص بكل مريض.",
-    "features": [
-      {
-        "title": "فريق مخلص",
-        "description": "مهنيون شغوفون بعملهم"
-      },
-      {
-        "title": "تقنية حديثة",
-        "description": "أجهزة من الجيل الجديد"
-      },
-      {
-        "title": "مواعيد سريعة",
-        "description": "إمكانية الحجز بسرعة"
-      },
-      {
-        "title": "خصوصية مضمونة",
-        "description": "احترام كامل للسرية وبيانات المرضى"
-      }
-    ],
-    "cta_title": "هل أنت مستعد لحجز موعد؟",
-    "cta_description": "فريقنا في خدمتك لتلبية كل احتياجاتك في التصوير الطبي.",
-    "cta_button": "احجز الآن"
-  },
-  "needs": {
-    "section_title": "ما هو احتياجك؟",
-    "section_description": "نحن هنا لمرافقتك سواء لفحص دوري، حالة مستعجلة أو متابعة طبية.",
-    "list": [
-      "فحص طبي بوصفة",
-      "كشف وقائي أو متابعة",
-      "مراقبة أمراض مزمنة",
-      "رأي طبي ثان",
-      "استشارة تخصصية في التصوير"
-    ]
-  },
-  "footer": {
-    "contact_info": {
-      "address": "32 شارع حمّو بوتليليس، وهران، الجزائر",
-      "phone": "+213 661 59 81 32",
-      "email": "cherif.benameur@gmail.com"
-    },
-    "social_media": {
-      "facebook": "https://facebook.com/centrebenameur",
-      "instagram": "https://instagram.com/centrebenameur"
-    },
-    "copyright": "© 2025 مركز بن عامر للتصوير. جميع الحقوق محفوظة."
-  }
+  "appointment.back": "رجوع",
+  "appointment.description": "احجز موعدًا بسهولة مع فريقنا الطبي عبر الإنترنت.",
+  "appointment.finalNote": "سنتصل بك قريبًا لتأكيد الموعد.",
+  "appointment.preparationDescription": "يرجى الحضور قبل الموعد بـ 15 دقيقة وإحضار مستنداتك الطبية.",
+  "appointment.preparationTitle": "التحضير",
+  "appointment.stepsDescription": "املأ النموذج، اختر الخدمة، وأرسل الطلب.",
+  "appointment.stepsTitle": "الخطوات",
+  "appointment.title": "حجز موعد",
+  "doctors.section_title": "فريقنا الطبي",
+  "footer.rights": "جميع الحقوق محفوظة.",
+  "footer.subtitle": "التميز في التصوير الطبي في وهران",
+  "footer.title": "مركز بن عامر للتصوير الطبي",
+  "form.back": "رجوع",
+  "form.contactUsLabel": "اتصل بنا",
+  "form.email": "البريد الإلكتروني",
+  "form.emailLabel": "عنوان البريد الإلكتروني",
+  "form.emailPlaceholder": "you@example.com",
+  "form.error.message": "حدث خطأ، يرجى المحاولة مرة أخرى.",
+  "form.error.title": "خطأ",
+  "form.fastResponseDesc": "ردود سريعة على طلباتك عبر الإنترنت.",
+  "form.fastResponseTitle": "الاستجابة",
+  "form.loading": "جارٍ التحميل...",
+  "form.message": "الرسالة",
+  "form.messageLabel": "رسالتك",
+  "form.messagePlaceholder": "حدد طلبك أو استفساراتك",
+  "form.name": "الاسم",
+  "form.nameLabel": "الاسم الكامل",
+  "form.namePlaceholder": "اسمك الكامل",
+  "form.phone": "الهاتف",
+  "form.phoneLabel": "رقم الهاتف",
+  "form.phonePlaceholder": "رقم هاتفك",
+  "form.qualityServiceDesc": "رعاية تصوير طبي عالية الجودة ومهنية.",
+  "form.qualityServiceTitle": "جودة الخدمة",
+  "form.sendButton": "إرسال",
+  "form.sending": "جارٍ الإرسال...",
+  "form.sendMessageSubtitle": "سوف نرد عليك في أقرب وقت.",
+  "form.sendMessageTitle": "تم الإرسال",
+  "form.service": "الخدمة",
+  "form.servicePlaceholder": "اختر خدمة",
+  "form.submit": "إرسال",
+  "form.success.message": "تم إرسال طلبك بنجاح.",
+  "form.success.title": "تم الطلب",
+  "hero.cta": "احجز موعدًا",
+  "hero.description": "فحوصات تصوير متقدمة تُجرى بواسطة خبراء في وهران.",
+  "hero.title": "صحتك بأيدٍ أمينة",
+  "nav.appointment": "الموعد",
+  "nav.contact": "اتصال",
+  "nav.home": "الرئيسية",
+  "nav.services": "الخدمات",
+  "nav.testimonials": "الشهادات",
+  "practicalInfo.section_title": "معلومات عملية",
+  "services.section_title": "خدماتنا",
+  "testimonials.appointment": "احجز فحصك الآن",
+  "testimonials.care.points": "الاهتمام، الدعم، المتابعة الشخصية",
+  "testimonials.care.text": "نضع المرضى في قلب اهتمامنا.",
+  "testimonials.care.title": "رعاية متميزة",
+  "testimonials.commitmentTitle": "الشفافية والالتزام",
+  "testimonials.ctaButton": "احجز موعدًا",
+  "testimonials.ctaText": "اكتشف لماذا يوصي المرضى بنا.",
+  "testimonials.ctaTitle": "ثقة مرضانا",
+  "testimonials.excellence.points": "تقنيات حديثة، خبرة موثوقة",
+  "testimonials.excellence.text": "فحوصات دقيقة لتشخيص موثوق.",
+  "testimonials.excellence.title": "التميّز الطبي",
+  "testimonials.extended.0.author": "نادية ك.",
+  "testimonials.extended.0.role": "مريضة",
+  "testimonials.extended.0.text": "فريق محترف وودود جدًا.",
+  "testimonials.extended.1.author": "د. لونيس",
+  "testimonials.extended.1.role": "طبيب محول",
+  "testimonials.extended.1.text": "نتائج موثوقة وخدمة سريعة.",
+  "testimonials.extended.2.author": "أحمد ز.",
+  "testimonials.extended.2.role": "مريض",
+  "testimonials.extended.2.text": "تم استقبالي بسرعة وبكل احترام.",
+  "testimonials.intro": "آراء مرضانا",
+  "testimonials.section_title": "ماذا يقولون عنا",
+  "testimonials.title": "الشهادات",
+  "toast.errorDescription": "تعذر إرسال الرسالة.",
+  "toast.errorTitle": "فشل",
+  "toast.messageSentDescription": "لقد استلمنا رسالتك.",
+  "toast.messageSentTitle": "تم الإرسال"
 }
