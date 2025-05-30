@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
-import pool from './db/db.js';
+import db from './db.js';
 
 const router = Router();
 
@@ -13,9 +13,9 @@ const ContactSchema = z.object({
 });
 
 // GET /api/contact
-router.get('/contact', async (_req: Request, res: Response): Promise<void> => {
+router.get('/contact', (_req: Request, res: Response) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM contact ORDER BY "createdAt" DESC');
+    const rows = db.prepare('SELECT * FROM contact ORDER BY createdAt DESC').all();
     res.status(200).json(rows);
   } catch (err) {
     console.error(err);
@@ -24,7 +24,7 @@ router.get('/contact', async (_req: Request, res: Response): Promise<void> => {
 });
 
 // POST /api/contact
-router.post('/contact', async (req: Request, res: Response): Promise<void> => {
+router.post('/contact', (req: Request, res: Response) => {
   const result = ContactSchema.safeParse(req.body);
 
   if (!result.success) {
@@ -35,21 +35,23 @@ router.post('/contact', async (req: Request, res: Response): Promise<void> => {
   const data = result.data;
 
   try {
-    const insertQuery = `
-      INSERT INTO contact (name, email, phone, service, message, status, "createdAt")
-      VALUES ($1, $2, $3, $4, $5, 'pending', NOW())
-      RETURNING *;
-    `;
-    const values = [
+    const stmt = db.prepare(`
+      INSERT INTO contact (name, email, phone, service, message, status, createdAt)
+      VALUES (?, ?, ?, ?, ?, 'pending', datetime('now'))
+    `);
+
+    const info = stmt.run(
       data.name,
       data.email,
       data.phone,
       data.service,
-      data.message ?? null,
-    ];
+      data.message ?? null
+    );
 
-    const { rows } = await pool.query(insertQuery, values);
-    res.status(200).json(rows[0]);
+    // Récupérer le nouveau message inséré
+    const newMessage = db.prepare('SELECT * FROM contact WHERE id = ?').get(info.lastInsertRowid);
+
+    res.status(200).json(newMessage);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erreur serveur' });
@@ -57,12 +59,9 @@ router.post('/contact', async (req: Request, res: Response): Promise<void> => {
 });
 
 // PATCH /api/contact/:id/status
-router.patch('/contact/:id/status', async (req: Request, res: Response): Promise<void> => {
-  // Convertir paramètre id en nombre
+router.patch('/contact/:id/status', (req: Request, res: Response) => {
   const id = Number(req.params.id);
-
-  // Typage strict du statut attendu
-  const { status }: { status: 'pending' | 'read' | 'archived' } = req.body;
+  const { status } = req.body;
 
   if (!['pending', 'read', 'archived'].includes(status)) {
     res.status(400).json({ error: 'Statut invalide' });
@@ -70,21 +69,22 @@ router.patch('/contact/:id/status', async (req: Request, res: Response): Promise
   }
 
   try {
-    const updateQuery = `
+    const stmt = db.prepare(`
       UPDATE contact
-      SET status = $1
-      WHERE id = $2
-      RETURNING *;
-    `;
+      SET status = ?
+      WHERE id = ?
+    `);
 
-    const { rows } = await pool.query(updateQuery, [status, id]);
+    const info = stmt.run(status, id);
 
-    if (rows.length === 0) {
+    if (info.changes === 0) {
       res.status(404).json({ error: 'Message non trouvé' });
       return;
     }
 
-    res.status(200).json(rows[0]);
+    const updatedMessage = db.prepare('SELECT * FROM contact WHERE id = ?').get(id);
+
+    res.status(200).json(updatedMessage);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erreur serveur' });
