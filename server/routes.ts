@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 // Pour régler l'erreur TS2307, ajoute un fichier de déclaration dans "server/db/database.d.ts"
 // ou utilise temporairement la directive @ts-ignore :
 /* @ts-ignore */
-import db from './db/database.js';
+import db from './db/db.js';
 
 const router = Router();
 
