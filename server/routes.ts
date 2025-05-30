@@ -1,32 +1,31 @@
-import { Router, type Request, type Response } from 'express';
+import { Router } from 'express';
+import type { Request, Response } from 'express';
 
 const router = Router();
 
-// ✅ Exemple route GET avec paramètre typé
+// Exemple GET
 router.get('/items/:id', (req: Request<{ id: string }>, res: Response) => {
-  const id = req.params.id;
-  // Simuler une récupération d'élément
-  const item = { id, name: 'Item ' + id };
+  const item = { id: req.params.id, name: `Item ${req.params.id}` };
   res.json(item);
 });
 
-// ✅ Interface pour le corps de la requête POST
+// POST avec typage du body
 interface NewItem {
   name: string;
   description?: string;
 }
 
-// ✅ Route POST avec typage explicite
 router.post('/items', (req: Request<{}, {}, NewItem>, res: Response) => {
-  const body = req.body;
-
-  if (!body?.name) {
-    return res.status(400).json({ error: 'Le champ name est requis.' });
+  const { name, description } = req.body;
+  if (!name) {
+    return res.status(400).json({ error: 'Le champ "name" est requis.' });
   }
 
-  // Ne pas utiliser `Number` comme nom de variable
-  const generatedId = Date.now().toString();
-  const newItem = { id: generatedId, ...body };
+  const newItem = {
+    id: Date.now().toString(),
+    name,
+    description,
+  };
 
   res.status(201).json(newItem);
 });
