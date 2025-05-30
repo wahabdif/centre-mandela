@@ -42,7 +42,7 @@ export const appointments = pgTable("appointments", {
   email: text("email").notNull(),
   phone: text("phone").notNull(),
   service: text("service").notNull(),
-  message: text("message"),
+  message: text("message").default(""),  // message peut être vide, pas null
   status: text("status").default("pending").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
