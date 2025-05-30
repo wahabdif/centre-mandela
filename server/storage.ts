@@ -1,6 +1,12 @@
 import Database from 'better-sqlite3';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
+// Gestion __dirname en ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Résolution du chemin vers la base de données
 const dbPath = path.resolve(__dirname, 'db', 'database.sqlite');
 const db = new Database(dbPath);
 
@@ -38,12 +44,12 @@ export type InsertContactMessage = {
   status?: string;
 };
 
-export async function getAllContactMessages(): Promise<ContactMessage[]> {
+export function getAllContactMessages(): ContactMessage[] {
   const stmt = db.prepare('SELECT * FROM contact ORDER BY datetime(createdAt) DESC');
   return stmt.all();
 }
 
-export async function createContactMessage(data: InsertContactMessage): Promise<ContactMessage> {
+export function createContactMessage(data: InsertContactMessage): ContactMessage {
   const createdAt = new Date().toISOString();
   const status = data.status ?? 'pending';
 
@@ -57,7 +63,7 @@ export async function createContactMessage(data: InsertContactMessage): Promise<
   return get.get(info.lastInsertRowid) as ContactMessage;
 }
 
-export async function updateContactMessageStatus(id: number, status: string): Promise<ContactMessage | null> {
+export function updateContactMessageStatus(id: number, status: string): ContactMessage | null {
   const allowedStatuses = ['pending', 'read', 'archived'];
   if (!allowedStatuses.includes(status)) throw new Error(`Statut invalide : ${status}`);
 
@@ -69,7 +75,7 @@ export async function updateContactMessageStatus(id: number, status: string): Pr
   return get.get(id) as ContactMessage;
 }
 
-export async function getContactMessageById(id: number): Promise<ContactMessage | null> {
+export function getContactMessageById(id: number): ContactMessage | null {
   const get = db.prepare('SELECT * FROM contact WHERE id = ?');
   return get.get(id) ?? null;
 }
