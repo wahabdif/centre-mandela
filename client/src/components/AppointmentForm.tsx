@@ -6,51 +6,34 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { services } from "@/lib/constants";
+import { useTranslation } from "react-i18next";
 
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+  Form, FormControl, FormField, FormItem,
+  FormLabel, FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { LoaderCircle } from "lucide-react";
 
 const appointmentFormSchema = z.object({
-  name: z.string().min(3, {
-    message: "Le nom doit comporter au moins 3 caractères",
+  name: z.string().min(3, { message: "form.errors.name" }),
+  email: z.string().email({ message: "form.errors.email" }),
+  phone: z.string().min(8).regex(/^[0-9+\s()-]{8,15}$/, {
+    message: "form.errors.phone",
   }),
-  email: z.string().email({
-    message: "Veuillez entrer une adresse e-mail valide",
-  }),
-  phone: z
-    .string()
-    .min(8, {
-      message: "Le numéro de téléphone doit comporter au moins 8 caractères",
-    })
-    .regex(/^[0-9+\s()-]{8,15}$/, {
-      message: "Veuillez entrer un numéro de téléphone valide",
-    }),
-  service: z.string({
-    required_error: "Veuillez sélectionner un service",
-  }),
+  service: z.string({ required_error: "form.errors.service" }),
   message: z.string().optional(),
 });
 
 type AppointmentFormValues = z.infer<typeof appointmentFormSchema>;
 
 export default function AppointmentForm() {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [submitted, setSubmitted] = useState(false);
 
@@ -72,9 +55,8 @@ export default function AppointmentForm() {
     },
     onSuccess: () => {
       toast({
-        title: "Rendez-vous demandé",
-        description:
-          "Nous vous contacterons bientôt pour confirmer votre rendez-vous.",
+        title: t("form.success.title"),
+        description: t("form.success.message"),
         variant: "default",
       });
       form.reset();
@@ -82,9 +64,8 @@ export default function AppointmentForm() {
     },
     onError: (error) => {
       toast({
-        title: "Erreur",
-        description:
-          error.message || "Une erreur s'est produite. Veuillez réessayer.",
+        title: t("form.error.title"),
+        description: error.message || t("form.error.message"),
         variant: "destructive",
       });
     },
@@ -99,13 +80,10 @@ export default function AppointmentForm() {
       <div className="bg-white rounded-lg shadow-xl overflow-hidden p-8 text-center text-gray-900">
         <div className="mb-6 text-5xl text-green-500">✓</div>
         <h3 className="text-2xl font-bold text-primary mb-4">
-          Demande envoyée avec succès
+          {t("form.success.title")}
         </h3>
-        <p className="text-lg mb-6">
-          Merci pour votre demande de rendez-vous. Notre équipe vous contactera
-          sous peu pour confirmer les détails.
-        </p>
-        <Button onClick={() => setSubmitted(false)}>Retour</Button>
+        <p className="text-lg mb-6">{t("form.success.message")}</p>
+        <Button onClick={() => setSubmitted(false)}>{t("form.back")}</Button>
       </div>
     );
   }
@@ -120,11 +98,12 @@ export default function AppointmentForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-semibold">Nom complet</FormLabel>
+                  <FormLabel className="font-semibold">
+                    {t("form.name")}
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Votre nom complet"
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
+                      placeholder={t("form.namePlaceholder")}
                       {...field}
                     />
                   </FormControl>
@@ -138,14 +117,9 @@ export default function AppointmentForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-semibold">Email</FormLabel>
+                  <FormLabel className="font-semibold">{t("form.email")}</FormLabel>
                   <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="votre.email@exemple.com"
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
-                      {...field}
-                    />
+                    <Input placeholder={t("form.emailPlaceholder")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -157,13 +131,9 @@ export default function AppointmentForm() {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-semibold">Téléphone</FormLabel>
+                  <FormLabel className="font-semibold">{t("form.phone")}</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Votre numéro de téléphone"
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
-                      {...field}
-                    />
+                    <Input placeholder={t("form.phonePlaceholder")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -175,22 +145,20 @@ export default function AppointmentForm() {
               name="service"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-semibold">
-                    Service souhaité
-                  </FormLabel>
+                  <FormLabel className="font-semibold">{t("form.service")}</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400">
-                        <SelectValue placeholder="Sélectionnez un service" />
+                      <SelectTrigger>
+                        <SelectValue placeholder={t("form.servicePlaceholder")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {services.map((service) => (
                         <SelectItem key={service.id} value={service.id}>
-                          {service.title}
+                          {t(`services.${service.id}`)}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -205,11 +173,10 @@ export default function AppointmentForm() {
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-semibold">Message</FormLabel>
+                  <FormLabel className="font-semibold">{t("form.message")}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Précisez votre demande ou vos questions"
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder:text-gray-400"
+                      placeholder={t("form.messagePlaceholder")}
                       rows={4}
                       {...field}
                     />
@@ -227,11 +194,11 @@ export default function AppointmentForm() {
               {createAppointment.isPending ? (
                 <>
                   <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-                  Envoi en cours...
+                  {t("form.loading")}
                 </>
               ) : (
                 <>
-                  <span className="mr-2">📩</span> Envoyer
+                  <span className="mr-2">📩</span> {t("form.submit")}
                 </>
               )}
             </Button>
