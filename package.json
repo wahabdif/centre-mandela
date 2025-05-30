@@ -5,7 +5,6 @@
   "license": "MIT",
   "type": "module",
   "main": "server/dist/index.js",
-  "scripts": {
     "scripts": {
   "dev": "vite",
   "dev:server": "tsx server/src/index.ts",
@@ -88,7 +87,6 @@
     "wouter": "^3.3.5",
     "zod": "^3.24.2",
     "zod-validation-error": "^3.4.0"
-    }
   },
   "devDependencies": {
     "@replit/vite-plugin-cartographer": "^0.2.5",
