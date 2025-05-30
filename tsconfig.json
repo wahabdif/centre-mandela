@@ -20,7 +20,7 @@
   "include": [
     "client/src",
     "shared",
-    "server"
+    "server/src"
   ],
   "exclude": [
     "node_modules",
