@@ -6,21 +6,19 @@ import routes from './routes';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use('/api', routes);
 
-// Middleware gestion d'erreur
+// Middleware de gestion des erreurs
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
-  res.status(500).json({ error: err.message });
+  res.status(500).json({ error: err.message || 'Erreur serveur' });
 });
 
-// Servir les fichiers statiques (frontend build)
+// Servir les fichiers statiques (build frontend)
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Route "catch-all" pour SPA
 app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -28,4 +26,3 @@ app.get('*', (req: Request, res: Response) => {
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
-
