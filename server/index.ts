@@ -4,7 +4,7 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 // ✅ Corrigé : pas d'extension .js/.ts dans les imports NodeNext
-import contactRoutes from './routes';
+import contactRoutes from './routes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
