@@ -19,17 +19,23 @@ export async function setupVite(app: express.Express, root: string = process.cwd
       try {
         const url = (req as any).originalUrl || req.url;
         const templatePath = resolve('index.html');
-        let template = fs.readFileSync(templatePath, 'utf-8');
 
+        if (!fs.existsSync(templatePath)) {
+          console.error(`❌ Le fichier ${templatePath} est introuvable.`);
+          return next(new Error('Fichier index.html introuvable'));
+        }
+
+        let template = fs.readFileSync(templatePath, 'utf-8');
         template = await (vite.transformIndexHtml as any)(url, template);
+
         const { render } = await vite.ssrLoadModule('/src/entry-server.tsx');
         const appHtml = await render(url);
 
         const html = template.replace(`<!--app-html-->`, appHtml);
-        res.setHeader('Content-Type', 'text/html'); // 🔥 Ajout du type MIME
+        res.setHeader('Content-Type', 'text/html');
         res.status(200).end(html);
       } catch (e) {
-        (vite.ssrFixStacktrace as any)(e instanceof Error ? e : new Error(String(e)));
+        (vite.ssrFixStacktrace as any)?.(e instanceof Error ? e : new Error(String(e)));
         next(e);
       }
     });
@@ -37,11 +43,15 @@ export async function setupVite(app: express.Express, root: string = process.cwd
     const distPath = resolve('dist/client');
     const ssrManifestPath = resolve('dist/client/ssr-manifest.json');
     const templatePath = resolve('dist/client/index.html');
-    
+
+    if (!fs.existsSync(templatePath) || !fs.existsSync(ssrManifestPath)) {
+      console.error(`❌ Fichiers nécessaires introuvables : ${templatePath} ou ${ssrManifestPath}`);
+      return;
+    }
+
     let template = fs.readFileSync(templatePath, 'utf-8');
 
     try {
-      // 🔥 Ajout de gestion d'erreur pour éviter un crash si le module SSR est introuvable
       const { render } = await import('./dist/server/entry-server.js');
       const manifest = JSON.parse(fs.readFileSync(ssrManifestPath, 'utf-8'));
 
@@ -51,8 +61,8 @@ export async function setupVite(app: express.Express, root: string = process.cwd
         const url = (req as any).originalUrl || req.url;
         const appHtml = await render(url, manifest);
         const html = template.replace(`<!--app-html-->`, appHtml);
-        
-        res.setHeader('Content-Type', 'text/html'); // 🔥 Ajout du type MIME
+
+        res.setHeader('Content-Type', 'text/html');
         res.status(200).end(html);
       });
     } catch (error) {
