@@ -6,6 +6,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["client/src/*"],
+      "@utils/*": ["client/src/utils/*"],
       "@shared/*": ["shared/*"]
     },
     "jsx": "react-jsx",
