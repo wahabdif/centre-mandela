@@ -9,7 +9,9 @@
     "build": "tsc -p tsconfig.server.json",
     "start": "node dist/index.js",
     "lint": "eslint . --ext .ts",
-    "test": "jest"
+    "test": "jest",
+    "preinstall": "npm install -g typescript eslint",
+    "postinstall": "echo 'Dependencies installed successfully'"
   },
   "dependencies": {
     "better-sqlite3": "^8.3.0",
