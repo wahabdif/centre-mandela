@@ -17,7 +17,7 @@ export async function setupVite(app: express.Application, root: string = process
 
     app.use('*', async (req: Request, res: Response, next: (err?: any) => void) => {
       try {
-        const url = req.originalUrl || req.url; // Utilisation correcte de `req.originalUrl`
+        const url = req.originalUrl || req.url;
         const templatePath = resolve('index.html');
 
         if (!fs.existsSync(templatePath)) {
@@ -32,7 +32,7 @@ export async function setupVite(app: express.Application, root: string = process
         const appHtml = await render(url);
 
         const html = template.replace(`<!--app-html-->`, appHtml);
-        res.setHeader('Content-Type', 'text/html'); // Correction : Utilisation correcte de setHeader
+        res.setHeader('Content-Type', 'text/html'); // Vérifiez la configuration TypeScript ici
         res.status(200).end(html);
       } catch (e) {
         vite.ssrFixStacktrace?.(e instanceof Error ? e : new Error(String(e)));
@@ -52,17 +52,17 @@ export async function setupVite(app: express.Application, root: string = process
     let template = fs.readFileSync(templatePath, 'utf-8');
 
     try {
-      const { render } = await import('./dist/server/entry-server.js'); // Correction : Import correct du module
+      const { render } = await import('./dist/server/entry-server.js');
       const manifest = JSON.parse(fs.readFileSync(ssrManifestPath, 'utf-8'));
 
       app.use('/assets', express.static(path.join(distPath, 'assets'), { fallthrough: false }));
 
       app.use('*', async (req: Request, res: Response) => {
-        const url = req.originalUrl || req.url; // Utilisation correcte de `req.originalUrl`
+        const url = req.originalUrl || req.url;
         const appHtml = await render(url, manifest);
         const html = template.replace(`<!--app-html-->`, appHtml);
 
-        res.setHeader('Content-Type', 'text/html'); // Correction : Utilisation correcte de setHeader
+        res.setHeader('Content-Type', 'text/html'); // Vérifiez la configuration TypeScript ici
         res.status(200).end(html);
       });
     } catch (error) {
