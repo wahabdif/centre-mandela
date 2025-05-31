@@ -5,15 +5,26 @@ import path from 'path';
 const dbPath = path.resolve(__dirname, 'data.db');
 
 // Initialisation de la connexion à la base SQLite
-const db = new Database(dbPath, { verbose: console.log });
+const db = new Database(dbPath, { verbose: process.env.NODE_ENV === 'development' ? console.log : undefined });
+
+// Interface pour définir les types des données
+interface Item {
+  id: string;
+  name: string;
+  description?: string;
+}
 
 // Création de la table 'items' si elle n'existe pas déjà
-db.prepare(`
-  CREATE TABLE IF NOT EXISTS items (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    description TEXT
-  )
-`).run();
+try {
+  db.prepare(`
+    CREATE TABLE IF NOT EXISTS items (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      description TEXT
+    )
+  `).run();
+} catch (error) {
+  console.error('Erreur lors de la création de la table items :', error);
+}
 
 export default db;
