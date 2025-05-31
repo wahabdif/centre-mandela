@@ -20,7 +20,7 @@ db.prepare(`
     phone TEXT NOT NULL,
     service TEXT NOT NULL,
     message TEXT,
-    status TEXT NOT NULL CHECK (status IN ('pending', 'read', 'archived')) DEFAULT 'pending',
+    httpStatus TEXT NOT NULL CHECK (httpStatus IN ('pending', 'read', 'archived')) DEFAULT 'pending',
     createdAt TEXT NOT NULL DEFAULT (datetime('now'))
   )
 `).run();
@@ -33,7 +33,7 @@ export type ContactMessage = {
   phone: string;
   service: string;
   message: string | null;
-  status: 'pending' | 'read' | 'archived';
+  httpStatus: 'pending' | 'read' | 'archived';
   createdAt: string;
 };
 
@@ -61,7 +61,7 @@ export function getContactMessageById(id: number): ContactMessage | undefined {
 // Créer un message
 export function createContactMessage(data: z.infer<typeof ContactInputSchema>): ContactMessage {
   const info = db.prepare(`
-    INSERT INTO contact (name, email, phone, service, message, status, createdAt)
+    INSERT INTO contact (name, email, phone, service, message, httpStatus, createdAt)
     VALUES (?, ?, ?, ?, ?, 'pending', datetime('now'))
   `).run(data.name, data.email, data.phone, data.service, data.message ?? null);
 
@@ -71,9 +71,9 @@ export function createContactMessage(data: z.infer<typeof ContactInputSchema>): 
 // Mettre à jour le statut d'un message
 export function updateContactMessageStatus(
   id: number,
-  status: 'pending' | 'read' | 'archived'
+  httpStatus: 'pending' | 'read' | 'archived'
 ): ContactMessage | undefined {
-  const result = db.prepare(`UPDATE contact SET status = ? WHERE id = ?`).run(status, id);
+  const result = db.prepare(`UPDATE contact SET httpStatus = ? WHERE id = ?`).run(httpStatus, id);
 
   return result.changes > 0 ? getContactMessageById(id) : undefined;
 }
