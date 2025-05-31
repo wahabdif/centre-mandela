@@ -29,7 +29,10 @@ export async function setupVite(root: string = process.cwd(), isDev: boolean = t
         // Transform the template using Vite
         template = await vite.transformIndexHtml(url, template);
 
-        const ssrModule = await vite.ssrLoadModule('/src/entry-server.tsx');
+        const ssrModule = await vite.ssrLoadModule('/src/entry-server.tsx').catch(() => {
+          throw new Error("Le module 'entry-server.tsx' est introuvable. Vérifiez votre configuration.");
+        });
+
         const appHtml = await ssrModule.render(url);
 
         const html = template.replace(`<!--app-html-->`, appHtml);
@@ -46,7 +49,10 @@ export async function setupVite(root: string = process.cwd(), isDev: boolean = t
         }
 
         const manifest = JSON.parse(fs.readFileSync(ssrManifestPath, 'utf-8'));
-        const ssrModule = await import('./dist/server/entry-server.js');
+        const ssrModule = await import('./dist/server/entry-server.js').catch(() => {
+          throw new Error("Le module 'entry-server.js' est introuvable. Vérifiez votre configuration.");
+        });
+
         const appHtml = await ssrModule.render(url, manifest);
 
         const html = template.replace(`<!--app-html-->`, appHtml);
