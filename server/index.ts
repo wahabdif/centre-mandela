@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv'; // Ajout de dotenv
 import path from 'path';
-import routes from './routes';
+import routes from './routes.js';
 
 dotenv.config(); // Configuration de dotenv pour charger les variables d'environnement
 
