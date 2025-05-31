@@ -1,72 +1,66 @@
-import express, { Request, Response } from 'express';
-import path from 'path';
+import http from 'http';
 import fs from 'fs';
+import path from 'path';
 import { createServer as createViteServer } from 'vite';
 
-export async function setupVite(app: express.Application, root: string = process.cwd(), isDev: boolean = true) {
+export async function setupVite(root: string = process.cwd(), isDev: boolean = true) {
   const resolve = (p: string) => path.resolve(root, p);
 
-  if (isDev) {
-    const vite = await createViteServer({
-      root,
-      server: { middlewareMode: true },
-      appType: 'custom'
-    });
+  const server = http.createServer(async (req, res) => {
+    try {
+      const url = req.url || '/';
+      const templatePath = resolve(isDev ? 'index.html' : 'dist/client/index.html');
 
-    app.use(vite.middlewares);
+      if (!fs.existsSync(templatePath)) {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('❌ Fichier index.html introuvable.');
+        return;
+      }
 
-    app.use('*', async (req: Request, res: Response, next: (err?: any) => void) => {
-      try {
-        const url = req.originalUrl || req.url;
-        const templatePath = resolve('index.html');
+      let template = fs.readFileSync(templatePath, 'utf-8');
 
-        if (!fs.existsSync(templatePath)) {
-          console.error(`❌ Le fichier ${templatePath} est introuvable.`);
-          return next(new Error('Fichier index.html introuvable'));
-        }
+      if (isDev) {
+        const vite = await createViteServer({
+          root,
+          server: { middlewareMode: true },
+          appType: 'custom'
+        });
 
-        let template = fs.readFileSync(templatePath, 'utf-8');
+        // Transform the template using Vite
         template = await vite.transformIndexHtml(url, template);
 
-        const { render } = await vite.ssrLoadModule('/src/entry-server.tsx');
-        const appHtml = await render(url);
+        const ssrModule = await vite.ssrLoadModule('/src/entry-server.tsx');
+        const appHtml = await ssrModule.render(url);
 
         const html = template.replace(`<!--app-html-->`, appHtml);
-        res.setHeader('Content-Type', 'text/html'); // Vérifiez la configuration TypeScript ici
-        res.status(200).end(html);
-      } catch (e) {
-        vite.ssrFixStacktrace?.(e instanceof Error ? e : new Error(String(e)));
-        next(e);
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(html);
+      } else {
+        const ssrManifestPath = resolve('dist/client/ssr-manifest.json');
+        const distPath = resolve('dist/client');
+
+        if (!fs.existsSync(ssrManifestPath)) {
+          res.writeHead(404, { 'Content-Type': 'text/plain' });
+          res.end('❌ Fichiers nécessaires introuvables.');
+          return;
+        }
+
+        const manifest = JSON.parse(fs.readFileSync(ssrManifestPath, 'utf-8'));
+        const ssrModule = await import('./dist/server/entry-server.js');
+        const appHtml = await ssrModule.render(url, manifest);
+
+        const html = template.replace(`<!--app-html-->`, appHtml);
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(html);
       }
-    });
-  } else {
-    const distPath = resolve('dist/client');
-    const ssrManifestPath = resolve('dist/client/ssr-manifest.json');
-    const templatePath = resolve('dist/client/index.html');
-
-    if (!fs.existsSync(templatePath) || !fs.existsSync(ssrManifestPath)) {
-      console.error(`❌ Fichiers nécessaires introuvables : ${templatePath} ou ${ssrManifestPath}`);
-      return;
-    }
-
-    let template = fs.readFileSync(templatePath, 'utf-8');
-
-    try {
-      const { render } = await import('./dist/server/entry-server.js');
-      const manifest = JSON.parse(fs.readFileSync(ssrManifestPath, 'utf-8'));
-
-      app.use('/assets', express.static(path.join(distPath, 'assets'), { fallthrough: false }));
-
-      app.use('*', async (req: Request, res: Response) => {
-        const url = req.originalUrl || req.url;
-        const appHtml = await render(url, manifest);
-        const html = template.replace(`<!--app-html-->`, appHtml);
-
-        res.setHeader('Content-Type', 'text/html'); // Vérifiez la configuration TypeScript ici
-        res.status(200).end(html);
-      });
     } catch (error) {
-      console.error("❌ Erreur lors du chargement du module SSR ou du fichier manifeste :", error);
+      console.error('❌ Erreur lors du traitement de la requête :', error);
+      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.end('Erreur serveur.');
     }
-  }
+  });
+
+  server.listen(3000, () => {
+    console.log(`Serveur démarré sur http://localhost:3000`);
+  });
 }
