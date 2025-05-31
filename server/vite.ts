@@ -26,7 +26,7 @@ export async function setupVite(app: express.Express, root: string = process.cwd
         }
 
         let template = fs.readFileSync(templatePath, 'utf-8');
-        template = await (vite.transformIndexHtml as any)(url, template);
+        template = await vite.transformIndexHtml(url, template);
 
         const { render } = await vite.ssrLoadModule('/src/entry-server.tsx');
         const appHtml = await render(url);
@@ -35,7 +35,7 @@ export async function setupVite(app: express.Express, root: string = process.cwd
         res.setHeader('Content-Type', 'text/html');
         res.status(200).end(html);
       } catch (e) {
-        (vite.ssrFixStacktrace as any)?.(e instanceof Error ? e : new Error(String(e)));
+        vite.ssrFixStacktrace?.(e instanceof Error ? e : new Error(String(e)));
         next(e);
       }
     });
@@ -66,7 +66,7 @@ export async function setupVite(app: express.Express, root: string = process.cwd
         res.status(200).end(html);
       });
     } catch (error) {
-      console.error("❌ Erreur lors du chargement du module SSR :", error);
+      console.error("❌ Erreur lors du chargement du module SSR ou du fichier manifeste :", error);
     }
   }
 }
