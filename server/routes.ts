@@ -33,7 +33,7 @@ router.get('/items/:id', (req: RequestWithId, res: Response) => {
 // POST /items
 router.post('/items', (req: Request, res: Response) => {
   try {
-    const { name, description } = req.body as NewItem;
+    const { name, description } = req.body as Partial<NewItem>;
 
     if (!name) {
       return res.status(400).json({ error: 'Le champ name est requis.' });
