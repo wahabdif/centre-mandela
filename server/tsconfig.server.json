@@ -7,7 +7,7 @@
     "outDir": "../dist/server",
     "strict": true,
     "esModuleInterop": true,
-    "strictFunctionTypes": true, // Correction ici
+    "strictFunctionTypes": true, 
     "skipLibCheck": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true
