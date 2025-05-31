@@ -154,6 +154,20 @@ export interface Toast {
 }
 
 /**
+ * Structure des messages de contact
+ */
+export interface ContactMessage {
+  id: number;                   // ID du message
+  name: string;                 // Nom de l'expéditeur
+  email: string;                // Email de l'expéditeur
+  phone: string;                // Téléphone de l'expéditeur
+  service: string;              // Service concerné
+  message: string | null;       // Contenu du message
+  httpStatus: 'pending' | 'read' | 'archived'; // Statut du message
+  createdAt: string;            // Date de création
+}
+
+/**
  * Interface principale combinant toutes les sections de traduction
  */
 export interface Translations {
@@ -167,4 +181,5 @@ export interface Translations {
   services: Services;
   testimonials: Testimonials;
   toast: Toast;
+  contactMessage: ContactMessage; // Ajouté pour les messages de contact
 }
