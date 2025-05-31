@@ -1,66 +1,37 @@
-const http = require('http');
-const url = require('url');
-const qs = require('querystring');
-const db = require('./db/db.js'); // Assurez-vous que db.js est compatible avec votre implémentation.
+import { Router, Request, Response } from 'express';
+import db from './db/db.js';
 
-const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url, true);
-  const method = req.method;
-  const path = parsedUrl.pathname;
+const router = Router();
 
-  if (method === 'GET' && path.startsWith('/items/')) {
-    const id = path.split('/')[2];
+router.get('/items/:id', (req: Request, res: Response) => { // Ajout des types Request et Response
+  try {
+    const { id } = req.params;
+    const item = db.prepare('SELECT * FROM items WHERE id = ?').get(id);
 
-    try {
-      const item = db.prepare('SELECT * FROM items WHERE id = ?').get(id);
-
-      if (!item) {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Item non trouvé.' }));
-        return;
-      }
-
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(item));
-    } catch (error) {
-      console.error('Erreur lors de la récupération de l\'élément:', error);
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'Erreur interne du serveur.' }));
+    if (!item) {
+      return res.status(404).json({ error: 'Item non trouvé.' });
     }
-  } else if (method === 'POST' && path === '/items') {
-    let body = '';
-
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-
-    req.on('end', () => {
-      const { name, description } = JSON.parse(body);
-
-      if (!name) {
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Le champ name est requis.' }));
-        return;
-      }
-
-      try {
-        const id = Date.now().toString();
-        db.prepare('INSERT INTO items (id, name, description) VALUES (?, ?, ?)').run(id, name, description);
-
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ id, name, description }));
-      } catch (error) {
-        console.error('Erreur lors de l\'insertion de l\'élément:', error);
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Erreur interne du serveur.' }));
-      }
-    });
-  } else {
-    res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: 'Route non trouvée.' }));
+    res.json(item);
+  } catch (error) {
+    console.error('Erreur lors de la récupération de l\'élément:', error);
+    res.status(500).json({ error: 'Erreur interne du serveur.' });
   }
 });
 
-server.listen(3000, () => {
-  console.log('Serveur démarré sur http://localhost:3000');
+router.post('/items', (req: Request, res: Response) => { // Ajout des types Request et Response
+  try {
+    const { name, description } = req.body;
+
+    if (!name) {
+      return res.status(400).json({ error: 'Le champ name est requis.' });
+    }
+
+    const id = Date.now().toString();
+    db.prepare('INSERT INTO items (id, name, description) VALUES (?, ?, ?)').run(id, name, description);
+
+    res.status(201).json({ id, name, description });
+  } catch (error) {
+    console.error('Erreur lors de l\'insertion de l\'élément:', error);
+    res.status(500).json({ error: 'Erreur interne du serveur.' });
+  }
 });
