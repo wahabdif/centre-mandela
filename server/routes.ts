@@ -1,7 +1,6 @@
 import { Router, Request, Response } from 'express';
-// Pour éviter l'erreur TS2307 sur les modules ESM
 /* @ts-ignore */
-import db from './db/db.js';
+import db from './db/db.js'; // Assurez-vous que ce fichier est bien compatible avec TypeScript.
 
 const router = Router();
 
@@ -17,28 +16,37 @@ interface RequestWithId extends Request {
 
 // GET /items/:id
 router.get('/items/:id', (req: RequestWithId, res: Response) => {
-  const { id } = req.params;
-  const item = (db.prepare('SELECT * FROM items WHERE id = ?').get as any)(id);
+  try {
+    const { id } = req.params;
+    const item = db.prepare('SELECT * FROM items WHERE id = ?').get(id);
 
-  if (!item) {
-    return res.status(404).json({ error: 'Item non trouvé.' });
+    if (!item) {
+      return res.status(404).json({ error: 'Item non trouvé.' });
+    }
+    res.json(item);
+  } catch (error) {
+    console.error('Erreur lors de la récupération de l\'élément:', error);
+    res.status(500).json({ error: 'Erreur interne du serveur.' });
   }
-  res.json(item);
 });
 
 // POST /items
 router.post('/items', (req: Request, res: Response) => {
-  const { name, description } = req.body as unknown as NewItem;
-  
-  if (!name) {
-    return res.status(400).json({ error: 'Le champ name est requis.' });
+  try {
+    const { name, description } = req.body as NewItem;
+
+    if (!name) {
+      return res.status(400).json({ error: 'Le champ name est requis.' });
+    }
+
+    const id = Date.now().toString();
+    db.prepare('INSERT INTO items (id, name, description) VALUES (?, ?, ?)').run(id, name, description);
+
+    res.status(201).json({ id, name, description });
+  } catch (error) {
+    console.error('Erreur lors de l\'insertion de l\'élément:', error);
+    res.status(500).json({ error: 'Erreur interne du serveur.' });
   }
-
-  const id = Date.now().toString();
-
-  (db.prepare('INSERT INTO items (id, name, description) VALUES (?, ?, ?)').run as any)(id, name, description);
-
-  res.status(201).json({ id, name, description });
 });
 
 export default router;
