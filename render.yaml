@@ -21,13 +21,12 @@ services:
     plan: free
     rootDir: server
     buildCommand: npm install && npm run build
-    startCommand: node dist/index.js
+    startCommand: node dist/index.js --port $PORT
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 10000
+        value: $PORT
     buildFilter:
       paths:
         - server/**
-p
