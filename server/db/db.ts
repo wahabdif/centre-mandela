@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3';
-import { z } from 'zod';
+import { z } from 'zod'; // Import corrigé
 import path from 'path';
 import { fileURLToPath } from 'url';
 
