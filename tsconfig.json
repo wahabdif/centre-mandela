@@ -17,7 +17,8 @@
     "strict": true,
     "types": ["node"],
     "forceConsistentCasingInFileNames": true,
-    "allowJs": true
+    "allowJs": true,
+    "outDir": "dist" // Ajoutez cette ligne ici
   },
   "include": [
     "client/src",

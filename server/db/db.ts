@@ -1,7 +1,8 @@
+// @ts-ignore
 import Database from 'better-sqlite3';
-import { z } from 'zod'; // Import corrigé
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { z } from 'zod';
 
 // Simulation de __dirname en ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -9,6 +10,7 @@ const __dirname = path.dirname(__filename);
 
 // Initialise SQLite (base de données locale)
 const dbPath = path.resolve(__dirname, 'data.sqlite');
+// @ts-ignore
 const db = new Database(dbPath, { verbose: console.log });
 
 // Création de la table 'contact' si elle n'existe pas
@@ -20,11 +22,11 @@ db.prepare(`
     phone TEXT NOT NULL,
     service TEXT NOT NULL,
     message TEXT,
-    createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+    createdAt TEXT NOT NULL DEFAULT (datetime('now')),
+    httpStatus TEXT
   )
 `).run();
 
-// === Typage TypeScript ===
 export type ContactMessage = {
   id: number;
   name: string;
@@ -33,6 +35,7 @@ export type ContactMessage = {
   service: string;
   message: string | null;
   createdAt: string;
+  httpStatus?: string | null;
 };
 
 // === Schéma Zod (validation) ===

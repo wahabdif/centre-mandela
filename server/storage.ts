@@ -1,4 +1,4 @@
-import Database from 'better-sqlite3';
+import * as Database from 'better-sqlite3';
 import path from 'path';
 
 // Création du chemin absolu vers la base SQLite dans le dossier `server/db`

@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url';
 import { setupVite, serveStatic } from './vite';
 // Permet d'obtenir __dirname dans un module ESM
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const app = express();
 const server = new Server(app);
 // Middleware pour parser le JSON
