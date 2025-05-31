@@ -38,7 +38,7 @@ router.post('/items', (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Le champ name est requis.' });
     }
 
-    const id = Date.now().toString(); // Conversion correcte
+    const id = Date.now().toString(); // Correction : Conversion explicite en chaîne
     db.prepare('INSERT INTO items (id, name, description) VALUES (?, ?, ?)').run(id, name, description);
 
     res.status(201).json({ id, name, description });
