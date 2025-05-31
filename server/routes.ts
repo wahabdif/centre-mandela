@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 /* @ts-ignore */
-import db from './db/db.js'; // Assurez-vous que ce fichier est bien compatible avec TypeScript.
+import db from './db/db.js';
 
 const router = Router();
 
@@ -39,7 +39,9 @@ router.post('/items', (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Le champ name est requis.' });
     }
 
+    // Utilisation correcte de Date.now() pour générer un ID unique
     const id = Date.now().toString();
+
     db.prepare('INSERT INTO items (id, name, description) VALUES (?, ?, ?)').run(id, name, description);
 
     res.status(201).json({ id, name, description });
