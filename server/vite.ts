@@ -40,7 +40,6 @@ export async function setupVite(root: string = process.cwd(), isDev: boolean = t
         res.end(html);
       } else {
         const ssrManifestPath = resolve('dist/client/ssr-manifest.json');
-        const distPath = resolve('dist/client');
 
         if (!fs.existsSync(ssrManifestPath)) {
           res.writeHead(404, { 'Content-Type': 'text/plain' });
