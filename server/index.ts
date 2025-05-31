@@ -1,17 +1,21 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
-import routes from './routes'; // Suppression de l'extension `.js`
+import routes from './routes';
 
 dotenv.config();
 
+console.log('Valeur de process.env.PORT:', process.env.PORT);
+
+const PORT: number = typeof process.env.PORT === 'string' && !isNaN(Number(process.env.PORT))
+  ? parseInt(process.env.PORT, 10)
+  : 3000;
+
 const app = express();
-const PORT: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 app.use(express.json());
 app.use('/api', routes);
 
-// Middleware de gestion des erreurs
 app.use((err: unknown, req: Request, res: Response, next: (err?: any) => void) => {
   if (err instanceof Error) {
     console.error(err.stack);
@@ -25,13 +29,10 @@ app.use((err: unknown, req: Request, res: Response, next: (err?: any) => void) =
   }
 });
 
-// Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Ajout explicite du Content-Type pour éviter le téléchargement du fichier au lieu de l'affichage
 app.get('*', (req: Request, res: Response) => {
   const filePath = path.join(__dirname, 'public', 'index.html');
-
   res.sendFile(filePath, (err) => {
     if (err) {
       console.error('Erreur lors de l\'envoi du fichier:', err);
