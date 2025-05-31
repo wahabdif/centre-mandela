@@ -3,7 +3,18 @@ import db from './db/db.js';
 
 const router = Router();
 
-router.get('/items/:id', (req: Request, res: Response) => { // Ajout des types Request et Response
+interface NewItem {
+  name: string;
+  description?: string;
+}
+
+// Interface personnalisée pour typer req.params
+interface RequestWithId extends Request {
+  params: { id: string };
+}
+
+// GET /items/:id
+router.get('/items/:id', (req: RequestWithId, res: Response) => {
   try {
     const { id } = req.params;
     const item = db.prepare('SELECT * FROM items WHERE id = ?').get(id);
@@ -18,9 +29,10 @@ router.get('/items/:id', (req: Request, res: Response) => { // Ajout des types R
   }
 });
 
-router.post('/items', (req: Request, res: Response) => { // Ajout des types Request et Response
+// POST /items
+router.post('/items', (req: Request, res: Response) => {
   try {
-    const { name, description } = req.body;
+    const { name, description } = req.body as Partial<NewItem>;
 
     if (!name) {
       return res.status(400).json({ error: 'Le champ name est requis.' });
@@ -35,3 +47,5 @@ router.post('/items', (req: Request, res: Response) => { // Ajout des types Requ
     res.status(500).json({ error: 'Erreur interne du serveur.' });
   }
 });
+
+export default router;
