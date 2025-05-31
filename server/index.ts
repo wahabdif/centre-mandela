@@ -1,14 +1,14 @@
 import express, { Request, Response } from 'express';
-import dotenv from 'dotenv'; // Ajout de dotenv
+import dotenv from 'dotenv';
 import path from 'path';
-import routes from './routes.js';
+import routes from './routes.js'; // Ajout explicite de l'extension `.js`
 
 dotenv.config(); // Configuration de dotenv pour charger les variables d'environnement
 
 const app = express();
-const PORT: number = typeof process.env.PORT === 'string' && !isNaN(Number(process.env.PORT))
-  ? parseInt(process.env.PORT, 10)
-  : 3000;
+
+// Correction de la conversion de process.env.PORT
+const PORT: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 app.use(express.json());
 app.use('/api', routes);
@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Servir le fichier index.html pour toutes les routes
 app.get('*', (req: Request, res: Response) => {
   const filePath = path.join(__dirname, 'public', 'index.html');
-  res.sendFile(filePath, (err) => {
+  res.sendFile(filePath, (err: Error) => { // Ajout explicite du type pour 'err'
     if (err) {
       console.error('Erreur lors de l\'envoi du fichier:', err);
       res.status(500).send('Erreur lors du chargement du fichier.');
