@@ -45,9 +45,17 @@ export const ContactInputSchema = z.object({
   phone: z.string().min(1, "Le téléphone est requis"),
   service: z.string().min(1, "Le service est requis"),
   message: z.string().nullable().optional(),
+  id: z.number().positive({ message: "L'ID doit être un nombre positif valide." }), // Validation ajoutée
 });
 
 // === Fonctions CRUD ===
+
+// Validation pour les IDs
+function validateId(id: number): void {
+  if (typeof id !== "number" || id <= 0 || isNaN(id)) {
+    throw new Error("L'ID doit être un nombre positif valide.");
+  }
+}
 
 // Récupérer tous les messages
 export function getAllContactMessages(): ContactMessage[] {
@@ -56,6 +64,7 @@ export function getAllContactMessages(): ContactMessage[] {
 
 // Récupérer un message par ID
 export function getContactMessageById(id: number): ContactMessage | undefined {
+  validateId(id); // Ajout de validation
   return db.prepare(`SELECT * FROM contact WHERE id = ?`).get(id) as ContactMessage | undefined;
 }
 
@@ -66,11 +75,15 @@ export function createContactMessage(data: z.infer<typeof ContactInputSchema>): 
     VALUES (?, ?, ?, ?, ?, datetime('now'))
   `).run(data.name, data.email, data.phone, data.service, data.message ?? null);
 
-  return getContactMessageById(Number(info.lastInsertRowid))!;
+  const newId = Number(info.lastInsertRowid);
+  validateId(newId); // Ajout de validation pour l'ID généré
+
+  return getContactMessageById(newId)!;
 }
 
 // Mettre à jour le statut d'un message
 export function updateContactMessageStatus(id: number, httpStatus: string): ContactMessage | undefined {
+  validateId(id); // Ajout de validation
   const result = db.prepare(`UPDATE contact SET httpStatus = ? WHERE id = ?`).run(httpStatus, id);
 
   return result.changes > 0 ? getContactMessageById(id) : undefined;
