@@ -132,6 +132,8 @@ export class SqliteStorage implements IStorage {
       id: info.lastInsertRowid as number,
       ...message,
       createdAt: now,
+      status: "pending",      // Ajouté pour correspondre au type ContactMessage
+      httpStatus: "pending",  // Ajouté pour correspondre au type ContactMessage
     };
   }
 }

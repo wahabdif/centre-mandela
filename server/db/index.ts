@@ -19,10 +19,13 @@ export {
 export {
   getUserById,
   getUserByUsername,
+  getUserByEmail, // <-- ajout ici
   createUser,
   verifyPassword,
   hashPassword,
   getAllUsers,
+  deleteUser,
+  updateUser,
 } from './users';
 
 // APPOINTMENTS
@@ -30,8 +33,8 @@ export {
   getAllAppointments,
   getAppointmentById,
   createAppointment,
-  uupdateAppointmentStatus,
+  updateAppointmentStatus,
+  updateAppointment,
   deleteAppointment,
+  InsertAppointment
 } from './appointments';
-
-

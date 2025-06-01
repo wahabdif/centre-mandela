@@ -11,10 +11,37 @@ export interface Appointment {
   description: string;
   finalNote: string;
   preparationDescription: string;
+  updateAppointmentStatus: string;
+  InsertAppointment: {
+    name: string;
+    email: string;
+    phone: string;
+    service: string;
+    message: string | null;
+    status: 'pending' | 'confirmed' | 'cancelled';
+    createdAt: string;
+  };
+  preparationSubtitle: string;
   preparationTitle: string;
   stepsDescription: string;
+  uupdateAppointmentStatus: string;
   stepsTitle: string;
   title: string;
+  appointment: {
+    name: string;
+    email: string;
+    phone: string;
+    service: string;
+    message: string | null;
+    status: 'pending' | 'confirmed' | 'cancelled';
+    createdAt: string;
+  };
+  appointmentStatus: {
+    pending: string;
+    confirmed: string;
+    cancelled: string;
+  };
+  
 }
 export interface IVIAppointment extends Appointment {}
 
@@ -98,6 +125,15 @@ export interface IVIPracticalInfo extends PracticalInfo {}
 /** ----------------- SERVICES ------------------ */
 export interface Services {
   section_title: string;
+  services: {
+    description: string;
+    title: string;
+  }[];
+  title: string;
+  cta: {
+    text: string;
+    title: string;
+  };
 }
 export interface IVIServices extends Services {}
 
@@ -106,6 +142,7 @@ export interface TestimonialExtended {
   author: string;
   role: string;
   text: string;
+  image: string;
 }
 export interface IVITestimonialExtended extends TestimonialExtended {}
 
@@ -160,6 +197,9 @@ export interface User {
   name: string;
   email: string;
   passwordHash?: string;
+  deleteUser: boolean;
+  isActive: boolean;
+  isVerified: boolean;
   role: 'admin' | 'doctor';
   createdAt: string;
 }
