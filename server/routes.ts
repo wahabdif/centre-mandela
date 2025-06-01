@@ -1,5 +1,4 @@
-// server/routes.ts
-import { Express } from 'express';
+import type { Express } from 'express';
 import authRoutes from './routes/auth';
 import contactRoutes from './routes/contact';
 import newsRoutes from './routes/news';

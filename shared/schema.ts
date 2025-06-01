@@ -85,6 +85,16 @@ export const appointments = sqliteTable("appointments", {
   createdAt: integer("createdAt").notNull(),
 });
 
+// --- Schéma/table newsPosts pour Drizzle ORM ---
+export const newsPosts = sqliteTable("newsPosts", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  createdAt: text("createdAt").notNull(),
+  authorId: integer("authorId").notNull(),
+  // Ajoute d'autres champs si besoin
+});
+
 // Schéma actualisé pour les rendez-vous
 export const updateAppointmentSchema = z.object({
   name: z.string().min(1, "Le nom est requis").optional(),
@@ -148,17 +158,43 @@ export const translationsSchema = z.object({
     password: z.string().min(1, "Le mot de passe est requis"),
     confirmPassword: z.string().min(1, "La confirmation du mot de passe est requise"),
   }),
+  login: z.object({
+    username: z.string().min(1, "Le nom d'utilisateur est requis"),
+    password: z.string().min(1, "Le mot de passe est requis"),
+    loginButton: z.string().min(1, "Le texte du bouton de connexion est requis"),
+    errorMessage: z.string().min(1, "Le message d'erreur de connexion est requis"),
+  }),
+  admin: z.object({
+    dashboardTitle: z.string().min(1, "Le titre du tableau de bord est requis"),
+    manageUsers: z.string().min(1, "Le texte de gestion des utilisateurs est requis"),
+    manageAppointments: z.string().min(1, "Le texte de gestion des rendez-vous est requis"),
+    manageNews: z.string().min(1, "Le texte de gestion des actualités est requis"),
+    manageTranslations: z.string().min(1, "Le texte de gestion des traductions est requis"),
+    userManagement: z.string().min(1, "Le texte de gestion des utilisateurs est requis"),
+    appointmentManagement: z.string().min(1, "Le texte de gestion des rendez-vous est requis"),
+    newsManagement: z.string().min(1, "Le texte de gestion des actualités est requis"),
+    translationManagement: z.string().min(1, "Le texte de gestion des traductions est requis"),
+  }),
+  error: z.object({
+    notFound: z.string().min(1, "Le message d'erreur 404 est requis"),
+    serverError: z.string().min(1, "Le message d'erreur serveur est requis"),
+    unauthorized: z.string().min(1, "Le message d'erreur non autorisé est requis"),
+  }),
 });
 export type Translations = z.infer<typeof translationsSchema>;
 export type InsertTranslations = z.infer<typeof translationsSchema>;
 export const updateTranslationsSchema = translationsSchema.partial();
 export type UpdateTranslations = z.infer<typeof updateTranslationsSchema>;
 
+// --- Schéma Zod et types pour newsPosts ---
 export const insertNewsPostSchema = z.object({
   title: z.string().min(1, "Le titre est requis"),
   content: z.string().min(1, "Le contenu est requis"),
 });
 export type InsertNewsPost = z.infer<typeof insertNewsPostSchema>;
+
+// Type pour la mise à jour d'une actualité (sans authorId)
+export type UpdateNewsPost = Omit<Partial<InsertNewsPost>, "authorId">;
 
 export const updateNewsPostSchema = z.object({
   title: z.string().min(1, "Le titre est requis").optional(),

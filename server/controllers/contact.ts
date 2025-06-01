@@ -1,4 +1,4 @@
-import * as db from '../db/index';
+import db from '../db/contact';
 import { contactMessageSchema } from '../../shared/zod';
 import { Request, Response } from 'express';
 

@@ -1,19 +1,28 @@
 import * as db from "../db/index";
 import { newsPostSchema } from '../../shared/zod';
 import { Request, Response } from 'express';
+import { InsertNewsPost } from "../../shared/schema";
 
+// Récupérer toutes les actualités
 export async function getNews(req: Request, res: Response) {
   const news = await db.getAllNewsPosts();
   res.json(news);
 }
 
+// Créer une actualité
 export async function createNews(req: Request, res: Response) {
   const result = newsPostSchema.safeParse(req.body);
   if (!result.success) return res.status(400).json({ error: result.error });
 
-  const post = await db.createNewsPost(result.data);
+  // authorId doit être fourni dans le body ou via l'utilisateur authentifié
+  const { authorId } = req.body;
+  if (!authorId) return res.status(400).json({ error: "authorId is required" });
+
+  const post = await db.createNewsPost({ ...result.data, authorId });
   res.status(201).json(post);
 }
+
+// Supprimer une actualité
 export async function deleteNews(req: Request, res: Response) {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -21,6 +30,8 @@ export async function deleteNews(req: Request, res: Response) {
   await db.deleteNewsPost(id);
   res.status(204).send();
 }
+
+// Récupérer une actualité par ID
 export async function getNewsById(req: Request, res: Response) {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -30,6 +41,8 @@ export async function getNewsById(req: Request, res: Response) {
 
   res.json(post);
 }
+
+// Mettre à jour une actualité
 export async function updateNews(req: Request, res: Response) {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -37,11 +50,8 @@ export async function updateNews(req: Request, res: Response) {
   const result = newsPostSchema.partial().safeParse(req.body);
   if (!result.success) return res.status(400).json({ error: result.error });
 
-  const post = await db.updateNewsPost(id, result.data);
-  if (!post) return res.status(404).json({ error: "News post not found" });
-
-  res.json(post);
 }
+
 // Mettre à jour le statut d'une actualité
 export async function updateNewsStatus(req: Request, res: Response) {
   const id = parseInt(req.params.id);
@@ -50,9 +60,7 @@ export async function updateNewsStatus(req: Request, res: Response) {
   const { status } = req.body;
   if (!status) return res.status(400).json({ error: "Status is required" });
 
-  const post = await db.updateNewsPost(id, { status });
-  if (!post) return res.status(404).json({ error: "News post not found" });
 
-  res.json(post);
 }
+
 export {};
