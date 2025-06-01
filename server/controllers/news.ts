@@ -55,3 +55,4 @@ export async function updateNewsStatus(req: Request, res: Response) {
 
   res.json(post);
 }
+export {};

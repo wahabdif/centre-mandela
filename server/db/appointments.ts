@@ -51,3 +51,5 @@ export async function updateAppointment(id: number, data: Partial<InsertAppointm
 export async function InsertAppointment(data: InsertAppointment) {
   return createAppointment(data);
 }
+
+export {};

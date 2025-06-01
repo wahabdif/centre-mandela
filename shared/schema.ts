@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
 
 // Schéma utilisateur
 export const insertUserSchema = z.object({
@@ -15,7 +16,18 @@ export type User = {
   id: number;
   username: string;
   password: string;
+  email?: string;
+  role?: string;
 };
+
+// --- Schéma/table users pour Drizzle ORM ---
+export const users = sqliteTable("users", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  username: text("username").notNull(),
+  password: text("password").notNull(),
+  email: text("email"),
+  role: text("role"),
+});
 
 // Schéma message de contact
 export const insertContactMessageSchema = z.object({
@@ -61,9 +73,7 @@ export type Appointment = {
   createdAt: number;
 };
 
-// --- Ajout du schéma/table appointments pour Drizzle ORM ---
-import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
-
+// --- Schéma/table appointments pour Drizzle ORM ---
 export const appointments = sqliteTable("appointments", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
@@ -158,3 +168,6 @@ export const updateNewsPostSchema = z.object({
 // ----------- TYPE POUR LE CONTROLLER updateAppointmentStatus -----------
 import type { Request, Response } from "express";
 export type UpdateAppointmentStatus = (req: Request, res: Response) => Promise<void>;
+
+// Pour forcer TypeScript à reconnaître ce fichier comme un module
+export {};

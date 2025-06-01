@@ -14,3 +14,4 @@ export async function sendMessage(req: Request, res: Response) {
   const message = await db.createContactMessage(result.data);
   res.status(201).json(message);
 }
+export {};
