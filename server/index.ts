@@ -2,41 +2,44 @@ import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import { registerRoutes } from './routes';
+import { render } from './ssr'; // Fonction SSR React que tu dois avoir
 
 dotenv.config();
 
 const app = express();
 
-// Validation du port avec une méthode claire et sûre
-const portEnv = process.env.PORT;
-const PORT: number = portEnv && !isNaN(Number(portEnv)) ? Number(portEnv) : 3000;
+// Validation et récupération du port (par défaut 3000)
+const PORT = Number.isNaN(Number(process.env.PORT)) 
+  ? 3000 
+  : parseInt(process.env.PORT as string, 10);
 
-// Middleware de log simple pour chaque requête
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
-
+// Middleware pour parser le JSON
 app.use(express.json());
+
+// Servir les fichiers statiques (le build React) dans /public
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Enregistrement des routes personnalisées
+// Enregistrer les routes API
 registerRoutes(app);
 
-// Route "catch-all" pour une SPA React avec React Router côté client
+// Gestion des routes non API : SSR React ou fichiers statiques
 app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, 'public', 'index.html');
-  res.sendFile(indexPath, (err) => {
-    if (err) {
-      console.error('Erreur lors de l\'envoi du fichier index.html:', err);
-      if (!res.headersSent) {
-        res.status(500).send('Erreur serveur.');
-      }
-    }
-  });
+  // Si la route commence par /api et qu'elle n'a pas été prise en charge, erreur 404
+  if (req.url.startsWith('/api/')) {
+    return res.status(404).send('API route non trouvée.');
+  }
+
+  try {
+    // Tenter de rendre la page React côté serveur
+    const html = render(req.url);
+    res.status(200).send(html);
+  } catch (error) {
+    console.error('Erreur SSR:', error);
+    res.status(500).send('Erreur serveur.');
+  }
 });
 
-// Démarrage du serveur
+// Démarrer le serveur
 app.listen(PORT, () => {
   console.log(`✅ Serveur Express démarré sur http://localhost:${PORT}`);
 });
