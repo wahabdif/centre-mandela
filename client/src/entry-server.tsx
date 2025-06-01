@@ -4,28 +4,37 @@ import { StaticRouter } from 'react-router-dom/server';
 import App from './App';
 
 export function render(url: string) {
-  // React Router côté serveur : on passe l'URL à StaticRouter
+  // Rendu React côté serveur avec StaticRouter pour la bonne route
   const appHtml = renderToString(
     <StaticRouter location={url}>
       <App />
     </StaticRouter>
   );
 
-  // Retourne une page HTML complète (tu peux adapter le head / styles / scripts)
-  return `
-    <!DOCTYPE html>
-    <html lang="fr">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Mon App SSR</title>
-        <link rel="stylesheet" href="/assets/main.css" />
-        <!-- Ajoute ici les meta, favicon, etc. -->
-      </head>
-      <body>
-        <div id="root">${appHtml}</div>
-        <script type="module" src="/assets/main.js"></script>
-      </body>
-    </html>
-  `;
+  // TODO : Ajouter ici la sérialisation sécurisée d’un état initial si besoin, par exemple avec
+  // const initialState = {};
+  // const serializedState = JSON.stringify(initialState).replace(/</g, '\\u003c');
+
+  return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mon App SSR</title>
+  <meta name="description" content="Application React avec rendu côté serveur (SSR)." />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/assets/main.css" />
+  <!-- Ajouter ici Open Graph, Twitter cards, etc. si nécessaire -->
+</head>
+<body>
+  <div id="root">${appHtml}</div>
+  <noscript>JavaScript est désactivé dans votre navigateur. Pour une expérience optimale, veuillez l’activer.</noscript>
+  <!--
+  <script>
+    // window.__INITIAL_STATE__ = ${serializedState};
+  </script>
+  -->
+  <script type="module" src="/assets/main.js"></script>
+</body>
+</html>`;
 }
