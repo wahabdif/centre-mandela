@@ -57,8 +57,17 @@ export class SqliteStorage implements IStorage {
   getNewsPost(arg0: number) {
     throw new Error("Method not implemented.");
   }
+
+  // Vérification des IDs
+  private validateId(id: number): void {
+    if (typeof id !== "number" || isNaN(id)) {
+      throw new Error("L'ID doit être un nombre valide.");
+    }
+  }
+
   // User methods
   async getUser(id: number): Promise<User | undefined> {
+    this.validateId(id);
     const row = db.prepare("SELECT * FROM users WHERE id = ?").get(id) as User | undefined;
     return row;
   }
@@ -80,6 +89,7 @@ export class SqliteStorage implements IStorage {
   }
 
   async getAppointment(id: number): Promise<Appointment | undefined> {
+    this.validateId(id);
     const row = db.prepare("SELECT * FROM appointments WHERE id = ?").get(id) as Appointment | undefined;
     return row;
   }
@@ -107,6 +117,7 @@ export class SqliteStorage implements IStorage {
   }
 
   async updateAppointmentStatus(id: number, status: string): Promise<Appointment | undefined> {
+    this.validateId(id);
     db.prepare("UPDATE appointments SET status = ? WHERE id = ?").run(status, id);
     return this.getAppointment(id);
   }
