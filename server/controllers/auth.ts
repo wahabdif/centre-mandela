@@ -1,5 +1,5 @@
 import * as db from '../db/index';
-import bcrypt from 'bcryptjs'; // ou 'bcrypt' selon ce que tu as installé
+import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import type { User } from '../../shared/schema';
 
@@ -26,7 +26,7 @@ export async function login(req: Request, res: Response) {
       email: user.email,
       role: user.role,
     });
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: "Erreur lors de la connexion" });
   }
 }

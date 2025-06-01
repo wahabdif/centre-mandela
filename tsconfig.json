@@ -7,6 +7,8 @@
     "typeRoots": ["./server/types", "./node_modules/@types"],
     "paths": {
       "@/*": ["client/src/*"],
+      "@components/*": ["client/src/components/*"],
+      "@lib/*": ["client/src/lib/*"],
       "@utils/*": ["client/src/utils/*"],
       "@shared/*": ["shared/*"]
     },
@@ -20,9 +22,9 @@
     "forceConsistentCasingInFileNames": true,
     "allowJs": false,
     "outDir": "dist",
-    "isolatedModules": true,  // bon pour React + vite + esbuild
-    "noEmit": false,          // on veut bien générer les fichiers dans dist
-    "sourceMap": true         // utile pour debug
+    "isolatedModules": true,
+    "noEmit": false,
+    "sourceMap": true
   },
   "include": [
     "client/src",
@@ -37,5 +39,4 @@
     "**/*.test.ts",
     "**/*.test.js"
   ]
-
 }

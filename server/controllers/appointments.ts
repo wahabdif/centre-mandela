@@ -2,6 +2,8 @@ import * as db from '../db/index';
 import { appointmentSchema } from '../../shared/zod';
 import { Request, Response, Router } from 'express';
 
+type IdRequest = Request<{ id: string }>;
+
 // Récupérer tous les rendez-vous
 export async function getAppointments(req: Request, res: Response) {
   try {
@@ -17,7 +19,6 @@ export async function createAppointment(req: Request, res: Response) {
   const result = appointmentSchema.safeParse(req.body);
   if (!result.success) return res.status(400).json({ error: result.error });
 
-  // Adapter les champs pour correspondre au schéma attendu par la base
   const { fullName, email, phone, message, date } = result.data;
   const appointmentData = {
     name: fullName,
@@ -37,7 +38,7 @@ export async function createAppointment(req: Request, res: Response) {
 }
 
 // Supprimer un rendez-vous
-export async function deleteAppointment(req: Request, res: Response) {
+export async function deleteAppointment(req: IdRequest, res: Response) {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'Invalid ID' });
 
@@ -50,7 +51,7 @@ export async function deleteAppointment(req: Request, res: Response) {
 }
 
 // Récupérer un rendez-vous par ID
-export async function getAppointment(req: Request, res: Response) {
+export async function getAppointment(req: IdRequest, res: Response) {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'Invalid ID' });
 
@@ -64,14 +65,13 @@ export async function getAppointment(req: Request, res: Response) {
 }
 
 // Mettre à jour un rendez-vous
-export async function updateAppointment(req: Request, res: Response) {
+export async function updateAppointment(req: IdRequest, res: Response) {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'Invalid ID' });
 
   const result = appointmentSchema.safeParse(req.body);
   if (!result.success) return res.status(400).json({ error: result.error });
 
-  // Adapter les champs pour correspondre au schéma attendu par la base
   const { fullName, email, phone, message, date } = result.data;
   const updateData = {
     name: fullName,
@@ -92,7 +92,7 @@ export async function updateAppointment(req: Request, res: Response) {
 }
 
 // Mettre à jour uniquement le statut d'un rendez-vous
-export async function updateAppointmentStatus(req: Request, res: Response) {
+export async function updateAppointmentStatus(req: IdRequest, res: Response) {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'Invalid ID' });
 
@@ -108,9 +108,8 @@ export async function updateAppointmentStatus(req: Request, res: Response) {
   }
 }
 
-// Création du routeur Express pour les rendez-vous
-import { Router as ExpressRouter } from 'express';
-const router = ExpressRouter();
+// Routeur
+const router = Router();
 
 router.get('/', getAppointments);
 router.post('/', createAppointment);

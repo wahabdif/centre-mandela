@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import { registerRoutes } from './routes';
@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 registerRoutes(app);
 
 // Gestion des routes non API : SSR React ou fichiers statiques
-app.get('*', (req, res) => {
+app.get('*', (req: Request, res: Response) => {
   // Si la route commence par /api et qu'elle n'a pas été prise en charge, erreur 404
   if (req.url.startsWith('/api/')) {
     return res.status(404).send('API route non trouvée.');

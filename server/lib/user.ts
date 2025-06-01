@@ -1,34 +1,45 @@
 import { db } from '../db/contact';
-import { users } from 'shared/schema.';
-import { eq } from 'drizzle-orm';
-// Update the import path below to the correct relative path, for example:
 import type { NewUser, User } from '../../client/src/type/index';
-// Or, if the types do not exist, create them in a new file and import from there.
 
-/** Récupérer un utilisateur par ID */
+/**
+ * Récupérer un utilisateur par ID
+ */
 export async function getUserById(id: number): Promise<User | undefined> {
-  const result = await db.select().from(users).where(eq(users.id, id));
-  return result[0];
+  const row = db.prepare(`SELECT * FROM users WHERE id = ?`).get(id);
+  return row as User | undefined;
 }
 
-/** Récupérer un utilisateur par email */
+/**
+ * Récupérer un utilisateur par email
+ */
 export async function getUserByEmail(email: string): Promise<User | undefined> {
-  const result = await db.select().from(users).where(eq(users.email, email));
-  return result[0];
+  const row = db.prepare(`SELECT * FROM users WHERE email = ?`).get(email);
+  return row as User | undefined;
 }
 
-/** Créer un nouvel utilisateur */
+/**
+ * Créer un nouvel utilisateur
+ */
 export async function createUser(data: NewUser): Promise<User> {
-  const inserted = await db.insert(users).values(data).returning();
-  return inserted[0];
+  const stmt = db.prepare(
+    `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`
+  );
+  const result = stmt.run(data.name, data.email, data.password);
+  const user = db.prepare(`SELECT * FROM users WHERE id = ?`).get(result.lastInsertRowid);
+  return user as User;
 }
 
-/** Supprimer un utilisateur par ID */
+/**
+ * Supprimer un utilisateur par ID
+ */
 export async function deleteUser(id: number): Promise<void> {
-  await db.delete(users).where(eq(users.id, id));
+  db.prepare(`DELETE FROM users WHERE id = ?`).run(id);
 }
 
-/** Lister tous les utilisateurs */
+/**
+ * Lister tous les utilisateurs
+ */
 export async function getAllUsers(): Promise<User[]> {
-  return db.select().from(users);
+  const rows = db.prepare(`SELECT * FROM users`).all();
+  return rows as User[];
 }

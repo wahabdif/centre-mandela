@@ -1,66 +1,85 @@
-import * as db from "../db/index";
+import type { Request, Response } from 'express';
+import * as db from '../db';
 import { newsPostSchema } from '../../shared/zod';
-import { Request, Response } from 'express';
 
-
-// Récupérer toutes les actualités
-export async function getNews(req: Request, res: Response) {
-  const news = await db.getAllNewsPosts();
-  res.json(news);
+export async function getAllNews(req: Request, res: Response) {
+  try {
+    const news = await db.getAllNewsPosts();
+    res.json(news);
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la récupération des actualités.' });
+  }
 }
 
-// Créer une actualité
+export async function getNewsById(req: Request<{ id: string }>, res: Response) {
+  try {
+    const id = Number(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: 'ID invalide.' });
+
+    const news = await db.getNewsPostById(id);
+    if (!news) return res.status(404).json({ error: 'Actualité introuvable.' });
+
+    res.json(news);
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la récupération de l’actualité.' });
+  }
+}
+
 export async function createNews(req: Request, res: Response) {
-  const result = newsPostSchema.safeParse(req.body);
-  if (!result.success) return res.status(400).json({ error: result.error });
+  try {
+    const parsed = newsPostSchema
+      .omit({ id: true, createdAt: true })
+      .safeParse(req.body);
 
-  // authorId doit être fourni dans le body ou via l'utilisateur authentifié
-  const { authorId } = req.body;
-  if (!authorId) return res.status(400).json({ error: "authorId is required" });
+    if (!parsed.success) {
+      return res.status(400).json({ error: 'Données invalides.', details: parsed.error.flatten() });
+    }
 
-  const post = await db.createNewsPost({ ...result.data, authorId });
-  res.status(201).json(post);
+    const data = {
+      ...parsed.data,
+      createdAt: new Date().toISOString(),
+      authorId: 1, // Remplacer par req.user.id si authentification active
+    };
+
+    const created = await db.createNewsPost(data);
+    res.status(201).json(created);
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la création de l’actualité.' });
+  }
 }
 
-// Supprimer une actualité
-export async function deleteNews(req: Request, res: Response) {
-  const id = parseInt(req.params.id);
-  if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
+export async function deleteNews(req: Request<{ id: string }>, res: Response) {
+  try {
+    const id = Number(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: 'ID invalide.' });
 
-  await db.deleteNewsPost(id);
-  res.status(204).send();
+    const deleted = await db.deleteNewsPost(id);
+    if (!deleted) return res.status(404).json({ error: 'Actualité introuvable.' });
+
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la suppression de l’actualité.' });
+  }
 }
 
-// Récupérer une actualité par ID
-export async function getNewsById(req: Request, res: Response) {
-  const id = parseInt(req.params.id);
-  if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
+export async function updateNews(req: Request<{ id: string }>, res: Response) {
+  try {
+    const id = Number(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: 'ID invalide.' });
 
-  const post = await db.getNewsPostById(id);
-  if (!post) return res.status(404).json({ error: "News post not found" });
+    const parsed = newsPostSchema
+      .omit({ id: true, createdAt: true })
+      .safeParse(req.body);
 
-  res.json(post);
+    if (!parsed.success) {
+      return res.status(400).json({ error: 'Données invalides.', details: parsed.error.flatten() });
+    }
+
+    const updated = await db.updateNewsPost(id, parsed.data);
+    if (!updated) return res.status(404).json({ error: 'Actualité introuvable.' });
+
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la mise à jour de l’actualité.' });
+  }
 }
-
-// Mettre à jour une actualité
-export async function updateNews(req: Request, res: Response) {
-  const id = parseInt(req.params.id);
-  if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
-
-  const result = newsPostSchema.partial().safeParse(req.body);
-  if (!result.success) return res.status(400).json({ error: result.error });
-
-}
-
-// Mettre à jour le statut d'une actualité
-export async function updateNewsStatus(req: Request, res: Response) {
-  const id = parseInt(req.params.id);
-  if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
-
-  const { status } = req.body;
-  if (!status) return res.status(400).json({ error: "Status is required" });
-
-
-}
-
-export {};

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
+import { InferInsertModel } from "drizzle-orm";
 
 // Schéma utilisateur
 export const insertUserSchema = z.object({
@@ -92,5 +93,23 @@ export const newsPosts = sqliteTable("newsPosts", {
   content: text("content").notNull(),
   createdAt: text("createdAt").notNull(),
   authorId: integer("authorId").notNull(),
-  // Ajoute d'autres champs si besoin
+  status: text("status").notNull().default("draft"),
 });
+
+// Types Drizzle pour newsPosts
+export type InsertNewsPost = InferInsertModel<typeof newsPosts>;
+
+// --- Fonction utilitaire pour la mise à jour d'une newsPost ---
+/**
+ * Met à jour une newsPost par son id.
+ * @param id L'identifiant de la newsPost à mettre à jour.
+ * @param data Les champs à mettre à jour (doit être un sous-ensemble de InsertNewsPost).
+ */
+export async function updateNewsPost(
+  id: number,
+  data: Partial<InsertNewsPost>
+): Promise<void> {
+  // Cette fonction doit être implémentée dans la couche DB, pas dans le schéma partagé.
+  // Ici, on ne met que la signature pour le typage partagé.
+  throw new Error("Not implemented: à implémenter côté serveur dans la couche DB.");
+}

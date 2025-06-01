@@ -1,4 +1,4 @@
-// services/index.ts
+// Point d'entrée centralisé pour tous les services DB
 
 // CONTACT
 export {
@@ -21,7 +21,7 @@ export {
 export {
   getUserById,
   getUserByUsername,
-  getUserByEmail, // Ajouté ici
+  getUserByEmail,
   createUser,
   verifyPassword,
   hashPassword,
@@ -37,5 +37,5 @@ export {
   createAppointment,
   updateAppointment,
   updateAppointmentStatus,
-  deleteAppointment, 
+  deleteAppointment,
 } from './appointments';

@@ -1,9 +1,12 @@
 import { Router } from 'express';
-import * as users from '../controllers/users';
+import {
+  getAllNews,
+  getNewsById, // 
+} from '../controllers/news';
 
 const router = Router();
 
-router.get('/', users.getUsers);
-router.get('/:id', users.getUser);
+router.get('/', getAllNews);
+router.get('/:id', getNewsById); 
 
 export default router;

@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 const dbPath = path.resolve(__dirname, 'data.sqlite');
 
 // Connexion à SQLite
-const db = new Database(dbPath, { verbose: console.log });
+export const db = new Database(dbPath, { verbose: console.log });
 
 // Création de la table 'contact' si elle n'existe pas
 db.prepare(`
