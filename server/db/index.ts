@@ -1,3 +1,5 @@
+// services/index.ts
+
 // CONTACT
 export {
   getAllContactMessages,
@@ -19,7 +21,7 @@ export {
 export {
   getUserById,
   getUserByUsername,
-  getUserByEmail, // <-- ajout ici
+  getUserByEmail, // Ajouté ici
   createUser,
   verifyPassword,
   hashPassword,
@@ -34,7 +36,5 @@ export {
   getAppointmentById,
   createAppointment,
   updateAppointmentStatus,
-  updateAppointment,
-  deleteAppointment,
-  InsertAppointment
+  deleteAppointment, // Supposition d’une fonction deleteAppointment
 } from './appointments';
