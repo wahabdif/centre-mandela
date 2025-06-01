@@ -6,7 +6,9 @@ import { registerRoutes } from './routes'; // ou `import registerRoutes from './
 dotenv.config();
 
 const app = express();
-const PORT: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+
+// Validation du port pour s'assurer qu'il est un nombre valide
+const PORT: number = Number.isNaN(Number(process.env.PORT)) ? 3000 : parseInt(process.env.PORT, 10);
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
