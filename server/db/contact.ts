@@ -1,16 +1,16 @@
-// @ts-ignore
 import Database from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { z } from 'zod';
 
-// Simulation de __dirname en ESM
+// Résolution __dirname en ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Initialise SQLite (base de données locale)
+// Chemin de la base de données
 const dbPath = path.resolve(__dirname, 'data.sqlite');
-// @ts-ignore
+
+// Connexion à SQLite
 const db = new Database(dbPath, { verbose: console.log });
 
 // Création de la table 'contact' si elle n'existe pas
@@ -27,66 +27,48 @@ db.prepare(`
   )
 `).run();
 
+// Type TypeScript pour une entrée de message de contact
 export type ContactMessage = {
   id: number;
   name: string;
   email: string;
   phone: string;
   service: string;
-  message: string | null;
+  message?: string;
   createdAt: string;
-  httpStatus?: string | null;
+  httpStatus?: string;
 };
 
-// === Schéma Zod (validation) ===
-export const ContactInputSchema = z.object({
-  name: z.string().min(1, "Le nom est requis"),
-  email: z.string().email("Email invalide"),
-  phone: z.string().min(1, "Le téléphone est requis"),
-  service: z.string().min(1, "Le service est requis"),
-  message: z.string().nullable().optional(),
-  id: z.number().positive({ message: "L'ID doit être un nombre positif valide." }), // Validation ajoutée
+// Schéma de validation avec Zod
+export const ContactMessageSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  phone: z.string().min(5),
+  service: z.string().min(1),
+  message: z.string().optional(),
 });
 
-// === Fonctions CRUD ===
+// Fonctions d’accès à la base de données
 
-// Validation pour les IDs
-function validateId(id: number): void {
-  if (typeof id !== "number" || id <= 0 || isNaN(id)) {
-    throw new Error("L'ID doit être un nombre positif valide.");
-  }
-}
-
-// Récupérer tous les messages
 export function getAllContactMessages(): ContactMessage[] {
-  return db.prepare(`SELECT * FROM contact ORDER BY datetime(createdAt) DESC`).all() as ContactMessage[];
+  return db.prepare(`SELECT * FROM contact ORDER BY createdAt DESC`).all();
 }
 
-// Récupérer un message par ID
 export function getContactMessageById(id: number): ContactMessage | undefined {
-  validateId(id); // Ajout de validation
-  return db.prepare(`SELECT * FROM contact WHERE id = ?`).get(id) as ContactMessage | undefined;
+  return db.prepare(`SELECT * FROM contact WHERE id = ?`).get(id);
 }
 
-// Créer un message
-export function createContactMessage(data: z.infer<typeof ContactInputSchema>): ContactMessage {
-  const info = db.prepare(`
-    INSERT INTO contact (name, email, phone, service, message, createdAt)
-    VALUES (?, ?, ?, ?, ?, datetime('now'))
-  `).run(data.name, data.email, data.phone, data.service, data.message ?? null);
+export function createContactMessage(data: Omit<ContactMessage, 'id' | 'createdAt'>): ContactMessage {
+  const stmt = db.prepare(`
+    INSERT INTO contact (name, email, phone, service, message, httpStatus)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `);
 
-  const newId = Number(info.lastInsertRowid);
-  validateId(newId); // Ajout de validation pour l'ID généré
+  const result = stmt.run(data.name, data.email, data.phone, data.service, data.message ?? null, data.httpStatus ?? null);
 
-  return getContactMessageById(newId)!;
+  return getContactMessageById(result.lastInsertRowid as number)!;
 }
 
-// Mettre à jour le statut d'un message
-export function updateContactMessageStatus(id: number, httpStatus: string): ContactMessage | undefined {
-  validateId(id); // Ajout de validation
-  const result = db.prepare(`UPDATE contact SET httpStatus = ? WHERE id = ?`).run(httpStatus, id);
-
-  return result.changes > 0 ? getContactMessageById(id) : undefined;
+export function updateContactMessageStatus(id: number, status: string): void {
+  db.prepare(`UPDATE contact SET httpStatus = ? WHERE id = ?`).run(status, id);
 }
-
-export default db;
