@@ -29,13 +29,12 @@ export const users = sqliteTable("users", {
   role: text("role"),
 });
 
-// Schéma message de contact
+// Schéma message de contact (sans id)
 export const insertContactMessageSchema = z.object({
   name: z.string().min(1, "Le nom est requis"),
   email: z.string().email("Email invalide"),
   phone: z.string().min(1, "Le téléphone est requis"),
   message: z.string().min(1, "Le message est requis"),
-  id: z.number().positive({ message: "L'ID doit être un nombre positif valide." }), // Validation ajoutée
 });
 
 export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
@@ -51,7 +50,7 @@ export type ContactMessage = {
   httpStatus: "pending" | "read" | "archived";
 };
 
-// Schéma rendez-vous
+// Schéma rendez-vous (sans id)
 export const insertAppointmentSchema = z.object({
   name: z.string().min(1, "Le nom est requis"),
   email: z.string().email("Email invalide"),
@@ -59,7 +58,6 @@ export const insertAppointmentSchema = z.object({
   service: z.string().min(1, "Le service est requis"),
   message: z.string().optional(),
   status: z.enum(["pending", "confirmed", "cancelled"]).default("pending"),
-  id: z.number().positive({ message: "L'ID doit être un nombre positif valide." }), // Validation ajoutée
 });
 
 export type InsertAppointment = z.infer<typeof insertAppointmentSchema>;

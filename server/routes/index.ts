@@ -1,6 +1,6 @@
 import { Express } from 'express';
 
-import appointmentRoutes from './appointment';
+import appointmentRoutes from './appointments';
 import contactRoutes from './contact';
 import newsRoutes from './news';
 import authRoutes from './auth';

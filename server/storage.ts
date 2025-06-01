@@ -1,15 +1,24 @@
-import type { User, InsertUser, Appointment, InsertAppointment, ContactMessage, InsertContactMessage } from "../shared/schema.js";
+import type {
+  User,
+  InsertUser,
+  Appointment,
+  InsertAppointment,
+  ContactMessage,
+  InsertContactMessage,
+} from "../shared/schema.js";
 import Database from "better-sqlite3";
 
 // Ouvrir la base de données SQLite
-const db = new Database("database.sqlite");
+const db = new Database("server/db/data.sqlite");
 
 // Création des tables si elles n'existent pas
 db.exec(`
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT NOT NULL UNIQUE,
-  password TEXT NOT NULL
+  password TEXT NOT NULL,
+  email TEXT,
+  role TEXT
 );
 
 CREATE TABLE IF NOT EXISTS appointments (
@@ -29,7 +38,17 @@ CREATE TABLE IF NOT EXISTS contact_messages (
   email TEXT NOT NULL,
   phone TEXT NOT NULL,
   message TEXT NOT NULL,
-  createdAt INTEGER NOT NULL
+  createdAt INTEGER NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending',
+  httpStatus TEXT NOT NULL DEFAULT 'pending'
+);
+
+CREATE TABLE IF NOT EXISTS newsPosts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  createdAt TEXT NOT NULL,
+  authorId INTEGER NOT NULL
 );
 `);
 
@@ -48,15 +67,19 @@ export interface IStorage {
   // Contact methods
   getContactMessages(): Promise<ContactMessage[]>;
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
+
+  // News methods (à implémenter si besoin)
+  getNewsPosts?(category?: string): Promise<any[]>;
+  getNewsPost?(id: number): Promise<any | undefined>;
 }
 
 export class SqliteStorage implements IStorage {
-  getNewsPosts(category: string | undefined) {
-    throw new Error("Method not implemented.");
-  }
-  getNewsPost(arg0: number) {
-    throw new Error("Method not implemented.");
-  }
+async getNewsPosts(category?: string): Promise<any[]> {
+  throw new Error("Method not implemented.");
+}
+async getNewsPost(id: number): Promise<any> {
+  throw new Error("Method not implemented.");
+}
 
   // Vérification des IDs
   private validateId(id: number): void {
@@ -78,8 +101,8 @@ export class SqliteStorage implements IStorage {
   }
 
   async createUser(user: InsertUser): Promise<User> {
-    const stmt = db.prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-    const info = stmt.run(user.username, user.password);
+    const stmt = db.prepare("INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, ?)");
+    const info = stmt.run(user.username, user.password, (user as any).email ?? null, (user as any).role ?? null);
     return { id: info.lastInsertRowid as number, ...user };
   }
 
@@ -105,13 +128,13 @@ export class SqliteStorage implements IStorage {
       appointment.phone,
       appointment.service,
       appointment.message || "",
-      "pending",
+      appointment.status || "pending",
       now
     );
     return {
       id: info.lastInsertRowid as number,
       ...appointment,
-      status: "pending",
+      status: appointment.status || "pending",
       createdAt: now,
     };
   }
@@ -130,21 +153,23 @@ export class SqliteStorage implements IStorage {
   async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
     const now = Date.now();
     const stmt = db.prepare(
-      "INSERT INTO contact_messages (name, email, phone, message, createdAt) VALUES (?, ?, ?, ?, ?)"
+      "INSERT INTO contact_messages (name, email, phone, message, createdAt, status, httpStatus) VALUES (?, ?, ?, ?, ?, ?, ?)"
     );
     const info = stmt.run(
       message.name,
       message.email,
       message.phone,
       message.message,
-      now
+      now,
+      "pending",
+      "pending"
     );
     return {
       id: info.lastInsertRowid as number,
       ...message,
       createdAt: now,
-      status: "pending",      // Ajouté pour correspondre au type ContactMessage
-      httpStatus: "pending",  // Ajouté pour correspondre au type ContactMessage
+      status: "pending",
+      httpStatus: "pending",
     };
   }
 }

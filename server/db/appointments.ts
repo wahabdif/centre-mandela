@@ -46,10 +46,3 @@ export async function updateAppointment(id: number, data: Partial<InsertAppointm
     .returning()
     .get();
 }
-
-// Alias pour createAppointment
-export async function InsertAppointment(data: InsertAppointment) {
-  return createAppointment(data);
-}
-
-export {};

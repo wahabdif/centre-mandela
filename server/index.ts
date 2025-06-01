@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import { registerRoutes } from './routes';
-import { render } from './entry-server';
+import { render } from '../client/src/entry-server';
 
 dotenv.config();
 

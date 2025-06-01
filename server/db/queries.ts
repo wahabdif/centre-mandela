@@ -1,6 +1,3 @@
-import db from "./contact"; // ou depuis ./index si tu veux centraliser
-import { ContactInputSchema } from "./contact";
-import type { ContactMessage } from "./contact";
 
 export {
   getAllContactMessages,

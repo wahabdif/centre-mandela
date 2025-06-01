@@ -2,7 +2,7 @@ import type { Express } from 'express';
 import authRoutes from './routes/auth';
 import contactRoutes from './routes/contact';
 import newsRoutes from './routes/news';
-import appointmentRoutes from './routes/appointment';
+import appointmentRoutes from './routes/appointments';
 import userRoutes from './routes/users';
 
 export function registerRoutes(app: Express) {

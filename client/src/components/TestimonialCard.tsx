@@ -5,13 +5,20 @@ import { Star, StarHalf } from "lucide-react";
 interface TestimonialCardProps {
   text: string;
   author: string;
-  role: string;
+  role?: string;
   initials: string;
   rating: number;
   avatar?: string;
 }
 
-export default function TestimonialCard({ text, author, role, initials, rating, avatar }: TestimonialCardProps) {
+export default function TestimonialCard({
+  text,
+  author,
+  role,
+  initials,
+  rating,
+  avatar,
+}: TestimonialCardProps) {
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 !== 0;
 
@@ -36,7 +43,7 @@ export default function TestimonialCard({ text, author, role, initials, rating, 
           </Avatar>
           <div>
             <h4 className="font-bold text-gray-900">{author}</h4>
-            <p className="text-sm text-gray-600">{role}</p>
+            {role && <p className="text-sm text-gray-600">{role}</p>}
           </div>
         </div>
       </CardContent>

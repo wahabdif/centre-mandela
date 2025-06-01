@@ -1,7 +1,7 @@
 import * as db from "../db/index";
 import { newsPostSchema } from '../../shared/zod';
 import { Request, Response } from 'express';
-import { InsertNewsPost } from "../../shared/schema";
+
 
 // Récupérer toutes les actualités
 export async function getNews(req: Request, res: Response) {

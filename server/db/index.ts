@@ -35,6 +35,7 @@ export {
   getAllAppointments,
   getAppointmentById,
   createAppointment,
+  updateAppointment,
   updateAppointmentStatus,
-  deleteAppointment, // Supposition d’une fonction deleteAppointment
+  deleteAppointment, 
 } from './appointments';

@@ -8,7 +8,7 @@ import type {
   SocialLink,
   HeroImages,
   EquipmentImage
-} from './types'; // ou le chemin correct vers ton fichier types
+} from '../type/index'; // ou le chemin correct vers ton fichier types
 
 // Services — description minimale, textes en JSON trad
 export const services: ServiceProps[] = [
@@ -16,24 +16,28 @@ export const services: ServiceProps[] = [
     id: "radiologie",
     icon: "x-ray",
     title: "Radiologie générale",
+    description: "Radiographies numériques, examens standards et spécialisés.",
     image: "https://images.pexels.com/photos/4226219/pexels-photo-4226219.jpeg?auto=compress&cs=tinysrgb&w=1500"
   },
   {
     id: "irm",
     icon: "magnet",
     title: "IRM",
+    description: "Imagerie par résonance magnétique pour un diagnostic précis.",
     image: "https://images.pexels.com/photos/6749773/pexels-photo-6749773.jpeg?auto=compress&cs=tinysrgb&w=1500"
   },
   {
     id: "scanner",
     icon: "laptop-medical",
     title: "Scanner",
+    description: "Tomodensitométrie multi-coupes pour l’exploration du corps.",
     image: "https://images.pexels.com/photos/4225880/pexels-photo-4225880.jpeg?auto=compress&cs=tinysrgb&w=1500"
   },
   {
     id: "echographie",
     icon: "search",
     title: "Échographie",
+    description: "Exploration non invasive par ultrasons de haute précision.",
     image: "https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg?auto=compress&cs=tinysrgb&w=1500"
   }
 ];

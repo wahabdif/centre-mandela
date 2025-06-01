@@ -1,6 +1,6 @@
 import * as db from '../db/index';
 import { appointmentSchema } from '../../shared/zod';
-import { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 
 // Récupérer tous les rendez-vous
 export async function getAppointments(req: Request, res: Response) {
@@ -108,4 +108,15 @@ export async function updateAppointmentStatus(req: Request, res: Response) {
   }
 }
 
-export {};
+// Création du routeur Express pour les rendez-vous
+import { Router as ExpressRouter } from 'express';
+const router = ExpressRouter();
+
+router.get('/', getAppointments);
+router.post('/', createAppointment);
+router.get('/:id', getAppointment);
+router.put('/:id', updateAppointment);
+router.patch('/:id/status', updateAppointmentStatus);
+router.delete('/:id', deleteAppointment);
+
+export const appointmentRoutes = router;

@@ -54,9 +54,9 @@ export default function Testimonials() {
             {extendedTestimonials.map((testimonial) => (
               <TestimonialCard
                 key={testimonial.id}
-                text={testimonial.text}
-                author={testimonial.author}
-                role={testimonial.role}
+                text={testimonial.text.toString()}
+                author={testimonial.author.toString()}
+                role={testimonial.role?.toString()}
                 initials={testimonial.initials}
                 rating={testimonial.rating}
               />
@@ -111,7 +111,7 @@ export default function Testimonials() {
                   {t("testimonials.excellence.text")}
                 </p>
                 <ul className="space-y-2">
-                  {t("testimonials.excellence.points", { returnObjects: true }).map((point: string, i: number) => (
+                  {(t("testimonials.excellence.points", { returnObjects: true }) as string[]).map((point, i) => (
                     <li key={i} className="flex items-start">
                       <span className="text-secondary font-bold mr-2">•</span>
                       <span>{point}</span>
@@ -128,7 +128,7 @@ export default function Testimonials() {
                   {t("testimonials.care.text")}
                 </p>
                 <ul className="space-y-2">
-                  {t("testimonials.care.points", { returnObjects: true }).map((point: string, i: number) => (
+                  {(t("testimonials.care.points", { returnObjects: true }) as string[]).map((point, i) => (
                     <li key={i} className="flex items-start">
                       <span className="text-secondary font-bold mr-2">•</span>
                       <span>{point}</span>

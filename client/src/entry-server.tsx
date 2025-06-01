@@ -1,19 +1,18 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
+// import { StaticRouter } from 'react-router-dom/server'; // <-- Retiré comme demandé
 import App from './App';
 
 export function render(url: string) {
-  // Rendu React côté serveur avec StaticRouter pour la bonne route
+  // Rendu React côté serveur sans StaticRouter (à adapter selon ton routage)
   const appHtml = renderToString(
-    <StaticRouter location={url}>
-      <App />
-    </StaticRouter>
+    <App />
   );
 
   // TODO : Ajouter ici la sérialisation sécurisée d’un état initial si besoin, par exemple avec
   // const initialState = {};
   // const serializedState = JSON.stringify(initialState).replace(/</g, '\\u003c');
+  const serializedState = "";
 
   return `<!DOCTYPE html>
 <html lang="fr">

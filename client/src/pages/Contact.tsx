@@ -1,10 +1,4 @@
-Pour générer un fichier Contact avec les validations nécessaires, voici une version améliorée avec des validations supplémentaires, notamment pour les champs numériques comme l'ID. 
 
----
-
-### Code généré :
-
-```typescript
 import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -218,19 +212,3 @@ export default function Contact() {
     </div>
   );
 }
-```
-
----
-
-### Points clés :
-1. **Validation des champs** :
-   - Nom, email, téléphone, message, et ID.
-   - Ajout d'une validation pour l'ID (doit être un nombre positif).
-
-2. **Gestion des erreurs** :
-   - Affichage de messages d'erreur personnalisés via `useToast`.
-
-3. **Structure claire** :
-   - Formulaire avec des composants réutilisables (`Form`, `FormField`, etc.).
-
-Souhaitez-vous des ajustements ou des ajouts spécifiques avant de l'intégrer à votre projet ? 😊

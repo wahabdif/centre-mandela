@@ -51,11 +51,11 @@ export const ContactMessageSchema = z.object({
 // Fonctions d’accès à la base de données
 
 export function getAllContactMessages(): ContactMessage[] {
-  return db.prepare(`SELECT * FROM contact ORDER BY createdAt DESC`).all();
+  return db.prepare(`SELECT * FROM contact ORDER BY createdAt DESC`).all() as ContactMessage[];
 }
 
 export function getContactMessageById(id: number): ContactMessage | undefined {
-  return db.prepare(`SELECT * FROM contact WHERE id = ?`).get(id);
+  return db.prepare(`SELECT * FROM contact WHERE id = ?`).get(id) as ContactMessage | undefined;
 }
 
 export function createContactMessage(data: Omit<ContactMessage, 'id' | 'createdAt'>): ContactMessage {
