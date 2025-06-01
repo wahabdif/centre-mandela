@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import { registerRoutes } from './routes';
-import { render } from './ssr'; // Fonction SSR React que tu dois avoir
+import { render } from './entry-server';
 
 dotenv.config();
 
