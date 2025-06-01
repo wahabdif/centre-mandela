@@ -9,7 +9,6 @@ import Map from "@/components/Map";
 import {
   contactInfo,
   workingHours,
-  heroImages,
 } from "@/lib/constants";
 
 import {
@@ -225,9 +224,9 @@ export default function Contact() {
                   <Button
                     type="submit"
                     className="w-full flex items-center justify-center space-x-2"
-                    disabled={submitContact.isLoading}
+                    disabled={submitContact.status === "pending"}
                   >
-                    {submitContact.isLoading ? (
+                    {submitContact.status === "pending" ? (
                       <>
                         <LoaderCircle className="mr-2 h-5 w-5 animate-spin" />
                         <span>{t("form.sending")}</span>

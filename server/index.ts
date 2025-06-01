@@ -1,66 +1,32 @@
-import http from 'http';
-import fs from 'fs';
+import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
+import { registerRoutes } from './routes'; // ou `import registerRoutes from './routes'` selon export
 
-dotenv.config(); // Charger les variables d'environnement
+dotenv.config();
 
+const app = express();
 const PORT: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-// Fonction pour gérer les requêtes HTTP
-const requestHandler = (req: http.IncomingMessage, res: http.ServerResponse) => {
-  if (req.url?.startsWith('/api')) {
-    // Exemple d'API simple
-    if (req.url === '/api/test') {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'Hello, API!' }));
-    } else {
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'API non trouvée' }));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+registerRoutes(app);
+
+app.get('*', (req, res) => {
+  const filePath = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url);
+  res.sendFile(filePath, (err) => {
+    const error = err as NodeJS.ErrnoException;
+    if (error) {
+      if (error.code === 'ENOENT') {
+        res.status(404).send('Fichier non trouvé.');
+      } else {
+        res.status(500).send('Erreur serveur.');
+      }
     }
-  } else if (req.url === '/' || req.url?.endsWith('.html')) {
-    // Servir des fichiers HTML
-    const filePath = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url);
+  });
+});
 
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        if (err.code === 'ENOENT') {
-          res.writeHead(404, { 'Content-Type': 'text/plain' });
-          res.end('Fichier non trouvé.');
-        } else {
-          res.writeHead(500, { 'Content-Type': 'text/plain' });
-          res.end('Erreur serveur.');
-        }
-      } else {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(data);
-      }
-    });
-  } else if (req.url?.endsWith('.css') || req.url?.endsWith('.js')) {
-    // Servir des fichiers statiques (CSS, JS)
-    const filePath = path.join(__dirname, 'public', req.url);
-
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('Fichier non trouvé.');
-      } else {
-        const ext = path.extname(filePath);
-        const contentType = ext === '.css' ? 'text/css' : 'application/javascript';
-        res.writeHead(200, { 'Content-Type': contentType });
-        res.end(data);
-      }
-    });
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Route non trouvée.');
-  }
-};
-
-// Créer le serveur HTTP
-const server = http.createServer(requestHandler);
-
-// Démarrer le serveur
-server.listen(PORT, () => {
-  console.log(`Serveur démarré sur http://localhost:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`✅ Serveur Express démarré sur http://localhost:${PORT}`);
 });

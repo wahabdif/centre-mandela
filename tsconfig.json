@@ -4,6 +4,7 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "baseUrl": ".",
+    "typeRoots": ["./server/types", "./node_modules/@types"],
     "paths": {
       "@/*": ["client/src/*"],
       "@utils/*": ["client/src/utils/*"],
@@ -17,13 +18,17 @@
     "strict": true,
     "types": ["node"],
     "forceConsistentCasingInFileNames": true,
-    "allowJs": true,
-    "outDir": "dist" // Ajoutez cette ligne ici
+    "allowJs": false,
+    "outDir": "dist",
+    "isolatedModules": true,  // bon pour React + vite + esbuild
+    "noEmit": false,          // on veut bien générer les fichiers dans dist
+    "sourceMap": true         // utile pour debug
   },
   "include": [
     "client/src",
     "shared",
-    "server/src"
+    "server/src",
+    "client/src/Type"
   ],
   "exclude": [
     "node_modules",
@@ -32,4 +37,5 @@
     "**/*.test.ts",
     "**/*.test.js"
   ]
+
 }
