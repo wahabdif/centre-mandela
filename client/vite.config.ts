@@ -1,40 +1,38 @@
+// vite.config.ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
-// Charger les variables d'environnement
+// Charge les variables d'environnement depuis .env
 dotenv.config();
 
-// Résoudre __dirname dans un module ES
+// Résout __dirname dans un module ES
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Sortie du build dans un dossier dédié aux fichiers frontend
+// Chemin de sortie pour le build frontend (dans le backend Express)
 const outDirPath = path.resolve(__dirname, '../server/public/frontend');
 
+// Définition de la configuration Vite
 export default defineConfig({
-  // Racine du projet frontend (dossier client)
-  root: __dirname,
+  root: __dirname, // Racine du projet client
 
   plugins: [react()],
 
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'), // Alias pour importer facilement depuis src
-      '@shared': path.resolve(__dirname, '../shared'), // Alias pour code partagé frontend/backend
+      '@': path.resolve(__dirname, 'src'), // Alias vers src/
+      '@shared': path.resolve(__dirname, '../shared'), // Code partagé frontend/backend
     },
   },
 
   build: {
-    outDir: outDirPath, // Sortie dans /server/public/frontend
-    emptyOutDir: true, // Vide le dossier avant build
-    sourcemap: true, // Génère les sourcemaps pour debug
-    target: 'esnext', // Cible moderne, compatible avec React 18+
-    // rollupOptions: {
-    //   // Ici tu peux ajouter des options Rollup si besoin (ex : externalisation)
-    // },
+    outDir: outDirPath,        // Dossier de build dans le backend
+    emptyOutDir: true,         // Vide avant chaque build
+    sourcemap: true,           // Pour faciliter le debug
+    target: 'esnext',          // Cible moderne compatible avec React 18+
   },
 
   server: {
@@ -42,9 +40,8 @@ export default defineConfig({
     open: true,
     strictPort: true,
     proxy: {
-      // Proxy les appels /api vers le backend Node.js
       '/api': {
-        target: process.env.VITE_BACKEND_URL || 'http://localhost:4000',
+        target: process.env['VITE_BACKEND_URL'] || 'http://localhost:4000',
         changeOrigin: true,
         secure: false,
       },
@@ -52,12 +49,13 @@ export default defineConfig({
   },
 
   define: {
+    // Injecte dynamiquement les variables d'environnement dans le code frontend
     'process.env': {
-      BACKEND_URL: process.env.VITE_BACKEND_URL, // Injection dynamique de l'URL du backend
+      BACKEND_URL: process.env['VITE_BACKEND_URL'],
     },
   },
 
   optimizeDeps: {
-    include: ['autoprefixer'], // Forcer inclusion si besoin
+    include: ['autoprefixer'], // Inclusion forcée si nécessaire
   },
 });
