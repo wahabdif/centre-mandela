@@ -27,5 +27,6 @@ module.exports = {
     'react/react-in-jsx-scope': 'off', // Désactive l'erreur liée à React
     '@typescript-eslint/no-explicit-any': 'off', // Autorise `any` pour éviter les erreurs bloquantes
     'react/no-unescaped-entities': 'off', // Désactive l'avertissement sur les entités HTML non échappées
+     '@typescript-eslint/no-unused-expressions': 'off',
   },
 };
