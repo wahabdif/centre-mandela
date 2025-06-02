@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   locales: ['fr', 'en', 'ar'],
   output: 'src/locales/$LOCALE/$NAMESPACE.json',
   defaultNamespace: 'default',
