@@ -16,22 +16,27 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true,
     "strict": true,
-    "types": ["node","express"],
     "forceConsistentCasingInFileNames": true,
+    "types": ["node", "express"],
     "allowJs": false,
     "outDir": "dist",
     "isolatedModules": true,
     "noEmit": false,
     "sourceMap": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    // ✅ Recommandations supplémentaires
+    "moduleDetection": "force",
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true
   },
   "include": [
     "client/src",
-    "shared",
+    "client/src/Type",
     "server/src",
-    "client/src/Type"
+    "shared"
   ],
   "exclude": [
     "node_modules",
