@@ -1,4 +1,9 @@
 export function setupDarkModeToggle(buttonSelector: string) {
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    // On est côté serveur, ne rien faire
+    return;
+  }
+
   const button = document.querySelector(buttonSelector);
   const html = document.documentElement;
 
@@ -15,9 +20,9 @@ export function setupDarkModeToggle(buttonSelector: string) {
 
   function updateButton() {
     if (html.classList.contains('dark')) {
-      button!.textContent = '🌙 Mode Sombre';
+      button.textContent = '🌙 Mode Sombre';
     } else {
-      button!.textContent = '☀️ Mode Clair';
+      button.textContent = '☀️ Mode Clair';
     }
   }
   updateButton();
