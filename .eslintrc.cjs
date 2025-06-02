@@ -1,12 +1,18 @@
-// .eslintrc.js
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'react'],
+  plugins: [
+    '@typescript-eslint',
+    'react',
+    'react-hooks',
+    'prettier',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
   ],
   settings: {
     react: {
@@ -22,11 +28,20 @@ module.exports = {
   },
   ignorePatterns: ['node_modules/', 'dist/', 'build/'],
   rules: {
-    '@typescript-eslint/no-unused-vars': 'off', // Supprime les warnings des variables inutilisées
-    'no-shadow': 'off', // Désactive le conflit de nom avec les variables globales
-    'react/react-in-jsx-scope': 'off', // Désactive l'erreur liée à React
-    '@typescript-eslint/no-explicit-any': 'off', // Autorise `any` pour éviter les erreurs bloquantes
-    'react/no-unescaped-entities': 'off', // Désactive l'avertissement sur les entités HTML non échappées
-     '@typescript-eslint/no-unused-expressions': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-expressions': 'off',
+    '@typescript-eslint/no-floating-promises': 'warn',
+    '@typescript-eslint/explicit-function-return-type': ['warn', { allowExpressions: true }],
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'no-shadow': 'off',
+    'no-empty': ['error', { allowEmptyCatch: true }],
+    'curly': ['error', 'all'],
+    'prefer-object-has-own': 'error',
+    'react/react-in-jsx-scope': 'off',
+    'react/no-unescaped-entities': 'off',
+    'react/jsx-no-bind': ['warn', { ignoreRefs: true, allowArrowFunctions: false }],
+    'react-hooks/exhaustive-deps': 'warn',
+    'prettier/prettier': 'error',
   },
 };
