@@ -8,7 +8,7 @@ import type {
   SocialLink,
   HeroImages,
   EquipmentImage
-} from '../type/index'; // ou le chemin correct vers ton fichier types
+} from '../type/index'; 
 
 // Services — description minimale, textes en JSON trad
 export const services: ServiceProps[] = [
