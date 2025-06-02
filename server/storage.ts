@@ -68,9 +68,6 @@ export interface IStorage {
   getContactMessages(): Promise<ContactMessage[]>;
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
 
-  // News methods (à implémenter si besoin)
-  getNewsPosts?(category?: string): Promise<any[]>;
-  getNewsPost?(id: number): Promise<any | undefined>;
 }
 
 export class SqliteStorage implements IStorage {
