@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
-// Schéma utilisateur
+import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
+
+// --- Zod: Schéma utilisateur ---
 export const insertUserSchema = z
   .object({
     username: z.string().min(1, "Le nom d'utilisateur est requis"),
@@ -10,7 +12,8 @@ export const insertUserSchema = z
   .refine(data => data.password === data.confirmPassword, {
     message: 'Les mots de passe ne correspondent pas',
   });
-// --- Schéma/table users pour Drizzle ORM ---
+
+// --- Drizzle: Table users ---
 export const users = sqliteTable('users', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   username: text('username').notNull(),
@@ -18,14 +21,16 @@ export const users = sqliteTable('users', {
   email: text('email'),
   role: text('role'),
 });
-// Schéma message de contact (sans id)
+
+// --- Zod: Contact Message ---
 export const insertContactMessageSchema = z.object({
   name: z.string().min(1, 'Le nom est requis'),
   email: z.string().email('Email invalide'),
   phone: z.string().min(1, 'Le téléphone est requis'),
   message: z.string().min(1, 'Le message est requis'),
 });
-// Schéma rendez-vous (sans id)
+
+// --- Zod: Appointment ---
 export const insertAppointmentSchema = z.object({
   name: z.string().min(1, 'Le nom est requis'),
   email: z.string().email('Email invalide'),
@@ -34,7 +39,8 @@ export const insertAppointmentSchema = z.object({
   message: z.string().optional(),
   status: z.enum(['pending', 'confirmed', 'cancelled']).default('pending'),
 });
-// --- Schéma/table appointments pour Drizzle ORM ---
+
+// --- Drizzle: Table appointments ---
 export const appointments = sqliteTable('appointments', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
@@ -45,7 +51,8 @@ export const appointments = sqliteTable('appointments', {
   status: text('status').notNull(),
   createdAt: integer('createdAt').notNull(),
 });
-// --- Schéma/table newsPosts pour Drizzle ORM ---
+
+// --- Drizzle: Table newsPosts ---
 export const newsPosts = sqliteTable('newsPosts', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   title: text('title').notNull(),
@@ -54,14 +61,16 @@ export const newsPosts = sqliteTable('newsPosts', {
   authorId: integer('authorId').notNull(),
   status: text('status').notNull().default('draft'),
 });
-// --- Fonction utilitaire pour la mise à jour d'une newsPost ---
-/**
- * Met à jour une newsPost par son id.
- * @param id L'identifiant de la newsPost à mettre à jour.
- * @param data Les champs à mettre à jour (doit être un sous-ensemble de InsertNewsPost).
- */
-export async function updateNewsPost(id, data) {
-  // Cette fonction doit être implémentée dans la couche DB, pas dans le schéma partagé.
-  // Ici, on ne met que la signature pour le typage partagé.
-  throw new Error('Not implemented: à implémenter côté serveur dans la couche DB.');
-}
+
+// --- Types générés ---
+export type User = InferSelectModel<typeof users>;
+export type InsertUser = InferInsertModel<typeof users>;
+
+export type Appointment = InferSelectModel<typeof appointments>;
+export type InsertAppointment = InferInsertModel<typeof appointments>;
+
+export type NewsPost = InferSelectModel<typeof newsPosts>;
+export type InsertNewsPost = InferInsertModel<typeof newsPosts>;
+
+export type ContactMessage = z.infer<typeof insertContactMessageSchema>;
+export type InsertContactMessage = ContactMessage;
