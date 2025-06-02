@@ -2,16 +2,14 @@ import * as db from '../db/index';
 import { appointmentSchema } from '../../shared/zod';
 import { Request, Response, Router } from 'express';
 
-type IdRequest = Request<{ id: string }>;
-
 /**
  * Utilitaire pour valider et extraire l'ID
  * @param req - La requête Express
  * @returns L'ID validé ou null
  */
-function validateId(req: IdRequest): number | null {
-    const id = parseInt(req.params.id);
-    return isNaN(id) || id <= 0 ? null : id;
+function validateId(req: Request): number | null {
+    const id = Number(req.params.id);
+    return Number.isNaN(id) || id <= 0 ? null : id;
 }
 
 /**
@@ -64,7 +62,7 @@ export async function createAppointment(req: Request, res: Response) {
  * DELETE /api/appointments/:id
  * Supprime un rendez-vous
  */
-export async function deleteAppointment(req: IdRequest, res: Response) {
+export async function deleteAppointment(req: Request, res: Response) {
     const id = validateId(req);
     if (!id) return res.status(400).json({ error: 'ID invalide.' });
 
@@ -84,7 +82,7 @@ export async function deleteAppointment(req: IdRequest, res: Response) {
  * GET /api/appointments/:id
  * Récupère un rendez-vous par ID
  */
-export async function getAppointment(req: IdRequest, res: Response) {
+export async function getAppointment(req: Request, res: Response) {
     const id = validateId(req);
     if (!id) return res.status(400).json({ error: 'ID invalide.' });
 
@@ -104,7 +102,7 @@ export async function getAppointment(req: IdRequest, res: Response) {
  * PUT /api/appointments/:id
  * Met à jour un rendez-vous
  */
-export async function updateAppointment(req: IdRequest, res: Response) {
+export async function updateAppointment(req: Request, res: Response) {
     const id = validateId(req);
     if (!id) return res.status(400).json({ error: 'ID invalide.' });
 
@@ -142,7 +140,7 @@ export async function updateAppointment(req: IdRequest, res: Response) {
  * PATCH /api/appointments/:id/status
  * Met à jour uniquement le statut d'un rendez-vous
  */
-export async function updateAppointmentStatus(req: IdRequest, res: Response) {
+export async function updateAppointmentStatus(req: Request, res: Response) {
     const id = validateId(req);
     if (!id) return res.status(400).json({ error: 'ID invalide.' });
 
