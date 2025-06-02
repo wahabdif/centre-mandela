@@ -1,0 +1,76 @@
+client/src/components/LanguageSwitcher.tsx(100,6): error TS17008: JSX element 'div' has no corresponding closing tag.
+client/src/components/LanguageSwitcher.tsx(115,10): error TS17008: JSX element 'div' has no corresponding closing tag.
+client/src/components/LanguageSwitcher.tsx(135,45): error TS1002: Unterminated string literal.
+client/src/components/LanguageSwitcher.tsx(136,1): error TS1005: ':' expected.
+client/src/components/LanguageSwitcher.tsx(136,1): error TS1005: '</' expected.
+client/src/components/Map.tsx(111,6): error TS17008: JSX element 'div' has no corresponding closing tag.
+client/src/components/Map.tsx(112,8): error TS17008: JSX element 'Card' has no corresponding closing tag.
+client/src/components/Map.tsx(125,10): error TS17008: JSX element 'CardContent' has no corresponding closing tag.
+client/src/components/Map.tsx(126,12): error TS17008: JSX element 'div' has no corresponding closing tag.
+client/src/components/Map.tsx(127,14): error TS17008: JSX element 'div' has no corresponding closing tag.
+client/src/components/Map.tsx(129,16): error TS17008: JSX element 'div' has no corresponding closing tag.
+client/src/components/Map.tsx(133,1): error TS1005: '</' expected.
+client/src/pages/Contact.tsx(1,1): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,6): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,14): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,17): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,25): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,33): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,38): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,42): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,73): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(1,77): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,85): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,95): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,100): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,104): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,143): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(1,148): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,152): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,159): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,170): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,176): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(1,182): error TS1002: Unterminated string literal.
+client/src/pages/Contact.tsx(3,3): error TS1109: Expression expected.
+client/src/pages/Contact.tsx(5,1): error TS1127: Invalid character.
+client/src/pages/Contact.tsx(5,2): error TS1127: Invalid character.
+client/src/pages/Contact.tsx(5,3): error TS1127: Invalid character.
+client/src/pages/Contact.tsx(5,5): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(223,3): error TS1109: Expression expected.
+client/src/pages/Contact.tsx(225,1): error TS1127: Invalid character.
+client/src/pages/Contact.tsx(225,2): error TS1127: Invalid character.
+client/src/pages/Contact.tsx(225,3): error TS1127: Invalid character.
+client/src/pages/Contact.tsx(225,5): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(226,17): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(226,30): error TS1109: Expression expected.
+client/src/pages/Contact.tsx(227,41): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(228,4): error TS1003: Identifier expected.
+client/src/pages/Contact.tsx(228,12): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(228,36): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(228,45): error TS1005: ',' expected.
+client/src/pages/Contact.tsx(228,50): error TS1005: ',' expected.
+client/src/pages/Contact.tsx(228,53): error TS1005: ',' expected.
+client/src/pages/Contact.tsx(228,60): error TS1005: ',' expected.
+client/src/pages/Contact.tsx(230,1): error TS1003: Identifier expected.
+client/src/pages/Contact.tsx(230,14): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(230,28): error TS1109: Expression expected.
+client/src/pages/Contact.tsx(231,16): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(231,19): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(231,28): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(231,66): error TS1002: Unterminated string literal.
+client/src/pages/Contact.tsx(233,16): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(233,25): error TS1109: Expression expected.
+client/src/pages/Contact.tsx(234,17): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(234,22): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(234,26): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(234,77): error TS1003: Identifier expected.
+client/src/pages/Contact.tsx(236,16): error TS1005: ';' expected.
+client/src/pages/Contact.tsx(236,20): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(236,32): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(236,35): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(236,39): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(236,46): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(236,58): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(236,64): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(236,67): error TS1434: Unexpected keyword or identifier.
+client/src/pages/Contact.tsx(236,97): error TS1002: Unterminated string literal.
