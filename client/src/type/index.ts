@@ -1,4 +1,30 @@
-/** ----------------- SERVICE TYPE ------------------ */
+/** ----------------- SHARED TYPES ------------------ */
+export type UserRole = 'admin' | 'user';
+
+/** ----------------- AUTHOR / USER ------------------ */
+export type Author = {
+  id: number;
+  name: string;
+  email: string;
+  role: UserRole;
+  createdAt: string;
+  updatedAt: string;
+  lastLogin?: string | null;
+  isActive: boolean;
+};
+
+export type User = Author & {
+  password: string;
+};
+
+/** ----------------- NEW USER ------------------ */
+export type NewUser = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+/** ----------------- SERVICE ------------------ */
 export type Service = {
   id: string | number;
   title: string;
@@ -9,7 +35,7 @@ export type Service = {
 
 export type ServiceProps = Service;
 
-/** ----------------- SERVICE DETAIL TYPE ------------------ */
+/** ----------------- SERVICE DETAIL ------------------ */
 export type ServiceDetail = {
   fullDescription: string;
   uses: string[];
@@ -17,7 +43,7 @@ export type ServiceDetail = {
   image: string;
 };
 
-/** ----------------- TESTIMONIAL TYPE ------------------ */
+/** ----------------- TESTIMONIAL ------------------ */
 export type Testimonial = {
   id: number;
   text: string;
@@ -28,21 +54,24 @@ export type Testimonial = {
   avatar?: string;
 };
 
-/** ----------------- WORKING HOUR TYPE ------------------ */
+/** ----------------- WORKING HOUR ------------------ */
 export type WorkingHour = {
   days: string;
   hours: string;
 };
 
-/** ----------------- CONTACT INFO TYPE ------------------ */
+/** ----------------- CONTACT INFO ------------------ */
 export type ContactInfo = {
   address: string;
   phone: string;
   email: string;
-  location?: { lat: number; lng: number };
+  location?: {
+    lat: number;
+    lng: number;
+  };
 };
 
-/** ----------------- FEATURE TYPE ------------------ */
+/** ----------------- FEATURE ------------------ */
 export type Feature = {
   icon: string;
   title: string;
@@ -50,7 +79,7 @@ export type Feature = {
   image?: string;
 };
 
-/** ----------------- TEAM BENEFIT TYPE ------------------ */
+/** ----------------- TEAM BENEFIT ------------------ */
 export type TeamBenefit = {
   icon: string;
   title: string;
@@ -58,14 +87,14 @@ export type TeamBenefit = {
   image?: string;
 };
 
-/** ----------------- SOCIAL LINK TYPE ------------------ */
+/** ----------------- SOCIAL LINK ------------------ */
 export type SocialLink = {
-  platform: string;
+  platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'youtube' | string;
   url: string;
   icon: string;
 };
 
-/** ----------------- HERO IMAGES TYPE ------------------ */
+/** ----------------- HERO IMAGES ------------------ */
 export type HeroImages = {
   home: string;
   services: string;
@@ -74,46 +103,35 @@ export type HeroImages = {
   contact: string;
 };
 
-/** ----------------- EQUIPMENT IMAGE TYPE ------------------ */
+/** ----------------- EQUIPMENT IMAGE ------------------ */
 export type EquipmentImage = {
   title: string;
   image: string;
   description?: string;
 };
 
-/** ----------------- APPOINTMENT TYPE ------------------ */
-export interface Appointment {
+/** ----------------- APPOINTMENT ------------------ */
+export type Appointment = {
   back: string;
+  title: string;
   description: string;
   finalNote: string;
   preparationDescription: string;
-  updateAppointmentStatus: string;
-  InsertAppointment: InsertAppointment;
-  preparationSubtitle: string;
   preparationTitle: string;
-  stepsDescription: string;
-  uupdateAppointmentStatus: string;
+  preparationSubtitle: string;
   stepsTitle: string;
-  title: string;
-  appointment: {
-    name: string;
-    email: string;
-    phone: string;
-    service: string;
-    message: string | null;
-    status: 'pending' | 'confirmed' | 'cancelled';
-    createdAt: string;
-  };
+  stepsDescription: string;
+  updateAppointmentStatus: string;
+  appointment: InsertAppointment;
   appointmentStatus: {
     pending: string;
     confirmed: string;
     cancelled: string;
   };
-}
+};
 
 export interface IVIAppointment extends Appointment {}
 
-/** ----------------- INSERT APPOINTMENT TYPE ------------------ */
 export type InsertAppointment = {
   name: string;
   email: string;
@@ -124,7 +142,18 @@ export type InsertAppointment = {
   createdAt: string;
 };
 
-/** ----------------- INSERT NEWS POST TYPE ------------------ */
+/** ----------------- NEWS POST ------------------ */
+export type NewsPost = {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt?: string;
+  authorId: number;
+  status: 'draft' | 'published' | 'archived';
+  author?: Author;
+};
+
 export type InsertNewsPost = {
   title: string;
   content: string;
@@ -132,73 +161,22 @@ export type InsertNewsPost = {
   authorId: number;
 };
 
-/** ----------------- NEW USER TYPE ------------------ */
-export type NewUser = {
-  name: string;
-  email: string;
-  password: string;
-};
-
-/** ----------------- USER TYPE ------------------ */
-export type User = {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  role: 'admin' | 'user';
-  createdAt: string;
-  updatedAt: string;
-  lastLogin?: string | null;
-  isActive: boolean;
-};
-
-/** ----------------- UPDATE NEWS POST TYPE ------------------ */
 export type UpdateNewsPost = {
+  id: number;
   title?: string;
   content?: string;
   createdAt?: string;
+  updatedAt?: string;
   authorId?: number;
-  id: number;
   status?: 'draft' | 'published' | 'archived';
-  updatedAt?: string;
 };
 
-/** ----------------- NEWS POST TYPE ------------------ */
-export type NewsPost = {
-  id: number;
-  title: string;
-  content: string;
-  createdAt: string;
-  authorId: number;
-  author?: {
-    id: number;
-    name: string;
-    email: string;
-    role: 'admin' | 'user';
-    createdAt: string;
-    updatedAt: string;
-    lastLogin?: string | null;
-    isActive: boolean;
-  };
-  status: 'draft' | 'published' | 'archived';
-  updatedAt?: string;
-};
-
-/** ----------------- NEWS POST STATUS TYPE ------------------ */
+/** ----------------- NEWS POST STATUS ------------------ */
 export type NewsPostStatus = {
   id: number;
   status: 'draft' | 'published' | 'archived';
   updatedAt: string;
   postId: number;
   post?: NewsPost;
-  author?: {
-    id: number;
-    name: string;
-    email: string;
-    role: 'admin' | 'user';
-    createdAt: string;
-    updatedAt: string;
-    lastLogin?: string | null;
-    isActive: boolean;
-  };
+  author?: Author;
 };
