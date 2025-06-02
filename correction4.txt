@@ -1,0 +1,444 @@
+
+/workspaces/centre-mandela/client/babel.config.js
+  2:1  error  'module' is not defined  no-undef
+
+/workspaces/centre-mandela/client/src/components/ui/calendar.tsx
+  55:22  error  'className' is missing in props validation  react/prop-types
+  58:23  error  'className' is missing in props validation  react/prop-types
+
+/workspaces/centre-mandela/client/src/components/ui/command.tsx
+  40:52  error  Unknown property 'cmdk-input-wrapper' found  react/no-unknown-property
+
+/workspaces/centre-mandela/client/src/components/ui/table.tsx
+  72:6  error  'className' is missing in props validation  react/prop-types
+  87:6  error  'className' is missing in props validation  react/prop-types
+
+/workspaces/centre-mandela/client/src/main.tsx
+  1:1  error  Do not use a triple slash reference for ./type/index.ts, use `import` style instead  @typescript-eslint/triple-slash-reference
+
+/workspaces/centre-mandela/client/src/type/index.ts
+  106:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+/workspaces/centre-mandela/public/assets/index-Z0kcGvwy.js
+   1:364    error  'document' is not defined                                                  no-undef
+   1:471    error  'document' is not defined                                                  no-undef
+   1:535    error  'MutationObserver' is not defined                                          no-undef
+   1:685    error  'document' is not defined                                                  no-undef
+   1:1033   error  'fetch' is not defined                                                     no-undef
+   9:1601   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+   9:4782   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  17:411    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  25:636    error  'performance' is not defined                                               no-undef
+  25:671    error  'performance' is not defined                                               no-undef
+  25:871    error  'setTimeout' is not defined                                                no-undef
+  25:921    error  'clearTimeout' is not defined                                              no-undef
+  25:965    error  'setImmediate' is not defined                                              no-undef
+  25:1005   error  'navigator' is not defined                                                 no-undef
+  25:1036   error  'navigator' is not defined                                                 no-undef
+  25:1082   error  'navigator' is not defined                                                 no-undef
+  25:1123   error  'navigator' is not defined                                                 no-undef
+  25:2125   error  'MessageChannel' is not defined                                            no-undef
+  25:2664   error  'console' is not defined                                                   no-undef
+  33:531    error  'window' is not defined                                                    no-undef
+  33:559    error  'window' is not defined                                                    no-undef
+  33:630    error  Unexpected combined character in character class                           no-misleading-character-class
+  33:3023   error  Unnecessary escape character: \-                                           no-useless-escape
+  33:4891   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:202    error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  37:1209   error  Empty block statement                                                      no-empty
+  37:2382   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:3063   error  'document' is not defined                                                  no-undef
+  37:3860   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:3901   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:4068   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:4095   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:4686   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:6022   error  'MSApp' is not defined                                                     no-undef
+  37:6070   error  'MSApp' is not defined                                                     no-undef
+  37:6245   error  'document' is not defined                                                  no-undef
+  37:7450   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:7543   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:8485   error  'window' is not defined                                                    no-undef
+  37:8625   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  37:9645   error  Expected to return a value in method 'get'                                 getter-return
+  37:9669   error  'window' is not defined                                                    no-undef
+  37:9707   error  'window' is not defined                                                    no-undef
+  37:11873  error  Empty block statement                                                      no-empty
+  37:19784  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:20126  error  Invalid typeof comparison value                                            valid-typeof
+  37:20300  error  Invalid typeof comparison value                                            valid-typeof
+  37:21330  error  'window' is not defined                                                    no-undef
+  37:22165  error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  37:23409  error  'window' is not defined                                                    no-undef
+  37:23444  error  'document' is not defined                                                  no-undef
+  37:23458  error  'document' is not defined                                                  no-undef
+  37:23505  error  'window' is not defined                                                    no-undef
+  37:24972  error  'document' is not defined                                                  no-undef
+  37:24996  error  'document' is not defined                                                  no-undef
+  37:25122  error  'document' is not defined                                                  no-undef
+  37:25147  error  'document' is not defined                                                  no-undef
+  37:26498  error  'window' is not defined                                                    no-undef
+  37:27196  error  'document' is not defined                                                  no-undef
+  37:27222  error  'window' is not defined                                                    no-undef
+  37:27698  error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  37:27934  error  'document' is not defined                                                  no-undef
+  37:27948  error  'document' is not defined                                                  no-undef
+  37:28238  error  'window' is not defined                                                    no-undef
+  37:28840  error  'document' is not defined                                                  no-undef
+  37:28895  error  'window' is not defined                                                    no-undef
+  37:29032  error  'window' is not defined                                                    no-undef
+  37:29162  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:33257  error  Expected a 'break' statement before 'case'                                 no-fallthrough
+  37:33444  error  Expected a 'break' statement before 'case'                                 no-fallthrough
+  37:34566  error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  37:34615  error  'window' is not defined                                                    no-undef
+  37:35370  error  'window' is not defined                                                    no-undef
+  37:35767  error  'window' is not defined                                                    no-undef
+  37:36019  error  Expected a 'break' statement before 'case'                                 no-fallthrough
+  37:37464  error  Unexpected control character(s) in regular expression: \x00                no-control-regex
+  38:385    error  'setTimeout' is not defined                                                no-undef
+  38:438    error  'clearTimeout' is not defined                                              no-undef
+  38:540    error  'queueMicrotask' is not defined                                            no-undef
+  38:642    error  'setTimeout' is not defined                                                no-undef
+  38:1506   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  38:1606   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  38:14767  error  Expected a 'break' statement before 'case'                                 no-fallthrough
+  38:15223  error  Unexpected constant condition                                              no-constant-condition
+  38:15817  error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  38:22404  error  Empty block statement                                                      no-empty
+  38:22413  error  Empty block statement                                                      no-empty
+  38:25799  error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  38:26662  error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  40:153    error  'console' is not defined                                                   no-undef
+  40:185    error  'setTimeout' is not defined                                                no-undef
+  40:3987   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  40:5109   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  40:12954  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:12975  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13045  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13226  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13328  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13408  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13432  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13484  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13838  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:16038  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:16316  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:16763  error  Unnecessary escape character: \/                                           no-useless-escape
+  40:17644  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:17952  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:22725  error  'window' is not defined                                                    no-undef
+  40:26038  error  Empty block statement                                                      no-empty
+  40:26073  error  Expected a 'break' statement before 'case'                                 no-fallthrough
+  40:30168  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:33882  error  'window' is not defined                                                    no-undef
+  40:34940  error  Unexpected constant condition                                              no-constant-condition
+  40:39503  error  Unexpected constant condition                                              no-constant-condition
+  40:39801  error  Unexpected constant condition                                              no-constant-condition
+  40:42883  error  Empty block statement                                                      no-empty
+  40:43990  error  Component definition is missing display name                               react/display-name
+  40:52244  error  'reportError' is not defined                                               no-undef
+  40:52268  error  'console' is not defined                                                   no-undef
+  40:53324  error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  40:54733  error  'Gl' is a function                                                         no-func-assign
+  40:54739  error  'Yl' is a function                                                         no-func-assign
+  40:55656  error  '__REACT_DEVTOOLS_GLOBAL_HOOK__' is not defined                            no-undef
+  40:55755  error  Empty block statement                                                      no-empty
+  40:57847  error  '__REACT_DEVTOOLS_GLOBAL_HOOK__' is not defined                            no-undef
+  40:57904  error  '__REACT_DEVTOOLS_GLOBAL_HOOK__' is not defined                            no-undef
+  40:57956  error  'console' is not defined                                                   no-undef
+  40:59211  error  'console' is not defined                                                   no-undef
+  40:59226  error  'console' is not defined                                                   no-undef
+  40:59240  error  'console' is not defined                                                   no-undef
+  40:59390  error  'setTimeout' is not defined                                                no-undef
+  40:63854  error  'setTimeout' is not defined                                                no-undef
+  40:69222  error  'window' is not defined                                                    no-undef
+  40:69565  error  'globalThis' is not defined                                                no-undef
+  40:69589  error  'globalThis' is not defined                                                no-undef
+  40:70264  error  'globalThis' is not defined                                                no-undef
+  40:70288  error  'globalThis' is not defined                                                no-undef
+  40:71385  error  'document' is not defined                                                  no-undef
+  40:71421  error  'document' is not defined                                                  no-undef
+  40:72028  error  'globalThis' is not defined                                                no-undef
+  40:72052  error  'globalThis' is not defined                                                no-undef
+  40:72444  error  'window' is not defined                                                    no-undef
+  40:72518  error  'window' is not defined                                                    no-undef
+  40:72686  error  'globalThis' is not defined                                                no-undef
+  40:72710  error  'globalThis' is not defined                                                no-undef
+  40:73037  error  'CustomEvent' is not defined                                               no-undef
+  40:73053  error  'document' is not defined                                                  no-undef
+  40:73148  error  'CustomEvent' is not defined                                               no-undef
+  40:73284  error  'globalThis' is not defined                                                no-undef
+  40:73302  error  'globalThis' is not defined                                                no-undef
+  40:73471  error  'globalThis' is not defined                                                no-undef
+  40:73495  error  'globalThis' is not defined                                                no-undef
+  40:74538  error  'window' is not defined                                                    no-undef
+  40:75256  error  'getComputedStyle' is not defined                                          no-undef
+  40:75913  error  'console' is not defined                                                   no-undef
+  40:77201  error  'console' is not defined                                                   no-undef
+  40:78111  error  'document' is not defined                                                  no-undef
+  40:78154  error  'document' is not defined                                                  no-undef
+  40:78319  error  'CustomEvent' is not defined                                               no-undef
+  40:78438  error  'CustomEvent' is not defined                                               no-undef
+  40:78568  error  'document' is not defined                                                  no-undef
+  40:78744  error  'window' is not defined                                                    no-undef
+  40:78778  error  'window' is not defined                                                    no-undef
+  40:78969  error  'window' is not defined                                                    no-undef
+  40:79006  error  'window' is not defined                                                    no-undef
+  40:79408  error  'document' is not defined                                                  no-undef
+  40:82477  error  'document' is not defined                                                  no-undef
+  40:82580  error  'window' is not defined                                                    no-undef
+  40:82655  error  'window' is not defined                                                    no-undef
+  40:82843  error  'window' is not defined                                                    no-undef
+  40:85180  error  'window' is not defined                                                    no-undef
+  40:85223  error  'window' is not defined                                                    no-undef
+  40:85773  error  'console' is not defined                                                   no-undef
+  40:86709  error  'CustomEvent' is not defined                                               no-undef
+  40:87001  error  'window' is not defined                                                    no-undef
+  40:87036  error  'window' is not defined                                                    no-undef
+  40:87074  error  'window' is not defined                                                    no-undef
+  40:87105  error  'window' is not defined                                                    no-undef
+  40:87221  error  'document' is not defined                                                  no-undef
+  40:87249  error  'NodeFilter' is not defined                                                no-undef
+  40:87367  error  'NodeFilter' is not defined                                                no-undef
+  40:87404  error  'NodeFilter' is not defined                                                no-undef
+  40:87429  error  'NodeFilter' is not defined                                                no-undef
+  40:87528  error  'document' is not defined                                                  no-undef
+  40:87588  error  'document' is not defined                                                  no-undef
+  65:24791  error  Unnecessary escape character: \-                                           no-useless-escape
+  65:24793  error  Unnecessary escape character: \[                                           no-useless-escape
+  65:24797  error  Unnecessary escape character: \/                                           no-useless-escape
+  65:24799  error  Unnecessary escape character: \{                                           no-useless-escape
+  65:24801  error  Unnecessary escape character: \}                                           no-useless-escape
+  65:24803  error  Unnecessary escape character: \(                                           no-useless-escape
+  65:24805  error  Unnecessary escape character: \)                                           no-useless-escape
+  65:24807  error  Unnecessary escape character: \*                                           no-useless-escape
+  65:24809  error  Unnecessary escape character: \+                                           no-useless-escape
+  65:24811  error  Unnecessary escape character: \?                                           no-useless-escape
+  65:24813  error  Unnecessary escape character: \.                                           no-useless-escape
+  65:24817  error  Unnecessary escape character: \^                                           no-useless-escape
+  65:24819  error  Unnecessary escape character: \$                                           no-useless-escape
+  65:24821  error  Unnecessary escape character: \|                                           no-useless-escape
+  65:24951  error  Unnecessary escape character: \/                                           no-useless-escape
+  65:26148  error  'console' is not defined                                                   no-undef
+  65:26169  error  'console' is not defined                                                   no-undef
+  65:26219  error  'console' is not defined                                                   no-undef
+  65:38396  error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  65:39986  error  Empty block statement                                                      no-empty
+  65:45991  error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  65:47045  error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  65:52002  error  'setTimeout' is not defined                                                no-undef
+  65:55660  error  'setTimeout' is not defined                                                no-undef
+  65:58745  error  'setTimeout' is not defined                                                no-undef
+  65:77105  error  'document' is not defined                                                  no-undef
+
+/workspaces/centre-mandela/server/public/assets/index-Clso05A_.js
+   1:364     error  'document' is not defined                                                  no-undef
+   1:471     error  'document' is not defined                                                  no-undef
+   1:535     error  'MutationObserver' is not defined                                          no-undef
+   1:685     error  'document' is not defined                                                  no-undef
+   1:1033    error  'fetch' is not defined                                                     no-undef
+   9:1598    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+   9:4775    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  17:411     error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  25:636     error  'performance' is not defined                                               no-undef
+  25:671     error  'performance' is not defined                                               no-undef
+  25:871     error  'setTimeout' is not defined                                                no-undef
+  25:921     error  'clearTimeout' is not defined                                              no-undef
+  25:965     error  'setImmediate' is not defined                                              no-undef
+  25:1005    error  'navigator' is not defined                                                 no-undef
+  25:1036    error  'navigator' is not defined                                                 no-undef
+  25:1082    error  'navigator' is not defined                                                 no-undef
+  25:1123    error  'navigator' is not defined                                                 no-undef
+  25:2120    error  'MessageChannel' is not defined                                            no-undef
+  25:2656    error  'console' is not defined                                                   no-undef
+  33:531     error  'window' is not defined                                                    no-undef
+  33:559     error  'window' is not defined                                                    no-undef
+  33:630     error  Unexpected combined character in character class                           no-misleading-character-class
+  33:3023    error  Unnecessary escape character: \-                                           no-useless-escape
+  33:4891    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:202     error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  37:1208    error  Empty block statement                                                      no-empty
+  37:2381    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:3062    error  'document' is not defined                                                  no-undef
+  37:3859    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:3900    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:4067    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:4094    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:4685    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:6021    error  'MSApp' is not defined                                                     no-undef
+  37:6069    error  'MSApp' is not defined                                                     no-undef
+  37:6244    error  'document' is not defined                                                  no-undef
+  37:7449    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:7542    error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:8484    error  'window' is not defined                                                    no-undef
+  37:8624    error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  37:9644    error  Expected to return a value in method 'get'                                 getter-return
+  37:9668    error  'window' is not defined                                                    no-undef
+  37:9706    error  'window' is not defined                                                    no-undef
+  37:11872   error  Empty block statement                                                      no-empty
+  37:19783   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:20125   error  Invalid typeof comparison value                                            valid-typeof
+  37:20299   error  Invalid typeof comparison value                                            valid-typeof
+  37:21329   error  'window' is not defined                                                    no-undef
+  37:22164   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  37:23408   error  'window' is not defined                                                    no-undef
+  37:23443   error  'document' is not defined                                                  no-undef
+  37:23457   error  'document' is not defined                                                  no-undef
+  37:23504   error  'window' is not defined                                                    no-undef
+  37:24971   error  'document' is not defined                                                  no-undef
+  37:24995   error  'document' is not defined                                                  no-undef
+  37:25121   error  'document' is not defined                                                  no-undef
+  37:25146   error  'document' is not defined                                                  no-undef
+  37:26497   error  'window' is not defined                                                    no-undef
+  37:27195   error  'document' is not defined                                                  no-undef
+  37:27221   error  'window' is not defined                                                    no-undef
+  37:27697   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  37:27933   error  'document' is not defined                                                  no-undef
+  37:27947   error  'document' is not defined                                                  no-undef
+  37:28237   error  'window' is not defined                                                    no-undef
+  37:28839   error  'document' is not defined                                                  no-undef
+  37:28894   error  'window' is not defined                                                    no-undef
+  37:29031   error  'window' is not defined                                                    no-undef
+  37:29161   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  37:33256   error  Expected a 'break' statement before 'case'                                 no-fallthrough
+  37:33443   error  Expected a 'break' statement before 'case'                                 no-fallthrough
+  37:34565   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  37:34614   error  'window' is not defined                                                    no-undef
+  37:35369   error  'window' is not defined                                                    no-undef
+  37:35772   error  'window' is not defined                                                    no-undef
+  37:36027   error  Expected a 'break' statement before 'case'                                 no-fallthrough
+  37:37484   error  Unexpected control character(s) in regular expression: \x00                no-control-regex
+  38:385     error  'setTimeout' is not defined                                                no-undef
+  38:438     error  'clearTimeout' is not defined                                              no-undef
+  38:540     error  'queueMicrotask' is not defined                                            no-undef
+  38:642     error  'setTimeout' is not defined                                                no-undef
+  38:1506    error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  38:1606    error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  38:14844   error  Expected a 'break' statement before 'case'                                 no-fallthrough
+  38:15300   error  Unexpected constant condition                                              no-constant-condition
+  38:15894   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  38:22481   error  Empty block statement                                                      no-empty
+  38:22490   error  Empty block statement                                                      no-empty
+  38:25876   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  38:26739   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  40:153     error  'console' is not defined                                                   no-undef
+  40:185     error  'setTimeout' is not defined                                                no-undef
+  40:3987    error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  40:5109    error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  40:12954   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:12975   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13045   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13226   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13315   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13395   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13419   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13471   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:13825   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:16025   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:16303   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:16750   error  Unnecessary escape character: \/                                           no-useless-escape
+  40:17631   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:17939   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:22712   error  'window' is not defined                                                    no-undef
+  40:26025   error  Empty block statement                                                      no-empty
+  40:26060   error  Expected a 'break' statement before 'case'                                 no-fallthrough
+  40:30155   error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  40:33869   error  'window' is not defined                                                    no-undef
+  40:34927   error  Unexpected constant condition                                              no-constant-condition
+  40:39490   error  Unexpected constant condition                                              no-constant-condition
+  40:39788   error  Unexpected constant condition                                              no-constant-condition
+  40:42870   error  Empty block statement                                                      no-empty
+  40:43977   error  Component definition is missing display name                               react/display-name
+  40:52230   error  'reportError' is not defined                                               no-undef
+  40:52254   error  'console' is not defined                                                   no-undef
+  40:53310   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  40:54719   error  'Gl' is a function                                                         no-func-assign
+  40:54725   error  'Yl' is a function                                                         no-func-assign
+  40:55642   error  '__REACT_DEVTOOLS_GLOBAL_HOOK__' is not defined                            no-undef
+  40:55741   error  Empty block statement                                                      no-empty
+  40:57833   error  '__REACT_DEVTOOLS_GLOBAL_HOOK__' is not defined                            no-undef
+  40:57890   error  '__REACT_DEVTOOLS_GLOBAL_HOOK__' is not defined                            no-undef
+  40:57942   error  'console' is not defined                                                   no-undef
+  65:1253    error  'console' is not defined                                                   no-undef
+  65:1268    error  'console' is not defined                                                   no-undef
+  65:1418    error  'setTimeout' is not defined                                                no-undef
+  65:5831    error  'setTimeout' is not defined                                                no-undef
+  65:11037   error  'window' is not defined                                                    no-undef
+  65:11342   error  'globalThis' is not defined                                                no-undef
+  65:12001   error  'globalThis' is not defined                                                no-undef
+  65:13047   error  'document' is not defined                                                  no-undef
+  65:13083   error  'document' is not defined                                                  no-undef
+  65:13687   error  'globalThis' is not defined                                                no-undef
+  65:14080   error  'window' is not defined                                                    no-undef
+  65:14154   error  'window' is not defined                                                    no-undef
+  65:14322   error  'globalThis' is not defined                                                no-undef
+  65:14650   error  'CustomEvent' is not defined                                               no-undef
+  65:14666   error  'document' is not defined                                                  no-undef
+  65:14761   error  'CustomEvent' is not defined                                               no-undef
+  65:14897   error  'globalThis' is not defined                                                no-undef
+  65:15057   error  'globalThis' is not defined                                                no-undef
+  65:16069   error  'window' is not defined                                                    no-undef
+  65:16787   error  'getComputedStyle' is not defined                                          no-undef
+  65:17385   error  'console' is not defined                                                   no-undef
+  65:18623   error  'console' is not defined                                                   no-undef
+  65:19513   error  'document' is not defined                                                  no-undef
+  65:19556   error  'document' is not defined                                                  no-undef
+  65:19720   error  'CustomEvent' is not defined                                               no-undef
+  65:19837   error  'CustomEvent' is not defined                                               no-undef
+  65:19963   error  'document' is not defined                                                  no-undef
+  65:20138   error  'window' is not defined                                                    no-undef
+  65:20172   error  'window' is not defined                                                    no-undef
+  65:20362   error  'window' is not defined                                                    no-undef
+  65:20399   error  'window' is not defined                                                    no-undef
+  65:20785   error  'document' is not defined                                                  no-undef
+  65:23766   error  'document' is not defined                                                  no-undef
+  65:23852   error  'window' is not defined                                                    no-undef
+  65:23926   error  'window' is not defined                                                    no-undef
+  65:24106   error  'window' is not defined                                                    no-undef
+  65:26426   error  'window' is not defined                                                    no-undef
+  65:26469   error  'window' is not defined                                                    no-undef
+  65:27019   error  'console' is not defined                                                   no-undef
+  65:27955   error  'CustomEvent' is not defined                                               no-undef
+  65:28247   error  'window' is not defined                                                    no-undef
+  65:28282   error  'window' is not defined                                                    no-undef
+  65:28320   error  'window' is not defined                                                    no-undef
+  65:28351   error  'window' is not defined                                                    no-undef
+  65:28467   error  'document' is not defined                                                  no-undef
+  65:28495   error  'NodeFilter' is not defined                                                no-undef
+  65:28613   error  'NodeFilter' is not defined                                                no-undef
+  65:28650   error  'NodeFilter' is not defined                                                no-undef
+  65:28675   error  'NodeFilter' is not defined                                                no-undef
+  65:28774   error  'document' is not defined                                                  no-undef
+  65:28834   error  'document' is not defined                                                  no-undef
+  65:54329   error  Unnecessary escape character: \-                                           no-useless-escape
+  65:54331   error  Unnecessary escape character: \[                                           no-useless-escape
+  65:54335   error  Unnecessary escape character: \/                                           no-useless-escape
+  65:54337   error  Unnecessary escape character: \{                                           no-useless-escape
+  65:54339   error  Unnecessary escape character: \}                                           no-useless-escape
+  65:54341   error  Unnecessary escape character: \(                                           no-useless-escape
+  65:54343   error  Unnecessary escape character: \)                                           no-useless-escape
+  65:54345   error  Unnecessary escape character: \*                                           no-useless-escape
+  65:54347   error  Unnecessary escape character: \+                                           no-useless-escape
+  65:54349   error  Unnecessary escape character: \?                                           no-useless-escape
+  65:54351   error  Unnecessary escape character: \.                                           no-useless-escape
+  65:54355   error  Unnecessary escape character: \^                                           no-useless-escape
+  65:54357   error  Unnecessary escape character: \$                                           no-useless-escape
+  65:54359   error  Unnecessary escape character: \|                                           no-useless-escape
+  65:54489   error  Unnecessary escape character: \/                                           no-useless-escape
+  65:55658   error  'console' is not defined                                                   no-undef
+  65:55680   error  'console' is not defined                                                   no-undef
+  65:67514   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  65:69084   error  Empty block statement                                                      no-empty
+  65:74961   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  65:75999   error  Expected a conditional expression and instead saw an assignment            no-cond-assign
+  65:80873   error  'setTimeout' is not defined                                                no-undef
+  65:84384   error  'setTimeout' is not defined                                                no-undef
+  65:87469   error  'setTimeout' is not defined                                                no-undef
+  65:105631  error  'document' is not defined                                                  no-undef
+
+/workspaces/centre-mandela/server/types/express.d.ts
+  7:15  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+✖ 423 problems (423 errors, 0 warnings)
+
