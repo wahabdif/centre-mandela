@@ -11,7 +11,7 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "resolveJsonModule": true                            // on veut générer des fichiers .js
+    "resolveJsonModule": true                         
   },
   "include": [
     "**/*.ts",
