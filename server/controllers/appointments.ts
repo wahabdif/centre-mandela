@@ -41,12 +41,13 @@ export async function createAppointment(req: Request, res: Response) {
     });
   }
 
-  const { fullName, email, phone, message, date } = result.data;
+  const { fullName, email, phone, message, service } = result.data;
+
   const appointmentData = {
     name: fullName,
     email,
     phone,
-    service: date,
+    service,      // ici on utilise bien "service" et non "date"
     message,
     status: 'pending' as const,
   };
@@ -118,12 +119,13 @@ export async function updateAppointment(req: Request, res: Response) {
     });
   }
 
-  const { fullName, email, phone, message, date } = result.data;
+  const { fullName, email, phone, message, service } = result.data;
+
   const updateData = {
     name: fullName,
     email,
     phone,
-    service: date,
+    service,
     message,
     status: 'pending' as const,
   };
@@ -168,9 +170,7 @@ export async function updateAppointmentStatus(req: Request, res: Response) {
     res.json(updatedAppointment);
   } catch (error) {
     console.error('Erreur lors de la mise à jour du statut du rendez-vous:', error);
-    res
-      .status(500)
-      .json({ error: 'Erreur interne lors de la mise à jour du statut du rendez-vous.' });
+    res.status(500).json({ error: 'Erreur interne lors de la mise à jour du statut du rendez-vous.' });
   }
 }
 
