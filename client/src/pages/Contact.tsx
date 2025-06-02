@@ -1,10 +1,3 @@
-Pour générer un fichier Contact avec les validations nécessaires, voici une version améliorée avec des validations supplémentaires, notamment pour les champs numériques comme l'ID. 
-
----
-
-### Code généré :
-
-```typescript
 import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -41,7 +34,7 @@ import {
 
 import { useTranslation } from "react-i18next";
 
-// Schéma de validation avec Zod
+// Schéma de validation
 const contactFormSchema = z.object({
   name: z.string().min(3, { message: "form.nameMinLength" }),
   email: z.string().email({ message: "form.emailInvalid" }),
@@ -49,7 +42,7 @@ const contactFormSchema = z.object({
     .string()
     .regex(/^[0-9+\s()-]{8,15}$/, { message: "form.phoneInvalid" }),
   message: z.string().min(10, { message: "form.messageMinLength" }),
-  id: z.number().positive({ message: "L'ID doit être un nombre positif." }), // Ajout pour valider l'ID
+  id: z.number().positive({ message: "L'ID doit être un nombre positif." }),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
@@ -66,7 +59,7 @@ export default function Contact() {
       email: "",
       phone: "",
       message: "",
-      id: 1, // Exemple de valeur par défaut pour l'ID
+      id: 1,
     },
   });
 
@@ -105,7 +98,6 @@ export default function Contact() {
 
   return (
     <div className="pt-28">
-      {/* Section Formulaire de Contact */}
       <section id="contact-form" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
@@ -118,6 +110,7 @@ export default function Contact() {
                 className="space-y-6 bg-white p-8 rounded-xl shadow-md"
                 noValidate
               >
+                {/* Nom */}
                 <FormField
                   control={form.control}
                   name="name"
@@ -134,6 +127,7 @@ export default function Contact() {
                     </FormItem>
                   )}
                 />
+                {/* Email */}
                 <FormField
                   control={form.control}
                   name="email"
@@ -151,6 +145,7 @@ export default function Contact() {
                     </FormItem>
                   )}
                 />
+                {/* Téléphone */}
                 <FormField
                   control={form.control}
                   name="phone"
@@ -168,6 +163,7 @@ export default function Contact() {
                     </FormItem>
                   )}
                 />
+                {/* Message */}
                 <FormField
                   control={form.control}
                   name="message"
@@ -185,6 +181,7 @@ export default function Contact() {
                     </FormItem>
                   )}
                 />
+                {/* ID */}
                 <FormField
                   control={form.control}
                   name="id"
@@ -218,19 +215,3 @@ export default function Contact() {
     </div>
   );
 }
-```
-
----
-
-### Points clés :
-1. **Validation des champs** :
-   - Nom, email, téléphone, message, et ID.
-   - Ajout d'une validation pour l'ID (doit être un nombre positif).
-
-2. **Gestion des erreurs** :
-   - Affichage de messages d'erreur personnalisés via `useToast`.
-
-3. **Structure claire** :
-   - Formulaire avec des composants réutilisables (`Form`, `FormField`, etc.).
-
-Souhaitez-vous des ajustements ou des ajouts spécifiques avant de l'intégrer à votre projet ? 😊
