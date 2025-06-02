@@ -9,7 +9,7 @@ import { Request, Response, Router } from 'express';
  */
 function validateId(req: Request): number | null {
     const id = Number(req.params.id);
-    return Number.isNaN(id) || id <= 0 ? null : id;
+    return !Number.isNaN(id) && id > 0 ? id : null;
 }
 
 /**
@@ -31,6 +31,8 @@ export async function getAppointments(req: Request, res: Response) {
  * Crée un nouveau rendez-vous
  */
 export async function createAppointment(req: Request, res: Response) {
+    if (!req.body) return res.status(400).json({ error: 'Requête invalide.' });
+
     const result = appointmentSchema.safeParse(req.body);
     if (!result.success) {
         return res.status(400).json({ 
@@ -106,6 +108,8 @@ export async function updateAppointment(req: Request, res: Response) {
     const id = validateId(req);
     if (!id) return res.status(400).json({ error: 'ID invalide.' });
 
+    if (!req.body) return res.status(400).json({ error: 'Requête invalide.' });
+
     const result = appointmentSchema.safeParse(req.body);
     if (!result.success) {
         return res.status(400).json({ 
@@ -143,6 +147,10 @@ export async function updateAppointment(req: Request, res: Response) {
 export async function updateAppointmentStatus(req: Request, res: Response) {
     const id = validateId(req);
     if (!id) return res.status(400).json({ error: 'ID invalide.' });
+
+    if (!req.body || typeof req.body !== "object") {
+        return res.status(400).json({ error: 'Requête invalide.' });
+    }
 
     const { status } = req.body;
     const validStatuses = ['pending', 'confirmed', 'cancelled'];
