@@ -24,7 +24,8 @@
     "outDir": "dist",
     "isolatedModules": true,
     "noEmit": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "skiplibcheck" true
   },
   "include": [
     "client/src",
