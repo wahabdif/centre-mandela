@@ -1,10 +1,10 @@
-const plugin = require("tailwindcss/plugin");
-const animate = require("tailwindcss-animate");
-const typography = require("@tailwindcss/typography");
-const rtl = require("tailwindcss-rtl");
+import plugin from "tailwindcss/plugin";
+import animate from "tailwindcss-animate";
+import typography from "@tailwindcss/typography";
+import rtl from "tailwindcss-rtl";
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
