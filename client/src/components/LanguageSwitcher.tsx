@@ -1,85 +1,183 @@
-// src/components/LanguageSwitcher.tsx
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { contactInfo } from "@/lib/constants";
+import { MapPin, Navigation, Phone, Mail, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-const languages = [
-  { code: 'fr', label: 'Français', flag: '🇫🇷' },
-  { code: 'en', label: 'English', flag: '🇺🇸' },
-  { code: 'ar', label: 'العربية', flag: '🇩🇿' },
-];
+declare global {
+  interface Window {
+    L?: any;  // facultatif, car on vérifie son existence
+  }
+}
 
-export default function LanguageSwitcher() {
-  const { i18n } = useTranslation();
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+export default function Map() {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<any>(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
-  // Fermer le menu si on clique en dehors ou appuie sur Échap
+  const lat = contactInfo?.location?.lat;
+  const lng = contactInfo?.location?.lng;
+
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    }
+    if (!lat || !lng) return;
 
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
-        setOpen(false);
+    // Injection des fichiers CSS et JS Leaflet
+    const injectLeafletAssets = () => {
+      if (!document.querySelector('link[href*="leaflet.css"]')) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+        link.integrity =
+          "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
+        link.crossOrigin = "";
+        document.head.appendChild(link);
       }
-    }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleKeyDown);
+      if (!document.querySelector('script[src*="leaflet.js"]')) {
+        const script = document.createElement("script");
+        script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+        script.integrity =
+          "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
+        script.crossOrigin = "";
+        script.onload = initMapWhenReady;
+        document.head.appendChild(script);
+      } else {
+        initMapWhenReady();
+      }
+    };
+
+    // Initialiser la carte dès que Leaflet est disponible
+    const initMapWhenReady = () => {
+      const interval = setInterval(() => {
+        if (window.L && mapRef.current) {
+          clearInterval(interval);
+          initMap();
+        }
+      }, 100);
+    };
+
+    // Initialisation de la carte Leaflet
+    const initMap = () => {
+      if (!window.L || !mapRef.current) return;
+
+      mapRef.current.innerHTML = ""; // nettoyer
+
+      const map = window.L.map(mapRef.current).setView([lat, lng], 16);
+      mapInstanceRef.current = map;
+
+      window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 19,
+      }).addTo(map);
+
+      // Recalcul taille carte après affichage
+      setTimeout(() => map.invalidateSize(), 500);
+
+      const marker = window.L.marker([lat, lng]).addTo(map);
+
+      const phone = contactInfo.phone.replace(/\s/g, "");
+      const safeAddress = contactInfo.address.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+      marker.bindPopup(`
+        <strong>Centre D'Imagerie Benameur</strong><br />
+        ${safeAddress}<br />
+        <a href="tel:${phone}">${contactInfo.phone}</a>
+      `);
+
+      marker.openPopup();
+      setMapLoaded(true);
+    };
+
+    injectLeafletAssets();
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleKeyDown);
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
     };
-  }, []);
+  }, [lat, lng]);
 
-  // Définir la direction RTL/LTR selon la langue
-  useEffect(() => {
-    document.documentElement.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
-  }, [i18n.language]);
-
-  const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
+  if (!lat || !lng) {
+    return (
+      <div className="p-6 bg-red-50 text-red-700 rounded-md">
+        Les coordonnées de la carte sont manquantes.
+      </div>
+    );
+  }
 
   return (
-    <div className="relative inline-block text-left" ref={ref}>
-      <button
-        onClick={() => setOpen((prev) => !prev)}
-        aria-haspopup="true"
-        aria-expanded={open}
-        className="inline-flex items-center justify-center gap-2 px-3 py-1.5 border border-gray-300 rounded-md bg-white text-sm font-medium hover:bg-gray-100 transition"
-      >
-        <span className="text-lg">{currentLang.flag}</span>
-        <span>{currentLang.label}</span>
-      </button>
-
-      {open && (
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+      <Card className="rounded-xl shadow-lg md:col-span-8">
         <div
-          role="menu"
-          aria-orientation="vertical"
-          aria-labelledby="language-switcher"
-          className="absolute z-50 mt-2 w-40 rounded-md shadow-lg bg-white border border-gray-200"
+          ref={mapRef}
+          id="map"
+          className="w-full h-[450px] bg-gray-100 relative"
         >
-          {languages.map(({ code, label, flag }) => (
-            <button
-              key={code}
-              role="menuitem"
-              onClick={() => {
-                i18n.changeLanguage(code);
-                localStorage.setItem('i18nextLng', code);
-                setOpen(false);
-              }}
-              className={`w-full px-4 py-2 text-left text-sm flex items-center gap-2 hover:bg-gray-100 transition ${
-                i18n.language === code ? 'font-semibold text-primary' : ''
-              }`}
-            >
-              <span className="text-lg">{flag}</span> <span>{label}</span>
-            </button>
-          ))}
+          {!mapLoaded && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mb-4"></div>
+              <p className="text-gray-500">Chargement de la carte...</p>
+            </div>
+          )}
         </div>
-      )}
-    </div>
-  );
-}
+        <CardContent className="p-6 bg-white">
+          <div className="space-y-4">
+            <div className="flex items-start">
+              <MapPin className="h-5 w-5 text-primary mr-2 mt-1" />
+              <div>
+                <h4 className="font-bold text-primary mb-1 text-lg">
+                  Comment nous trouver
+                </h4>
+                <p className="text-gray-700">
+                  Le centre est situé à proximité du centre-ville d'Oran.
+                </p>
+              </div>
+            </div>
+            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 space-y-2">
+              <p className="text-gray-800">
+                <strong>Adresse :</strong> {contactInfo.address}
+              </p>
+              <p className="text-gray-800">
+                <strong>Téléphone :</strong> {contactInfo.phone}
+              </p>
+              <p className="text-gray-800">
+                <strong>GPS :</strong> {lat.toFixed(6)}, {lng.toFixed(6)}
+              </p>
+              <div className="flex gap-4 mt-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    window.open(
+                      `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
+                      "_blank"
+                    )
+                  }
+                >
+                  <Navigation className="w-4 h-4 mr-2" />
+                  Itinéraire
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    (window.location.href = `tel:${contactInfo.phone.replace(
+                      /\s/g,
+                      ""
+                    )}`)
+                  }
+                >
+                  <Phone className="w-4 h-4 mr-2" />
+                  Appeler
+                </Button>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="rounded-xl shadow-lg md:col-span-4 bg-primary text-white">
+        <div className="h-24 bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
+          <h3 className
