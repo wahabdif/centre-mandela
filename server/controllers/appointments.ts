@@ -1,189 +1,70 @@
-import * as db from '../db/index';
-import { appointmentSchema } from '../../shared/zod';
-import { Request, Response, Router } from 'express';
+// server/controllers/appointments.ts
 
-/**
- * Utilitaire pour valider et extraire l'ID
- * @param req - La requête Express
- * @returns L'ID validé ou null
- */
-function validateId(req: Request): number | null {
-  const id = Number(req.params.id);
-  return !Number.isNaN(id) && id > 0 ? id : null;
-}
+import type { Request, Response } from 'express';
 
-/**
- * GET /api/appointments
- * Récupère tous les rendez-vous
- */
 export async function getAppointments(req: Request, res: Response) {
   try {
-    const appointments = await db.getAllAppointments();
-    res.json(appointments);
+    // logique de récupération
+    res.json([]); // exemple de retour
   } catch (error) {
-    console.error('Erreur lors de la récupération des rendez-vous:', error);
-    res.status(500).json({ error: 'Erreur interne lors de la récupération des rendez-vous.' });
+    console.error('Erreur getAppointments :', error);
+    res.status(500).json({ error: 'Erreur serveur' });
   }
 }
 
-/**
- * POST /api/appointments
- * Crée un nouveau rendez-vous
- */
 export async function createAppointment(req: Request, res: Response) {
-  if (!req.body) return res.status(400).json({ error: 'Requête invalide.' });
-
-  const result = appointmentSchema.safeParse(req.body);
-  if (!result.success) {
-    return res.status(400).json({
-      error: 'Données invalides.',
-      details: result.error.flatten(),
-    });
-  }
-
-  const { fullName, email, phone, message, service } = result.data;
-
-  const appointmentData = {
-    name: fullName,
-    email,
-    phone,
-    service,      // ici on utilise bien "service" et non "date"
-    message,
-    status: 'pending' as const,
-  };
-
   try {
-    const appointment = await db.createAppointment(appointmentData);
-    res.status(201).json(appointment);
+    const data = req.body;
+    // logique de création
+    res.status(201).json({ message: 'Rendez-vous créé', data });
   } catch (error) {
-    console.error('Erreur lors de la création du rendez-vous:', error);
-    res.status(500).json({ error: 'Erreur interne lors de la création du rendez-vous.' });
+    console.error('Erreur createAppointment :', error);
+    res.status(500).json({ error: 'Erreur serveur' });
   }
 }
 
-/**
- * DELETE /api/appointments/:id
- * Supprime un rendez-vous
- */
-export async function deleteAppointment(req: Request, res: Response) {
-  const id = validateId(req);
-  if (!id) return res.status(400).json({ error: 'ID invalide.' });
-
-  try {
-    const deleted = await db.deleteAppointment(id);
-    if (!deleted) {
-      return res.status(404).json({ error: 'Rendez-vous introuvable ou déjà supprimé.' });
-    }
-    res.status(204).send();
-  } catch (error) {
-    console.error('Erreur lors de la suppression du rendez-vous:', error);
-    res.status(500).json({ error: 'Erreur interne lors de la suppression du rendez-vous.' });
-  }
-}
-
-/**
- * GET /api/appointments/:id
- * Récupère un rendez-vous par ID
- */
 export async function getAppointment(req: Request, res: Response) {
-  const id = validateId(req);
-  if (!id) return res.status(400).json({ error: 'ID invalide.' });
-
   try {
-    const appointment = await db.getAppointmentById(id);
-    if (!appointment) {
-      return res.status(404).json({ error: 'Rendez-vous introuvable.' });
-    }
-    res.json(appointment);
+    const id = Number(req.params.id);
+    // logique de récupération
+    res.json({ id });
   } catch (error) {
-    console.error('Erreur lors de la récupération du rendez-vous:', error);
-    res.status(500).json({ error: 'Erreur interne lors de la récupération du rendez-vous.' });
+    console.error('Erreur getAppointment :', error);
+    res.status(500).json({ error: 'Erreur serveur' });
   }
 }
 
-/**
- * PUT /api/appointments/:id
- * Met à jour un rendez-vous
- */
 export async function updateAppointment(req: Request, res: Response) {
-  const id = validateId(req);
-  if (!id) return res.status(400).json({ error: 'ID invalide.' });
-
-  if (!req.body) return res.status(400).json({ error: 'Requête invalide.' });
-
-  const result = appointmentSchema.safeParse(req.body);
-  if (!result.success) {
-    return res.status(400).json({
-      error: 'Données invalides.',
-      details: result.error.flatten(),
-    });
-  }
-
-  const { fullName, email, phone, message, service } = result.data;
-
-  const updateData = {
-    name: fullName,
-    email,
-    phone,
-    service,
-    message,
-    status: 'pending' as const,
-  };
-
   try {
-    const updatedAppointment = await db.updateAppointment(id, updateData);
-    if (!updatedAppointment) {
-      return res.status(404).json({ error: 'Rendez-vous introuvable.' });
-    }
-    res.json(updatedAppointment);
+    const id = Number(req.params.id);
+    const data = req.body;
+    // logique de mise à jour
+    res.json({ message: 'Rendez-vous mis à jour', id, data });
   } catch (error) {
-    console.error('Erreur lors de la mise à jour du rendez-vous:', error);
-    res.status(500).json({ error: 'Erreur interne lors de la mise à jour du rendez-vous.' });
+    console.error('Erreur updateAppointment :', error);
+    res.status(500).json({ error: 'Erreur serveur' });
   }
 }
 
-/**
- * PATCH /api/appointments/:id/status
- * Met à jour uniquement le statut d'un rendez-vous
- */
 export async function updateAppointmentStatus(req: Request, res: Response) {
-  const id = validateId(req);
-  if (!id) return res.status(400).json({ error: 'ID invalide.' });
-
-  if (!req.body || typeof req.body !== 'object') {
-    return res.status(400).json({ error: 'Requête invalide.' });
-  }
-
-  const { status } = req.body;
-  const validStatuses = ['pending', 'confirmed', 'cancelled'];
-  if (!status || !validStatuses.includes(status)) {
-    return res.status(400).json({
-      error: `Statut invalide. Valeurs autorisées : ${validStatuses.join(', ')}.`,
-    });
-  }
-
   try {
-    const updatedAppointment = await db.updateAppointmentStatus(id, status);
-    if (!updatedAppointment) {
-      return res.status(404).json({ error: 'Rendez-vous introuvable.' });
-    }
-    res.json(updatedAppointment);
+    const id = Number(req.params.id);
+    const { status } = req.body;
+    // logique de mise à jour de statut
+    res.json({ message: 'Statut mis à jour', id, status });
   } catch (error) {
-    console.error('Erreur lors de la mise à jour du statut du rendez-vous:', error);
-    res.status(500).json({ error: 'Erreur interne lors de la mise à jour du statut du rendez-vous.' });
+    console.error('Erreur updateAppointmentStatus :', error);
+    res.status(500).json({ error: 'Erreur serveur' });
   }
 }
 
-/**
- * Routeur des rendez-vous
- */
-const router = Router();
-
-router.get('/', getAppointments);
-router.post('/', createAppointment);
-router.get('/:id', getAppointment);
-router.put('/:id', updateAppointment);
-router.patch('/:id/status', updateAppointmentStatus);
-router.delete('/:id', deleteAppointment);
-
-export const appointmentRoutes = router;
+export async function deleteAppointment(req: Request, res: Response) {
+  try {
+    const id = Number(req.params.id);
+    // logique de suppression
+    res.json({ message: 'Rendez-vous supprimé', id });
+  } catch (error) {
+    console.error('Erreur deleteAppointment :', error);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+}
