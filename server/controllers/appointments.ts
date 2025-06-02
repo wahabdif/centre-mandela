@@ -1,6 +1,9 @@
 // server/controllers/appointments.ts
-
 import type { Request, Response } from 'express';
+
+interface AppointmentParams {
+  id: string; // toujours une string dans req.params
+}
 
 export async function getAppointments(req: Request, res: Response) {
   try {
@@ -23,7 +26,7 @@ export async function createAppointment(req: Request, res: Response) {
   }
 }
 
-export async function getAppointment(req: Request, res: Response) {
+export async function getAppointment(req: Request<AppointmentParams>, res: Response) {
   try {
     const id = Number(req.params.id);
     // logique de récupération
@@ -34,7 +37,7 @@ export async function getAppointment(req: Request, res: Response) {
   }
 }
 
-export async function updateAppointment(req: Request, res: Response) {
+export async function updateAppointment(req: Request<AppointmentParams>, res: Response) {
   try {
     const id = Number(req.params.id);
     const data = req.body;
@@ -46,7 +49,7 @@ export async function updateAppointment(req: Request, res: Response) {
   }
 }
 
-export async function updateAppointmentStatus(req: Request, res: Response) {
+export async function updateAppointmentStatus(req: Request<AppointmentParams>, res: Response) {
   try {
     const id = Number(req.params.id);
     const { status } = req.body;
@@ -58,7 +61,7 @@ export async function updateAppointmentStatus(req: Request, res: Response) {
   }
 }
 
-export async function deleteAppointment(req: Request, res: Response) {
+export async function deleteAppointment(req: Request<AppointmentParams>, res: Response) {
   try {
     const id = Number(req.params.id);
     // logique de suppression
