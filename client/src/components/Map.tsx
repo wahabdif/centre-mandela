@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 declare global {
   interface Window {
-    L?: any;  // facultatif, car on vérifie son existence
+    L?: any;
   }
 }
 
@@ -21,14 +21,12 @@ export default function Map() {
   useEffect(() => {
     if (!lat || !lng) return;
 
-    // Injection des fichiers CSS et JS Leaflet
     const injectLeafletAssets = () => {
       if (!document.querySelector('link[href*="leaflet.css"]')) {
         const link = document.createElement("link");
         link.rel = "stylesheet";
         link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-        link.integrity =
-          "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
+        link.integrity = "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
         link.crossOrigin = "";
         document.head.appendChild(link);
       }
@@ -36,8 +34,7 @@ export default function Map() {
       if (!document.querySelector('script[src*="leaflet.js"]')) {
         const script = document.createElement("script");
         script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-        script.integrity =
-          "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
+        script.integrity = "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
         script.crossOrigin = "";
         script.onload = initMapWhenReady;
         document.head.appendChild(script);
@@ -46,7 +43,6 @@ export default function Map() {
       }
     };
 
-    // Initialiser la carte dès que Leaflet est disponible
     const initMapWhenReady = () => {
       const interval = setInterval(() => {
         if (window.L && mapRef.current) {
@@ -56,11 +52,10 @@ export default function Map() {
       }, 100);
     };
 
-    // Initialisation de la carte Leaflet
     const initMap = () => {
       if (!window.L || !mapRef.current) return;
 
-      mapRef.current.innerHTML = ""; // nettoyer
+      mapRef.current.innerHTML = "";
 
       const map = window.L.map(mapRef.current).setView([lat, lng], 16);
       mapInstanceRef.current = map;
@@ -71,7 +66,6 @@ export default function Map() {
         maxZoom: 19,
       }).addTo(map);
 
-      // Recalcul taille carte après affichage
       setTimeout(() => map.invalidateSize(), 500);
 
       const marker = window.L.marker([lat, lng]).addTo(map);
@@ -127,6 +121,54 @@ export default function Map() {
             <div className="flex items-start">
               <MapPin className="h-5 w-5 text-primary mr-2 mt-1" />
               <div>
-                <h4 className="font-bold text-primary mb-1 text-lg">
-                  Comment nous trouver
-                </h4>
+                <h4 className="font-bold text-primary mb-1 text-lg">Comment nous trouver</h4>
+                <p className="text-gray-700">{contactInfo.address}</p>
+              </div>
+            </div>
+
+            <div className="flex items-start">
+              <Phone className="h-5 w-5 text-primary mr-2 mt-1" />
+              <div>
+                <h4 className="font-bold text-primary mb-1 text-lg">Téléphone</h4>
+                <p className="text-gray-700">{contactInfo.phone}</p>
+              </div>
+            </div>
+
+            <div className="flex items-start">
+              <Mail className="h-5 w-5 text-primary mr-2 mt-1" />
+              <div>
+                <h4 className="font-bold text-primary mb-1 text-lg">Email</h4>
+                <p className="text-gray-700">{contactInfo.email}</p>
+              </div>
+            </div>
+
+            <div className="flex items-start">
+              <Clock className="h-5 w-5 text-primary mr-2 mt-1" />
+              <div>
+                <h4 className="font-bold text-primary mb-1 text-lg">Horaires</h4>
+                <p className="text-gray-700">
+                  Dimanche à Jeudi<br />
+                  9h00 - 17h00
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-4">
+              <Button asChild variant="outline">
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <Navigation className="w-4 h-4" />
+                  Itinéraire via Google Maps
+                </a>
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
