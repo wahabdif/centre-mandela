@@ -7,12 +7,12 @@
     "rootDir": "./",
     "outDir": "../dist/server",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true
   },
-  "include": ["**/*.ts", "./**/*.ts", "./Types/**/*.d.ts"],
+  "include": ["./**/*.ts", "./Types/**/*.d.ts"],
   "exclude": ["node_modules", "../dist"]
 }
