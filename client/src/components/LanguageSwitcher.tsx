@@ -1,4 +1,3 @@
-// src/components/LanguageSwitcher.tsx
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState, useRef, useCallback } from 'react';
 
@@ -17,7 +16,7 @@ export default function LanguageSwitcher() {
 
   const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
 
-  // Fermer le menu si clic en dehors ou Échap et remettre focus sur bouton toggle
+  // Fermer le menu si clic en dehors ou Échap
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (ref.current && !ref.current.contains(event.target as Node)) {
@@ -31,6 +30,7 @@ export default function LanguageSwitcher() {
         toggleButtonRef.current?.focus();
       }
     }
+
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleKeyDown);
     return () => {
@@ -53,7 +53,7 @@ export default function LanguageSwitcher() {
     }
   }, [open, i18n.language]);
 
-  // Gestion du clavier dans le menu (flèches + tab trap)
+  // Navigation clavier dans le menu
   const onKeyDownMenu = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (!open) return;
@@ -73,15 +73,12 @@ export default function LanguageSwitcher() {
           break;
 
         case 'Tab':
-          // Empêcher de sortir du menu en tabulant
           if (event.shiftKey) {
-            // Shift + Tab sur le premier bouton : focus au dernier bouton
             if (currentIndex === 0) {
               event.preventDefault();
               buttonsRef.current[focusableCount - 1]?.focus();
             }
           } else {
-            // Tab sur le dernier bouton : focus au premier bouton
             if (currentIndex === focusableCount - 1) {
               event.preventDefault();
               buttonsRef.current[0]?.focus();
@@ -132,4 +129,15 @@ export default function LanguageSwitcher() {
                 toggleButtonRef.current?.focus();
               }}
               className={`w-full px-4 py-2 text-left text-sm flex items-center gap-2 hover:bg-gray-100 transition ${
-                i18n.language === code ? 'fo
+                i18n.language === code ? 'font-semibold bg-gray-100' : ''
+              }`}
+            >
+              <span className="text-lg">{flag}</span>
+              <span>{label}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
