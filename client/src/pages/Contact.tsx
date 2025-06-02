@@ -1,214 +1,135 @@
+// src/components/LanguageSwitcher.tsx
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
-import { useState } from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
-import Map from "@/components/Map";
-import { contactInfo, workingHours } from "@/lib/constants";
+const languages = [
+  { code: 'fr', label: 'Français', flag: '🇫🇷' },
+  { code: 'en', label: 'English', flag: '🇺🇸' },
+  { code: 'ar', label: 'العربية', flag: '🇩🇿' },
+];
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import {
-  LoaderCircle,
-  MapPin,
-  Phone,
-  Mail,
-  Clock,
-  Send,
-  Facebook,
-  Instagram,
-  Linkedin,
-  CheckCircle,
-} from "lucide-react";
+export default function LanguageSwitcher() {
+  const { i18n } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
 
-import { useTranslation } from "react-i18next";
+  const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
 
-// Schéma de validation avec Zod
-const contactFormSchema = z.object({
-  name: z.string().min(3, { message: "form.nameMinLength" }),
-  email: z.string().email({ message: "form.emailInvalid" }),
-  phone: z
-    .string()
-    .regex(/^[0-9+\s()-]{8,15}$/, { message: "form.phoneInvalid" }),
-  message: z.string().min(10, { message: "form.messageMinLength" }),
-  id: z.number().positive({ message: "L'ID doit être un nombre positif." }), // Ajout pour valider l'ID
-});
+  // Fermer le menu si clic en dehors ou Échap et remettre focus sur bouton toggle
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false);
+        toggleButtonRef.current?.focus();
+      }
+    }
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        toggleButtonRef.current?.focus();
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
-type ContactFormValues = z.infer<typeof contactFormSchema>;
+  // Changer la direction du document selon la langue
+  useEffect(() => {
+    document.documentElement.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
+  }, [i18n.language]);
 
-export default function Contact() {
-  const { t } = useTranslation();
-  const { toast } = useToast();
-  const [submitted, setSubmitted] = useState(false);
+  // Focus sur la langue courante quand on ouvre
+  useEffect(() => {
+    if (open) {
+      const currentIndex = languages.findIndex((l) => l.code === i18n.language);
+      const buttonToFocus = buttonsRef.current[currentIndex] || buttonsRef.current[0];
+      buttonToFocus?.focus();
+    }
+  }, [open, i18n.language]);
 
-  const form = useForm<ContactFormValues>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-      id: 1, // Exemple de valeur par défaut pour l'ID
+  // Gestion du clavier dans le menu (flèches + tab trap)
+  const onKeyDownMenu = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!open) return;
+
+      const focusableCount = buttonsRef.current.length;
+      const currentIndex = buttonsRef.current.findIndex((btn) => btn === document.activeElement);
+
+      switch (event.key) {
+        case 'ArrowDown':
+          event.preventDefault();
+          buttonsRef.current[(currentIndex + 1) % focusableCount]?.focus();
+          break;
+
+        case 'ArrowUp':
+          event.preventDefault();
+          buttonsRef.current[(currentIndex - 1 + focusableCount) % focusableCount]?.focus();
+          break;
+
+        case 'Tab':
+          // Empêcher de sortir du menu en tabulant
+          if (event.shiftKey) {
+            // Shift + Tab sur le premier bouton : focus au dernier bouton
+            if (currentIndex === 0) {
+              event.preventDefault();
+              buttonsRef.current[focusableCount - 1]?.focus();
+            }
+          } else {
+            // Tab sur le dernier bouton : focus au premier bouton
+            if (currentIndex === focusableCount - 1) {
+              event.preventDefault();
+              buttonsRef.current[0]?.focus();
+            }
+          }
+          break;
+
+        default:
+          break;
+      }
     },
-  });
-
-  const submitContact = useMutation({
-    mutationFn: async (data: ContactFormValues) => {
-      const response = await apiRequest("POST", "/api/contact", data);
-      return response.json();
-    },
-    onSuccess: () => {
-      toast({
-        title: t("toast.messageSentTitle"),
-        description: t("toast.messageSentDescription"),
-        variant: "default",
-      });
-      form.reset();
-      setSubmitted(true);
-      setTimeout(() => {
-        window.scrollTo({
-          top: document.getElementById("contact-form")?.offsetTop || 0,
-          behavior: "smooth",
-        });
-      }, 100);
-    },
-    onError: (error: any) => {
-      toast({
-        title: t("toast.errorTitle"),
-        description: error?.message || t("toast.errorDescription"),
-        variant: "destructive",
-      });
-    },
-  });
-
-  function onSubmit(data: ContactFormValues) {
-    submitContact.mutate(data);
-  }
+    [open]
+  );
 
   return (
-    <div className="pt-28">
-      {/* Section Formulaire de Contact */}
-      <section id="contact-form" className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6">
-              {t("form.sendMessageTitle")}
-            </h2>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6 bg-white p-8 rounded-xl shadow-md"
-                noValidate
-              >
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("form.nameLabel")}</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder={t("form.namePlaceholder")}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("form.emailLabel")}</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          placeholder={t("form.emailPlaceholder")}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("form.phoneLabel")}</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="tel"
-                          placeholder={t("form.phonePlaceholder")}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("form.messageLabel")}</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          rows={5}
-                          placeholder={t("form.messagePlaceholder")}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="id"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("form.idLabel")}</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder={t("form.idPlaceholder")}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type="submit"
-                  disabled={submitContact.status === "pending"}
-                >
-                  {submitContact.status === "pending"
-                    ? t("form.sending")
-                    : t("form.sendButton")}
-                </Button>
-              </form>
-            </Form>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
+    <div className="relative inline-block text-left" ref={ref}>
+      <button
+        ref={toggleButtonRef}
+        onClick={() => setOpen((prev) => !prev)}
+        aria-haspopup="true"
+        aria-expanded={open}
+        aria-controls="language-menu"
+        className="inline-flex items-center justify-center gap-2 px-3 py-1.5 border border-gray-300 rounded-md bg-white text-sm font-medium hover:bg-gray-100 transition"
+        id="language-switcher"
+      >
+        <span className="text-lg">{currentLang.flag}</span>
+        <span>{currentLang.label}</span>
+      </button>
+
+      {open && (
+        <div
+          id="language-menu"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="language-switcher"
+          className="absolute z-50 mt-2 w-40 rounded-md shadow-lg bg-white border border-gray-200"
+          onKeyDown={onKeyDownMenu}
+        >
+          {languages.map(({ code, label, flag }, idx) => (
+            <button
+              key={code}
+              role="menuitem"
+              ref={(el) => (buttonsRef.current[idx] = el)}
+              onClick={() => {
+                i18n.changeLanguage(code);
+                localStorage.setItem('i18nextLng', code);
+                setOpen(false);
+                toggleButtonRef.current?.focus();
+              }}
+              className={`w-full px-4 py-2 text-left text-sm flex items-center gap-2 hover:bg-gray-100 transition ${
+                i18n.language === code ? 'fo
