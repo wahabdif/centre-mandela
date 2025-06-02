@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -11,7 +11,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "baseUrl": ".", 
+    "baseUrl": "client", 
     "paths": {
       "@/*": ["src/*"],
       "@lib/*": ["src/lib/*"],              
@@ -20,6 +20,6 @@
     },
     "types": ["vite/client"]
   },
-  "include": ["src", "vite.config.ts", "."], 
+  "include": ["src", "vite.config.ts"],
   "exclude": ["dist", "node_modules"]
 }
