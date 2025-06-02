@@ -8,7 +8,7 @@ const entryServerPath = join(distDir, 'entry-server.js');
 
 // Vérifiez si le fichier existe
 try {
-  const entryServer = require(entryServerPath);
+  const entryServer = await import(entryServerPath);
 
   const server = createServer((req, res) => {
     const parsedUrl = parse(req.url || '', true);
