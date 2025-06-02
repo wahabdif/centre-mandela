@@ -1,4 +1,4 @@
-// .eslintrc.js
+ // .eslintrc.js
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
