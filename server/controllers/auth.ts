@@ -40,10 +40,19 @@ export async function login(req: Request, res: Response) {
       return res.status(401).json({ error: 'Identifiants invalides.' });
     }
 
-    // Génération d'un token JWT
-    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET || 'secret', {
-      expiresIn: '1h',
-    });
+    // Récupération du secret JWT de façon sûre
+    const jwtSecret = process.env['JWT_SECRET'];
+    if (!jwtSecret) {
+      console.error('JWT_SECRET est manquant dans les variables d\'environnement.');
+      return res.status(500).json({ error: 'Erreur de configuration serveur.' });
+    }
+
+    // Génération du token JWT
+    const token = jwt.sign(
+      { id: user.id, role: user.role },
+      jwtSecret,
+      { expiresIn: '1h' }
+    );
 
     // Réponse avec les informations utilisateur et le token
     res.json({
