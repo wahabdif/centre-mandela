@@ -24,5 +24,6 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     'no-shadow': ['error', { builtinGlobals: true }],
+    'react/react-in-jsx-scope': 'off', // Désactive l'erreur liée à React
   },
 };
