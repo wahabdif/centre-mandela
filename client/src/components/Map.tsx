@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 declare global {
   interface Window {
-    L: any;
+    L?: any;  // facultatif, car on vérifie son existence
   }
 }
 
@@ -21,6 +21,7 @@ export default function Map() {
   useEffect(() => {
     if (!lat || !lng) return;
 
+    // Injection des fichiers CSS et JS Leaflet
     const injectLeafletAssets = () => {
       if (!document.querySelector('link[href*="leaflet.css"]')) {
         const link = document.createElement("link");
@@ -45,6 +46,7 @@ export default function Map() {
       }
     };
 
+    // Initialiser la carte dès que Leaflet est disponible
     const initMapWhenReady = () => {
       const interval = setInterval(() => {
         if (window.L && mapRef.current) {
@@ -54,10 +56,11 @@ export default function Map() {
       }, 100);
     };
 
+    // Initialisation de la carte Leaflet
     const initMap = () => {
       if (!window.L || !mapRef.current) return;
 
-      mapRef.current.innerHTML = "";
+      mapRef.current.innerHTML = ""; // nettoyer
 
       const map = window.L.map(mapRef.current).setView([lat, lng], 16);
       mapInstanceRef.current = map;
@@ -68,6 +71,7 @@ export default function Map() {
         maxZoom: 19,
       }).addTo(map);
 
+      // Recalcul taille carte après affichage
       setTimeout(() => map.invalidateSize(), 500);
 
       const marker = window.L.marker([lat, lng]).addTo(map);
@@ -126,93 +130,3 @@ export default function Map() {
                 <h4 className="font-bold text-primary mb-1 text-lg">
                   Comment nous trouver
                 </h4>
-                <p className="text-gray-700">
-                  Le centre est situé à proximité du centre-ville d'Oran.
-                </p>
-              </div>
-            </div>
-            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 space-y-2">
-              <p className="text-gray-800">
-                <strong>Adresse :</strong> {contactInfo.address}
-              </p>
-              <p className="text-gray-800">
-                <strong>Téléphone :</strong> {contactInfo.phone}
-              </p>
-              <p className="text-gray-800">
-                <strong>GPS :</strong> {lat.toFixed(6)}, {lng.toFixed(6)}
-              </p>
-              <div className="flex gap-4 mt-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() =>
-                    window.open(
-                      `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
-                      "_blank"
-                    )
-                  }
-                >
-                  <Navigation className="w-4 h-4 mr-2" />
-                  Itinéraire
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() =>
-                    (window.location.href = `tel:${contactInfo.phone.replace(
-                      /\s/g,
-                      ""
-                    )}`)
-                  }
-                >
-                  <Phone className="w-4 h-4 mr-2" />
-                  Appeler
-                </Button>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="rounded-xl shadow-lg md:col-span-4 bg-primary text-white">
-        <div className="h-24 bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
-          <h3 className="text-xl font-bold">Nos coordonnées</h3>
-        </div>
-        <CardContent className="p-6 space-y-4">
-          <div className="flex items-start">
-            <MapPin className="w-5 h-5 mr-3" />
-            <div>
-              <h4 className="font-semibold">Adresse</h4>
-              <p>{contactInfo.address}</p>
-            </div>
-          </div>
-          <div className="flex items-start">
-            <Phone className="w-5 h-5 mr-3" />
-            <div>
-              <h4 className="font-semibold">Téléphone</h4>
-              <p>{contactInfo.phone}</p>
-            </div>
-          </div>
-          <div className="flex items-start">
-            <Mail className="w-5 h-5 mr-3" />
-            <div>
-              <h4 className="font-semibold">Email</h4>
-              <a href={`mailto:${contactInfo.email}`} className="underline">
-                {contactInfo.email}
-              </a>
-            </div>
-          </div>
-          <div className="flex items-start">
-            <Clock className="w-5 h-5 mr-3" />
-            <div>
-              <h4 className="font-semibold mb-1">Horaires</h4>
-              <p>Lun-Ven : 08h00 - 18h00</p>
-              <p>Samedi : 08h00 - 13h00</p>
-              <p>Dimanche : Fermé</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
