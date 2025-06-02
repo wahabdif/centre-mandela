@@ -4,7 +4,7 @@
   "description": "Centre d’imagerie médicale Nelson Mandela",
   "license": "MIT",
   "type": "module",
-  "main": "dist/server/index.js",
+  "main": "dist/server/index",
   "scripts": {
     "dev": "vite",
     "dev:server": "tsx server/src/index.ts",
