@@ -1,4 +1,4 @@
-
+err a corriger 
 /workspaces/centre-mandela/client/babel.config.js
   2:1  error  'module' is not defined  no-undef
 
