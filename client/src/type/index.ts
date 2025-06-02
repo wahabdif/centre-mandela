@@ -9,6 +9,14 @@ export type Service = {
 
 export type ServiceProps = Service;
 
+/** ----------------- SERVICE DETAIL TYPE ------------------ */
+export type ServiceDetail = {
+  fullDescription: string;
+  uses: string[];
+  preparation: string;
+  image: string;
+};
+
 /** ----------------- TESTIMONIAL TYPE ------------------ */
 export type Testimonial = {
   id: number;
@@ -144,8 +152,8 @@ export type User = {
   isActive: boolean;
 };
 
-/** ----------------- NEWS POST TYPE ------------------ */
-export type updateNewsPost = {
+/** ----------------- UPDATE NEWS POST TYPE ------------------ */
+export type UpdateNewsPost = {
   title?: string;
   content?: string;
   createdAt?: string;
