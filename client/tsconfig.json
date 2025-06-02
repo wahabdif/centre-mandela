@@ -16,7 +16,8 @@
       "@/*": ["src/*"],
       "@lib/*": ["src/lib/*"],              
       "@components/*": ["src/components/*"],
-      "@shared/*": ["../shared/*"]
+      "@shared/*": ["../shared/*"],
+      "@hooks/*": ["src/hooks/*"]  // Ajout du chemin hooks
     },
     "types": ["vite/client"]
   },
