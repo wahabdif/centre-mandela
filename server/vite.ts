@@ -3,18 +3,21 @@ import { parse } from 'url';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-const distDir = join(__dirname, '../dist/server'); // Chemin ajusté pour correspondre à la racine
+// Chemins ajustés pour correspondre à la structure du projet
+const distDir = join(__dirname, '../dist/server'); // Correspond à `dist/server` depuis la racine
 const entryServerPath = join(distDir, 'entry-server.js');
 
 async function startServer() {
   try {
+    // Import dynamique du fichier `entry-server.js`
     const entryServer = await import(entryServerPath);
 
+    // Création du serveur HTTP
     const server = createServer((req, res) => {
       const parsedUrl = parse(req.url || '', true);
       const { pathname } = parsedUrl;
 
-      // Route principale
+      // Route principale pour le rendu
       if (pathname === '/') {
         const html = entryServer.render('/');
         res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -39,6 +42,7 @@ async function startServer() {
       }
     });
 
+    // Lancement du serveur
     server.listen(3000, () => {
       console.log('Serveur démarré sur http://localhost:3000');
     });
