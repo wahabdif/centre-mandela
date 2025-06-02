@@ -26,12 +26,27 @@
     "sourceMap": true,
     "skipLibCheck": true,
 
-    // ✅ Recommandations supplémentaires
+    // ✅ BONUS : Améliorations avancées pour la robustesse du typage
     "moduleDetection": "force",
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true
   },
-  "include": ["client", "client/src/Type", "server", "shared"],
-  "exclude": ["node_modules", "dist", "build", "**/*.test.ts", "**/*.test.js"]
+  "include": [
+    "client",
+    "client/src/Type",
+    "server",
+    "server/**/*.ts",
+    "shared",
+    "shared/**/*.ts",
+    "shared/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "**/*.test.ts",
+    "**/*.test.js"
+  ]
 }
