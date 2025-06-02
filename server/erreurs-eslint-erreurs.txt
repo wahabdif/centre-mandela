@@ -1,0 +1,7 @@
+Unknown command: "eslint"
+
+
+Did you mean this?
+  npm run lint # run the "lint" package script
+To see a list of supported npm commands, run:
+  npm help
