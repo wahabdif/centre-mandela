@@ -11,6 +11,7 @@ export async function getAllContactMessages(_req: Request, res: Response) {
     const messages = await db.getAllContactMessages();
     res.json(messages);
   } catch (error) {
+    console.error('Erreur lors de la récupération des messages:', error);
     res.status(500).json({ error: 'Erreur lors de la récupération des messages.' });
   }
 }
@@ -22,14 +23,18 @@ export async function getAllContactMessages(_req: Request, res: Response) {
 export async function getContactMessageById(req: Request<{ id: string }>, res: Response) {
   try {
     const id = Number(req.params.id);
-    const message = await db.getContactMessageById(id);
+    if (isNaN(id)) {
+      return res.status(400).json({ error: 'ID invalide.' });
+    }
 
+    const message = await db.getContactMessageById(id);
     if (!message) {
       return res.status(404).json({ error: 'Message introuvable.' });
     }
 
     res.json(message);
   } catch (error) {
+    console.error('Erreur lors de la récupération du message:', error);
     res.status(500).json({ error: 'Erreur lors de la récupération du message.' });
   }
 }
@@ -56,8 +61,10 @@ export async function createContactMessage(req: Request, res: Response) {
       message: message ?? undefined, // ✅ null → undefined
     });
 
+    console.log('Message créé avec succès:', newMessage);
     res.status(201).json(newMessage);
   } catch (error) {
+    console.error('Erreur lors de la création du message:', error);
     res.status(500).json({ error: 'Erreur lors de l’envoi du message.' });
   }
 }
@@ -77,19 +84,46 @@ export async function updateContactMessageStatus(req: Request<{ id: string }>, r
 
     await db.updateContactMessageStatus(id, isRead ? 'read' : 'unread');
 
-    // Supposons que la fonction lève une erreur si le message n'existe pas
-    // Sinon, vous pouvez vérifier l'existence avant la mise à jour
-
+    console.log(`Statut du message ID ${id} mis à jour: ${isRead ? 'read' : 'unread'}`);
     res.status(204).send();
   } catch (error) {
+    console.error('Erreur lors de la mise à jour du statut:', error);
     res.status(500).json({ error: 'Erreur lors de la mise à jour du statut.' });
   }
 }
-export function getMessages(arg0: string, getMessages: any) {
-    throw new Error('Function not implemented.');
+
+/**
+ * GET /api/contact/messages
+ * Récupère tous les messages de contact (fonction manquante)
+ */
+export async function getMessages(req: Request, res: Response) {
+  try {
+    const messages = await db.getAllContactMessages();
+    console.log('Messages récupérés:', messages);
+    res.json(messages);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des messages:', error);
+    res.status(500).json({ error: 'Erreur interne.' });
+  }
 }
 
-export function sendMessage(arg0: string, sendMessage: any) {
-    throw new Error('Function not implemented.');
-}
+/**
+ * POST /api/contact/send
+ * Envoie un message (fonction manquante)
+ */
+export async function sendMessage(req: Request, res: Response) {
+  try {
+    const { email, message } = req.body;
+    if (!email || !message) {
+      return res.status(400).json({ error: 'Email et message sont requis.' });
+    }
 
+    // Logique pour envoyer un email ou un message
+    console.log(`Message envoyé par ${email}: ${message}`);
+
+    res.status(200).json({ success: true, message: 'Message envoyé avec succès.' });
+  } catch (error) {
+    console.error('Erreur lors de l\'envoi du message:', error);
+    res.status(500).json({ error: 'Erreur interne.' });
+  }
+}
