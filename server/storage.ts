@@ -5,7 +5,7 @@ import type {
   InsertAppointment,
   ContactMessage,
   InsertContactMessage,
-} from '../shared/schema.js';
+} from '../shared/schema';
 import Database from 'better-sqlite3';
 
 // Ouvrir la base de données SQLite
