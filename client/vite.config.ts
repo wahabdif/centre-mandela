@@ -2,13 +2,17 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+
+// Charger les variables d'environnement
+dotenv.config();
 
 // Résoudre __dirname dans un module ES
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Sortie du build dans le dossier public du serveur backend
-const outDirPath = path.resolve(__dirname, '../server/public');
+// Sortie du build dans un dossier dédié aux fichiers frontend
+const outDirPath = path.resolve(__dirname, '../server/public/frontend');
 
 export default defineConfig({
   // Racine du projet frontend (dossier client)
@@ -24,7 +28,7 @@ export default defineConfig({
   },
 
   build: {
-    outDir: outDirPath,    // Sortie dans /server/public
+    outDir: outDirPath,    // Sortie dans /server/public/frontend
     emptyOutDir: true,     // Vide le dossier avant build
     sourcemap: true,       // Génère les sourcemaps pour debug
     target: 'esnext',      // Cible moderne, compatible avec React 18+
@@ -40,7 +44,7 @@ export default defineConfig({
     proxy: {
       // Proxy les appels /api vers le backend Node.js
       '/api': {
-        target: 'http://localhost:4000',
+        target: process.env.VITE_BACKEND_URL || 'http://localhost:4000',
         changeOrigin: true,
         secure: false,
       },
@@ -48,7 +52,9 @@ export default defineConfig({
   },
 
   define: {
-    'process.env': {}, // Évite les erreurs liées à l'usage de process.env dans le frontend
+    'process.env': {
+      BACKEND_URL: process.env.VITE_BACKEND_URL, // Injection dynamique de l'URL du backend
+    },
   },
 
   optimizeDeps: {
