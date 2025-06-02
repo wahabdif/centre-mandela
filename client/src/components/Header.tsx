@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'wouter';
+import { Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -13,8 +13,8 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Ferme le menu mobile à chaque changement de route
@@ -25,7 +25,7 @@ export default function Header() {
   return (
     <header
       className={`bg-white fixed w-full z-50 transition-shadow duration-300 ${
-        isScrolled ? "shadow-md" : ""
+        isScrolled ? 'shadow-md' : ''
       }`}
       role="banner"
     >
@@ -34,7 +34,7 @@ export default function Header() {
         <Link href="/" aria-label="Accueil - Centre D'Imagerie Benameur">
           <div className="flex items-center space-x-2 rtl:space-x-reverse cursor-pointer select-none">
             <div className="font-bold text-2xl font-heading text-gray-900">
-              <span className="text-primary">Centre D'Imagerie</span>{" "}
+              <span className="text-primary">Centre D'Imagerie</span>{' '}
               <span className="text-secondary">Benameur</span>
             </div>
           </div>
@@ -59,7 +59,7 @@ export default function Header() {
           size="icon"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden focus-visible:ring-primary rounded"
-          aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+          aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-menu"
         >
@@ -106,10 +106,10 @@ function NavLink({ href, label }: NavLinkProps) {
       <div
         tabIndex={0}
         className={`transition-colors cursor-pointer px-2 py-1 rounded focus:outline-none focus-visible:ring-primary ${
-          isActive ? "text-primary font-semibold" : "text-dark hover:text-primary"
+          isActive ? 'text-primary font-semibold' : 'text-dark hover:text-primary'
         }`}
         role="link"
-        aria-current={isActive ? "page" : undefined}
+        aria-current={isActive ? 'page' : undefined}
       >
         {label}
       </div>

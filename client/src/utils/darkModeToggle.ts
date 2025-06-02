@@ -1,5 +1,5 @@
 export function setupDarkModeToggle(buttonSelector: string) {
-  if (typeof window === "undefined" || typeof document === "undefined") {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
     // On est côté serveur, ne rien faire
     return;
   }

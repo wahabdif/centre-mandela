@@ -48,7 +48,12 @@ export async function hashPassword(password: string) {
 // Mettre à jour le mot de passe d'un utilisateur par ID
 export async function updateUserPassword(id: number, newPassword: string) {
   const hashedPassword = await hashPassword(newPassword);
-  return db.update(users).set({ password: hashedPassword }).where(eq(users.id, id)).returning().get();
+  return db
+    .update(users)
+    .set({ password: hashedPassword })
+    .where(eq(users.id, id))
+    .returning()
+    .get();
 }
 
 // Mettre à jour l'email d'un utilisateur par ID
@@ -59,7 +64,7 @@ export async function updateUserEmail(id: number, newEmail: string) {
 // Mettre à jour un utilisateur par ID (username et/ou password)
 export async function updateUser(
   id: number,
-  data: Partial<{ username: string; password: string }>
+  data: Partial<{ username: string; password: string }>,
 ) {
   const updateData: Partial<{ username: string; password: string }> = {};
   if (data.username) {
@@ -74,7 +79,7 @@ export async function updateUser(
 // Mettre à jour un utilisateur par username (email et/ou password)
 export async function updateUserByUsername(
   username: string,
-  data: Partial<{ email: string; password: string }>
+  data: Partial<{ email: string; password: string }>,
 ) {
   const updateData: Partial<{ email: string; password: string }> = {};
   if (data.email) {

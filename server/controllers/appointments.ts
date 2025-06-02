@@ -8,8 +8,8 @@ import { Request, Response, Router } from 'express';
  * @returns L'ID validé ou null
  */
 function validateId(req: Request): number | null {
-    const id = Number(req.params.id);
-    return !Number.isNaN(id) && id > 0 ? id : null;
+  const id = Number(req.params.id);
+  return !Number.isNaN(id) && id > 0 ? id : null;
 }
 
 /**
@@ -17,13 +17,13 @@ function validateId(req: Request): number | null {
  * Récupère tous les rendez-vous
  */
 export async function getAppointments(req: Request, res: Response) {
-    try {
-        const appointments = await db.getAllAppointments();
-        res.json(appointments);
-    } catch (error) {
-        console.error('Erreur lors de la récupération des rendez-vous:', error);
-        res.status(500).json({ error: "Erreur interne lors de la récupération des rendez-vous." });
-    }
+  try {
+    const appointments = await db.getAllAppointments();
+    res.json(appointments);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des rendez-vous:', error);
+    res.status(500).json({ error: 'Erreur interne lors de la récupération des rendez-vous.' });
+  }
 }
 
 /**
@@ -31,33 +31,33 @@ export async function getAppointments(req: Request, res: Response) {
  * Crée un nouveau rendez-vous
  */
 export async function createAppointment(req: Request, res: Response) {
-    if (!req.body) return res.status(400).json({ error: 'Requête invalide.' });
+  if (!req.body) return res.status(400).json({ error: 'Requête invalide.' });
 
-    const result = appointmentSchema.safeParse(req.body);
-    if (!result.success) {
-        return res.status(400).json({ 
-            error: 'Données invalides.', 
-            details: result.error.flatten() 
-        });
-    }
+  const result = appointmentSchema.safeParse(req.body);
+  if (!result.success) {
+    return res.status(400).json({
+      error: 'Données invalides.',
+      details: result.error.flatten(),
+    });
+  }
 
-    const { fullName, email, phone, message, date } = result.data;
-    const appointmentData = {
-        name: fullName,
-        email,
-        phone,
-        service: date,
-        message,
-        status: "pending" as const,
-    };
+  const { fullName, email, phone, message, date } = result.data;
+  const appointmentData = {
+    name: fullName,
+    email,
+    phone,
+    service: date,
+    message,
+    status: 'pending' as const,
+  };
 
-    try {
-        const appointment = await db.createAppointment(appointmentData);
-        res.status(201).json(appointment);
-    } catch (error) {
-        console.error('Erreur lors de la création du rendez-vous:', error);
-        res.status(500).json({ error: "Erreur interne lors de la création du rendez-vous." });
-    }
+  try {
+    const appointment = await db.createAppointment(appointmentData);
+    res.status(201).json(appointment);
+  } catch (error) {
+    console.error('Erreur lors de la création du rendez-vous:', error);
+    res.status(500).json({ error: 'Erreur interne lors de la création du rendez-vous.' });
+  }
 }
 
 /**
@@ -65,19 +65,19 @@ export async function createAppointment(req: Request, res: Response) {
  * Supprime un rendez-vous
  */
 export async function deleteAppointment(req: Request, res: Response) {
-    const id = validateId(req);
-    if (!id) return res.status(400).json({ error: 'ID invalide.' });
+  const id = validateId(req);
+  if (!id) return res.status(400).json({ error: 'ID invalide.' });
 
-    try {
-        const deleted = await db.deleteAppointment(id);
-        if (!deleted) {
-            return res.status(404).json({ error: 'Rendez-vous introuvable ou déjà supprimé.' });
-        }
-        res.status(204).send();
-    } catch (error) {
-        console.error('Erreur lors de la suppression du rendez-vous:', error);
-        res.status(500).json({ error: "Erreur interne lors de la suppression du rendez-vous." });
+  try {
+    const deleted = await db.deleteAppointment(id);
+    if (!deleted) {
+      return res.status(404).json({ error: 'Rendez-vous introuvable ou déjà supprimé.' });
     }
+    res.status(204).send();
+  } catch (error) {
+    console.error('Erreur lors de la suppression du rendez-vous:', error);
+    res.status(500).json({ error: 'Erreur interne lors de la suppression du rendez-vous.' });
+  }
 }
 
 /**
@@ -85,19 +85,19 @@ export async function deleteAppointment(req: Request, res: Response) {
  * Récupère un rendez-vous par ID
  */
 export async function getAppointment(req: Request, res: Response) {
-    const id = validateId(req);
-    if (!id) return res.status(400).json({ error: 'ID invalide.' });
+  const id = validateId(req);
+  if (!id) return res.status(400).json({ error: 'ID invalide.' });
 
-    try {
-        const appointment = await db.getAppointmentById(id);
-        if (!appointment) {
-            return res.status(404).json({ error: 'Rendez-vous introuvable.' });
-        }
-        res.json(appointment);
-    } catch (error) {
-        console.error('Erreur lors de la récupération du rendez-vous:', error);
-        res.status(500).json({ error: "Erreur interne lors de la récupération du rendez-vous." });
+  try {
+    const appointment = await db.getAppointmentById(id);
+    if (!appointment) {
+      return res.status(404).json({ error: 'Rendez-vous introuvable.' });
     }
+    res.json(appointment);
+  } catch (error) {
+    console.error('Erreur lors de la récupération du rendez-vous:', error);
+    res.status(500).json({ error: 'Erreur interne lors de la récupération du rendez-vous.' });
+  }
 }
 
 /**
@@ -105,39 +105,39 @@ export async function getAppointment(req: Request, res: Response) {
  * Met à jour un rendez-vous
  */
 export async function updateAppointment(req: Request, res: Response) {
-    const id = validateId(req);
-    if (!id) return res.status(400).json({ error: 'ID invalide.' });
+  const id = validateId(req);
+  if (!id) return res.status(400).json({ error: 'ID invalide.' });
 
-    if (!req.body) return res.status(400).json({ error: 'Requête invalide.' });
+  if (!req.body) return res.status(400).json({ error: 'Requête invalide.' });
 
-    const result = appointmentSchema.safeParse(req.body);
-    if (!result.success) {
-        return res.status(400).json({ 
-            error: 'Données invalides.', 
-            details: result.error.flatten() 
-        });
+  const result = appointmentSchema.safeParse(req.body);
+  if (!result.success) {
+    return res.status(400).json({
+      error: 'Données invalides.',
+      details: result.error.flatten(),
+    });
+  }
+
+  const { fullName, email, phone, message, date } = result.data;
+  const updateData = {
+    name: fullName,
+    email,
+    phone,
+    service: date,
+    message,
+    status: 'pending' as const,
+  };
+
+  try {
+    const updatedAppointment = await db.updateAppointment(id, updateData);
+    if (!updatedAppointment) {
+      return res.status(404).json({ error: 'Rendez-vous introuvable.' });
     }
-
-    const { fullName, email, phone, message, date } = result.data;
-    const updateData = {
-        name: fullName,
-        email,
-        phone,
-        service: date,
-        message,
-        status: "pending" as const,
-    };
-
-    try {
-        const updatedAppointment = await db.updateAppointment(id, updateData);
-        if (!updatedAppointment) {
-            return res.status(404).json({ error: 'Rendez-vous introuvable.' });
-        }
-        res.json(updatedAppointment);
-    } catch (error) {
-        console.error('Erreur lors de la mise à jour du rendez-vous:', error);
-        res.status(500).json({ error: "Erreur interne lors de la mise à jour du rendez-vous." });
-    }
+    res.json(updatedAppointment);
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour du rendez-vous:', error);
+    res.status(500).json({ error: 'Erreur interne lors de la mise à jour du rendez-vous.' });
+  }
 }
 
 /**
@@ -145,31 +145,33 @@ export async function updateAppointment(req: Request, res: Response) {
  * Met à jour uniquement le statut d'un rendez-vous
  */
 export async function updateAppointmentStatus(req: Request, res: Response) {
-    const id = validateId(req);
-    if (!id) return res.status(400).json({ error: 'ID invalide.' });
+  const id = validateId(req);
+  if (!id) return res.status(400).json({ error: 'ID invalide.' });
 
-    if (!req.body || typeof req.body !== "object") {
-        return res.status(400).json({ error: 'Requête invalide.' });
-    }
+  if (!req.body || typeof req.body !== 'object') {
+    return res.status(400).json({ error: 'Requête invalide.' });
+  }
 
-    const { status } = req.body;
-    const validStatuses = ['pending', 'confirmed', 'cancelled'];
-    if (!status || !validStatuses.includes(status)) {
-        return res.status(400).json({ 
-            error: `Statut invalide. Valeurs autorisées : ${validStatuses.join(', ')}.` 
-        });
-    }
+  const { status } = req.body;
+  const validStatuses = ['pending', 'confirmed', 'cancelled'];
+  if (!status || !validStatuses.includes(status)) {
+    return res.status(400).json({
+      error: `Statut invalide. Valeurs autorisées : ${validStatuses.join(', ')}.`,
+    });
+  }
 
-    try {
-        const updatedAppointment = await db.updateAppointmentStatus(id, status);
-        if (!updatedAppointment) {
-            return res.status(404).json({ error: 'Rendez-vous introuvable.' });
-        }
-        res.json(updatedAppointment);
-    } catch (error) {
-        console.error('Erreur lors de la mise à jour du statut du rendez-vous:', error);
-        res.status(500).json({ error: "Erreur interne lors de la mise à jour du statut du rendez-vous." });
+  try {
+    const updatedAppointment = await db.updateAppointmentStatus(id, status);
+    if (!updatedAppointment) {
+      return res.status(404).json({ error: 'Rendez-vous introuvable.' });
     }
+    res.json(updatedAppointment);
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour du statut du rendez-vous:', error);
+    res
+      .status(500)
+      .json({ error: 'Erreur interne lors de la mise à jour du statut du rendez-vous.' });
+  }
 }
 
 /**

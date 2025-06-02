@@ -26,5 +26,5 @@ hydrateRoot(
     <ErrorBoundary>
       <App />
     </ErrorBoundary>
-  </BrowserRouter>
+  </BrowserRouter>,
 );

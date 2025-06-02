@@ -1,10 +1,10 @@
 // server/types/express.d.ts
 
-import type { User as AppUser } from "../../client/src/type"; 
+import type { User as AppUser } from '../../client/src/type';
 
 declare global {
   namespace Express {
-    interface User extends Omit<AppUser, "password"> {}
+    interface User extends Omit<AppUser, 'password'> {}
 
     interface Request {
       user?: User;

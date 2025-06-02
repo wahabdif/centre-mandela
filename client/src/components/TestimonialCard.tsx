@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Star, StarHalf } from "lucide-react";
+import { Card, CardContent } from '@/components/ui/card';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Star, StarHalf } from 'lucide-react';
 
 interface TestimonialCardProps {
   text: string;
@@ -34,9 +34,7 @@ export default function TestimonialCard({
         <p className="text-gray-700 mb-6 italic leading-relaxed">"{text}"</p>
         <div className="flex items-center">
           <Avatar className="h-14 w-14 border-2 border-primary mr-4">
-            {avatar ? (
-              <AvatarImage src={avatar} alt={author} />
-            ) : null}
+            {avatar ? <AvatarImage src={avatar} alt={author} /> : null}
             <AvatarFallback className="bg-primary text-white text-lg font-semibold">
               {initials}
             </AvatarFallback>

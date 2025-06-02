@@ -32,17 +32,6 @@
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": [
-    "client/src",
-    "client/src/Type",
-    "server/src",
-    "shared"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build",
-    "**/*.test.ts",
-    "**/*.test.js"
-  ]
+  "include": ["client", "client/src/Type", "server", "shared"],
+  "exclude": ["node_modules", "dist", "build", "**/*.test.ts", "**/*.test.js"]
 }

@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { 
+import {
   getAppointments,
   createAppointment,
   getAppointment,
   updateAppointment,
   updateAppointmentStatus,
-  deleteAppointment
+  deleteAppointment,
 } from '../controllers/appointments';
 
 const router = Router();

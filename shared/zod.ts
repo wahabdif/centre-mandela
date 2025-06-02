@@ -1,9 +1,9 @@
-import * as z from "zod";
+import * as z from 'zod';
 
 // Schéma de connexion
 export const loginSchema = z.object({
   username: z.string().min(1, "Nom d'utilisateur requis"),
-  password: z.string().min(1, "Mot de passe requis"),
+  password: z.string().min(1, 'Mot de passe requis'),
 });
 export type LoginInput = z.infer<typeof loginSchema>;
 

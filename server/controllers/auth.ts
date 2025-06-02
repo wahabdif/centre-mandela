@@ -29,7 +29,7 @@ export async function login(req: Request, res: Response) {
     }
 
     // Recherche de l'utilisateur par email
-    const user = await db.getUserByEmail(email) as User | undefined;
+    const user = (await db.getUserByEmail(email)) as User | undefined;
     if (!user || !user.password) {
       return res.status(401).json({ error: 'Identifiants invalides.' });
     }
@@ -41,11 +41,9 @@ export async function login(req: Request, res: Response) {
     }
 
     // Génération d'un token JWT
-    const token = jwt.sign(
-      { id: user.id, role: user.role },
-      process.env.JWT_SECRET || 'secret',
-      { expiresIn: '1h' }
-    );
+    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET || 'secret', {
+      expiresIn: '1h',
+    });
 
     // Réponse avec les informations utilisateur et le token
     res.json({

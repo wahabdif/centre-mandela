@@ -13,13 +13,7 @@
     "strict": true,
     "resolveJsonModule": true,
     "skipLibCheck": true
-                             
   },
-  "include": [
-    "**/*.ts",
-    "./**/*.ts",
-    "./Types/**/*.d.ts"
-  ],
+  "include": ["**/*.ts", "./**/*.ts", "./Types/**/*.d.ts"],
   "exclude": ["node_modules", "../dist"]
 }
-    

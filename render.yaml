@@ -10,7 +10,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: VITE_API_URL
-        value: "https://centre-mandela-backend.onrender.com"
+        value: 'https://centre-mandela-backend.onrender.com'
     buildFilter:
       paths:
         - client/**

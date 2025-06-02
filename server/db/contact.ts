@@ -14,7 +14,8 @@ const dbPath = path.resolve(__dirname, 'data.sqlite');
 export const db = new Database(dbPath, { verbose: console.log });
 
 // Création de la table 'contact' si elle n'existe pas
-db.prepare(`
+db.prepare(
+  `
   CREATE TABLE IF NOT EXISTS contact (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -25,7 +26,8 @@ db.prepare(`
     createdAt TEXT NOT NULL DEFAULT (datetime('now')),
     httpStatus TEXT
   )
-`).run();
+`,
+).run();
 
 // Type TypeScript pour une entrée de message de contact
 export type ContactMessage = {
@@ -58,13 +60,22 @@ export function getContactMessageById(id: number): ContactMessage | undefined {
   return db.prepare(`SELECT * FROM contact WHERE id = ?`).get(id) as ContactMessage | undefined;
 }
 
-export function createContactMessage(data: Omit<ContactMessage, 'id' | 'createdAt'>): ContactMessage {
+export function createContactMessage(
+  data: Omit<ContactMessage, 'id' | 'createdAt'>,
+): ContactMessage {
   const stmt = db.prepare(`
     INSERT INTO contact (name, email, phone, service, message, httpStatus)
     VALUES (?, ?, ?, ?, ?, ?)
   `);
 
-  const result = stmt.run(data.name, data.email, data.phone, data.service, data.message ?? null, data.httpStatus ?? null);
+  const result = stmt.run(
+    data.name,
+    data.email,
+    data.phone,
+    data.service,
+    data.message ?? null,
+    data.httpStatus ?? null,
+  );
 
   return getContactMessageById(result.lastInsertRowid as number)!;
 }

@@ -1,12 +1,12 @@
-import { ArrowLeft } from "lucide-react";
-import { useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft } from 'lucide-react';
+import { useLocation } from 'wouter';
+import { Button } from '@/components/ui/button';
 
 interface BackButtonProps {
   className?: string;
 }
 
-export default function BackButton({ className = "" }: BackButtonProps) {
+export default function BackButton({ className = '' }: BackButtonProps) {
   const [_, navigate] = useLocation();
 
   return (

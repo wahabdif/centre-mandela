@@ -9,8 +9,8 @@ dotenv.config();
 const app = express();
 
 // Validation et récupération du port (par défaut 3000)
-const PORT = Number.isNaN(Number(process.env.PORT)) 
-  ? 3000 
+const PORT = Number.isNaN(Number(process.env.PORT))
+  ? 3000
   : parseInt(process.env.PORT as string, 10);
 
 // Middleware pour parser le JSON

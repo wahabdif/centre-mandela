@@ -28,10 +28,10 @@ export default defineConfig({
   },
 
   build: {
-    outDir: outDirPath,    // Sortie dans /server/public/frontend
-    emptyOutDir: true,     // Vide le dossier avant build
-    sourcemap: true,       // Génère les sourcemaps pour debug
-    target: 'esnext',      // Cible moderne, compatible avec React 18+
+    outDir: outDirPath, // Sortie dans /server/public/frontend
+    emptyOutDir: true, // Vide le dossier avant build
+    sourcemap: true, // Génère les sourcemaps pour debug
+    target: 'esnext', // Cible moderne, compatible avec React 18+
     // rollupOptions: {
     //   // Ici tu peux ajouter des options Rollup si besoin (ex : externalisation)
     // },

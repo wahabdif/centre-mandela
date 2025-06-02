@@ -5,14 +5,12 @@ import App from './App';
 
 export function render(url: string) {
   // Rendu React côté serveur sans StaticRouter (à adapter selon ton routage)
-  const appHtml = renderToString(
-    <App />
-  );
+  const appHtml = renderToString(<App />);
 
   // TODO : Ajouter ici la sérialisation sécurisée d’un état initial si besoin, par exemple avec
   // const initialState = {};
   // const serializedState = JSON.stringify(initialState).replace(/</g, '\\u003c');
-  const serializedState = "";
+  const serializedState = '';
 
   return `<!DOCTYPE html>
 <html lang="fr">

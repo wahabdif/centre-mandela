@@ -15,7 +15,8 @@ export async function getAppointmentById(id: number) {
 
 // Créer un nouveau rendez-vous
 export async function createAppointment(data: InsertAppointment) {
-  return db.insert(appointments)
+  return db
+    .insert(appointments)
     .values({
       ...data,
       createdAt: Date.now(), // Champ obligatoire pour Drizzle
@@ -31,18 +32,10 @@ export async function deleteAppointment(id: number) {
 
 // Mettre à jour le statut d'un rendez-vous
 export async function updateAppointmentStatus(id: number, status: string) {
-  return db.update(appointments)
-    .set({ status })
-    .where(eq(appointments.id, id))
-    .returning()
-    .get();
+  return db.update(appointments).set({ status }).where(eq(appointments.id, id)).returning().get();
 }
 
 // Mettre à jour un rendez-vous
 export async function updateAppointment(id: number, data: Partial<InsertAppointment>) {
-  return db.update(appointments)
-    .set(data)
-    .where(eq(appointments.id, id))
-    .returning()
-    .get();
+  return db.update(appointments).set(data).where(eq(appointments.id, id)).returning().get();
 }

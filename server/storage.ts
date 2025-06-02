@@ -5,11 +5,11 @@ import type {
   InsertAppointment,
   ContactMessage,
   InsertContactMessage,
-} from "../shared/schema.js";
-import Database from "better-sqlite3";
+} from '../shared/schema.js';
+import Database from 'better-sqlite3';
 
 // Ouvrir la base de données SQLite
-const db = new Database("server/db/data.sqlite");
+const db = new Database('server/db/data.sqlite');
 
 // Création des tables si elles n'existent pas
 db.exec(`
@@ -67,20 +67,19 @@ export interface IStorage {
   // Contact methods
   getContactMessages(): Promise<ContactMessage[]>;
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
-
 }
 
 export class SqliteStorage implements IStorage {
-async getNewsPosts(category?: string): Promise<any[]> {
-  throw new Error("Method not implemented.");
-}
-async getNewsPost(id: number): Promise<any> {
-  throw new Error("Method not implemented.");
-}
+  async getNewsPosts(category?: string): Promise<any[]> {
+    throw new Error('Method not implemented.');
+  }
+  async getNewsPost(id: number): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
 
   // Vérification des IDs
   private validateId(id: number): void {
-    if (typeof id !== "number" || isNaN(id)) {
+    if (typeof id !== 'number' || isNaN(id)) {
       throw new Error("L'ID doit être un nombre valide.");
     }
   }
@@ -88,35 +87,46 @@ async getNewsPost(id: number): Promise<any> {
   // User methods
   async getUser(id: number): Promise<User | undefined> {
     this.validateId(id);
-    const row = db.prepare("SELECT * FROM users WHERE id = ?").get(id) as User | undefined;
+    const row = db.prepare('SELECT * FROM users WHERE id = ?').get(id) as User | undefined;
     return row;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    const row = db.prepare("SELECT * FROM users WHERE username = ?").get(username) as User | undefined;
+    const row = db.prepare('SELECT * FROM users WHERE username = ?').get(username) as
+      | User
+      | undefined;
     return row;
   }
 
   async createUser(user: InsertUser): Promise<User> {
-    const stmt = db.prepare("INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, ?)");
-    const info = stmt.run(user.username, user.password, (user as any).email ?? null, (user as any).role ?? null);
+    const stmt = db.prepare(
+      'INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, ?)',
+    );
+    const info = stmt.run(
+      user.username,
+      user.password,
+      (user as any).email ?? null,
+      (user as any).role ?? null,
+    );
     return { id: info.lastInsertRowid as number, ...user };
   }
 
   // Appointment methods
   async getAppointments(): Promise<Appointment[]> {
-    return db.prepare("SELECT * FROM appointments").all() as Appointment[];
+    return db.prepare('SELECT * FROM appointments').all() as Appointment[];
   }
 
   async getAppointment(id: number): Promise<Appointment | undefined> {
     this.validateId(id);
-    const row = db.prepare("SELECT * FROM appointments WHERE id = ?").get(id) as Appointment | undefined;
+    const row = db.prepare('SELECT * FROM appointments WHERE id = ?').get(id) as
+      | Appointment
+      | undefined;
     return row;
   }
 
   async createAppointment(appointment: InsertAppointment): Promise<Appointment> {
     const stmt = db.prepare(
-      "INSERT INTO appointments (name, email, phone, service, message, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?)"
+      'INSERT INTO appointments (name, email, phone, service, message, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?)',
     );
     const now = Date.now();
     const info = stmt.run(
@@ -124,33 +134,33 @@ async getNewsPost(id: number): Promise<any> {
       appointment.email,
       appointment.phone,
       appointment.service,
-      appointment.message || "",
-      appointment.status || "pending",
-      now
+      appointment.message || '',
+      appointment.status || 'pending',
+      now,
     );
     return {
       id: info.lastInsertRowid as number,
       ...appointment,
-      status: appointment.status || "pending",
+      status: appointment.status || 'pending',
       createdAt: now,
     };
   }
 
   async updateAppointmentStatus(id: number, status: string): Promise<Appointment | undefined> {
     this.validateId(id);
-    db.prepare("UPDATE appointments SET status = ? WHERE id = ?").run(status, id);
+    db.prepare('UPDATE appointments SET status = ? WHERE id = ?').run(status, id);
     return this.getAppointment(id);
   }
 
   // Contact methods
   async getContactMessages(): Promise<ContactMessage[]> {
-    return db.prepare("SELECT * FROM contact_messages").all() as ContactMessage[];
+    return db.prepare('SELECT * FROM contact_messages').all() as ContactMessage[];
   }
 
   async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
     const now = Date.now();
     const stmt = db.prepare(
-      "INSERT INTO contact_messages (name, email, phone, message, createdAt, status, httpStatus) VALUES (?, ?, ?, ?, ?, ?, ?)"
+      'INSERT INTO contact_messages (name, email, phone, message, createdAt, status, httpStatus) VALUES (?, ?, ?, ?, ?, ?, ?)',
     );
     const info = stmt.run(
       message.name,
@@ -158,15 +168,15 @@ async getNewsPost(id: number): Promise<any> {
       message.phone,
       message.message,
       now,
-      "pending",
-      "pending"
+      'pending',
+      'pending',
     );
     return {
       id: info.lastInsertRowid as number,
       ...message,
       createdAt: now,
-      status: "pending",
-      httpStatus: "pending",
+      status: 'pending',
+      httpStatus: 'pending',
     };
   }
 }

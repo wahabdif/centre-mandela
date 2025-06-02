@@ -22,7 +22,7 @@ async function startServer() {
         const html = entryServer.render('/');
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(html);
-      } 
+      }
       // Route pour les fichiers statiques
       else if (pathname && pathname.startsWith('/static/')) {
         const filePath = join(distDir, pathname.replace('/static/', ''));
@@ -34,7 +34,7 @@ async function startServer() {
           res.writeHead(404, { 'Content-Type': 'text/plain' });
           res.end('Fichier non trouvé.');
         }
-      } 
+      }
       // Route non trouvée
       else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });

@@ -123,7 +123,7 @@ export async function sendMessage(req: Request, res: Response) {
 
     res.status(200).json({ success: true, message: 'Message envoyé avec succès.' });
   } catch (error) {
-    console.error('Erreur lors de l\'envoi du message:', error);
+    console.error("Erreur lors de l'envoi du message:", error);
     res.status(500).json({ error: 'Erreur interne.' });
   }
 }

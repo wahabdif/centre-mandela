@@ -1,5 +1,5 @@
-import { IconType } from "react-icons";
-import { FiClock, FiMapPin, FiPhone } from "react-icons/fi";
+import { IconType } from 'react-icons';
+import { FiClock, FiMapPin, FiPhone } from 'react-icons/fi';
 
 export interface PracticalInfoItem {
   icon: IconType;
@@ -10,17 +10,17 @@ export interface PracticalInfoItem {
 export const practicalInfo: PracticalInfoItem[] = [
   {
     icon: FiClock,
-    titleKey: "info.openingHours.title",
-    detailKey: "info.openingHours.detail",
+    titleKey: 'info.openingHours.title',
+    detailKey: 'info.openingHours.detail',
   },
   {
     icon: FiMapPin,
-    titleKey: "info.address.title",
-    detailKey: "info.address.detail",
+    titleKey: 'info.address.title',
+    detailKey: 'info.address.detail',
   },
   {
     icon: FiPhone,
-    titleKey: "info.contact.title",
-    detailKey: "info.contact.detail",
+    titleKey: 'info.contact.title',
+    detailKey: 'info.contact.detail',
   },
 ];

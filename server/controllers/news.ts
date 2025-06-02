@@ -27,9 +27,7 @@ export async function getNewsById(req: Request<{ id: string }>, res: Response) {
 
 export async function createNews(req: Request, res: Response) {
   try {
-    const parsed = newsPostSchema
-      .omit({ id: true, createdAt: true })
-      .safeParse(req.body);
+    const parsed = newsPostSchema.omit({ id: true, createdAt: true }).safeParse(req.body);
 
     if (!parsed.success) {
       return res.status(400).json({ error: 'Données invalides.', details: parsed.error.flatten() });
@@ -67,9 +65,7 @@ export async function updateNews(req: Request<{ id: string }>, res: Response) {
     const id = Number(req.params.id);
     if (isNaN(id)) return res.status(400).json({ error: 'ID invalide.' });
 
-    const parsed = newsPostSchema
-      .omit({ id: true, createdAt: true })
-      .safeParse(req.body);
+    const parsed = newsPostSchema.omit({ id: true, createdAt: true }).safeParse(req.body);
 
     if (!parsed.success) {
       return res.status(400).json({ error: 'Données invalides.', details: parsed.error.flatten() });

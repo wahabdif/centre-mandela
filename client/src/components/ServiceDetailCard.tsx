@@ -1,5 +1,5 @@
-import { CheckCircle } from "lucide-react";
-import { ServiceProps, ServiceDetail } from "@/types";
+import { CheckCircle } from 'lucide-react';
+import { ServiceProps, ServiceDetail } from '@/types';
 
 interface ServiceDetailCardProps {
   service: ServiceProps;
@@ -15,9 +15,7 @@ export function ServiceDetailCard({ service, detail }: ServiceDetailCardProps) {
         className="w-full h-48 object-cover"
       />
       <div className="p-6 flex flex-col flex-grow">
-        <h3 className="text-2xl font-semibold text-primary mb-3">
-          {service.title}
-        </h3>
+        <h3 className="text-2xl font-semibold text-primary mb-3">{service.title}</h3>
         <p className="text-gray-700 mb-4">{detail.fullDescription}</p>
 
         <h4 className="font-bold text-primary mb-2">Utilisations principales :</h4>

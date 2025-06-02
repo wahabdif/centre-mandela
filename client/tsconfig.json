@@ -11,13 +11,13 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "baseUrl": "client", 
+    "baseUrl": "client",
     "paths": {
       "@/*": ["src/*"],
-      "@lib/*": ["src/lib/*"],              
+      "@lib/*": ["src/lib/*"],
       "@components/*": ["src/components/*"],
       "@shared/*": ["../shared/*"],
-      "@hooks/*": ["src/hooks/*"]  // Ajout du chemin hooks
+      "@hooks/*": ["src/hooks/*"] // Ajout du chemin hooks
     },
     "types": ["vite/client"]
   },

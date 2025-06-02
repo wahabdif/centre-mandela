@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Cloner le dépôt
         uses: actions/checkout@v3
-        
+
       - name: Installer Node.js
         uses: actions/setup-node@v3
         with:
@@ -33,7 +33,7 @@ jobs:
     steps:
       - name: Cloner le dépôt
         uses: actions/checkout@v3
-        
+
       - name: Installer Node.js
         uses: actions/setup-node@v3
         with:

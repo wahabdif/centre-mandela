@@ -1,10 +1,10 @@
-import { useTranslation } from "react-i18next";
-import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
-import { services, iconMap } from "@/lib/data/services";
-import { doctors } from "@/lib/data/doctors";
-import { practicalInfo } from "@/lib/data/practicalInfo";
-import { testimonials } from "@/lib/data/testimonials";
+import { useTranslation } from 'react-i18next';
+import { Link } from 'wouter';
+import { Button } from '@/components/ui/button';
+import { services, iconMap } from '@/lib/data/services';
+import { doctors } from '@/lib/data/doctors';
+import { practicalInfo } from '@/lib/data/practicalInfo';
+import { testimonials } from '@/lib/data/testimonials';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -14,11 +14,11 @@ export default function Home() {
       {/* HERO SECTION */}
       <section className="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-br from-primary to-secondary text-white px-6 text-center">
         <div className="max-w-2xl space-y-6">
-          <h1 className="text-4xl md:text-5xl font-bold">{t("hero.title")}</h1>
-          <p className="text-lg md:text-xl">{t("hero.description")}</p>
+          <h1 className="text-4xl md:text-5xl font-bold">{t('hero.title')}</h1>
+          <p className="text-lg md:text-xl">{t('hero.description')}</p>
           <Link href="/contact">
             <Button size="lg" className="text-lg">
-              {t("hero.cta")}
+              {t('hero.cta')}
             </Button>
           </Link>
         </div>
@@ -26,10 +26,10 @@ export default function Home() {
 
       {/* SERVICES SECTION */}
       <section className="py-20 px-4 max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">{t("services.section_title")}</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">{t('services.section_title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {services.map(({ icon, title, description, image, id }, idx) => {
-            const Icon = iconMap[icon] || iconMap["brain"];
+            const Icon = iconMap[icon] || iconMap['brain'];
             return (
               <div key={id} className="bg-white shadow-lg rounded-lg p-6 text-center space-y-4">
                 <Icon className="w-12 h-12 mx-auto text-primary" />
@@ -45,7 +45,9 @@ export default function Home() {
       {/* PRACTICAL INFO SECTION */}
       <section className="bg-gray-50 py-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">{t("practicalInfo.section_title")}</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">
+            {t('practicalInfo.section_title')}
+          </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {practicalInfo.map(({ icon: Icon, titleKey, detailKey }, idx) => (
               <div key={idx} className="text-center space-y-4">
@@ -60,7 +62,7 @@ export default function Home() {
 
       {/* DOCTORS SECTION */}
       <section className="py-20 px-4 max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">{t("doctors.section_title")}</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">{t('doctors.section_title')}</h2>
         <div className="flex flex-wrap justify-center gap-8">
           {doctors.map(({ name, specialty, photo }, idx) => (
             <div key={idx} className="max-w-sm text-center space-y-4">
@@ -80,7 +82,9 @@ export default function Home() {
       {/* TESTIMONIALS SECTION */}
       <section className="bg-primary text-white py-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">{t("testimonials.section_title")}</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">
+            {t('testimonials.section_title')}
+          </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map(({ name, message }, idx) => (
               <div key={idx} className="bg-white text-gray-800 p-6 rounded-lg shadow-lg">

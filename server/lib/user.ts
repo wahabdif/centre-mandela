@@ -21,9 +21,7 @@ export async function getUserByEmail(email: string): Promise<User | undefined> {
  * Créer un nouvel utilisateur
  */
 export async function createUser(data: NewUser): Promise<User> {
-  const stmt = db.prepare(
-    `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`
-  );
+  const stmt = db.prepare(`INSERT INTO users (name, email, password) VALUES (?, ?, ?)`);
   const result = stmt.run(data.name, data.email, data.password);
   const user = db.prepare(`SELECT * FROM users WHERE id = ?`).get(result.lastInsertRowid);
   return user as User;
