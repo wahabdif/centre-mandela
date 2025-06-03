@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "jsx": "react-jsx",
     "baseUrl": "src",
@@ -10,8 +10,7 @@
       "@components/*": ["src/components/*"],
       "@shared/*": ["../shared/*"],
       "@hooks/*": ["src/hooks/*"]
-    },
-    "outDir": "../dist/client"
+    }
   },
   "include": ["src", "vite.config.ts"],
   "exclude": ["dist", "node_modules"]
