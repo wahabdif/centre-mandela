@@ -1,36 +1,31 @@
-import * as z from 'zod';
-// Schéma de connexion
-export const loginSchema = z.object({
-    username: z.string().min(1, "Nom d'utilisateur requis"),
-    password: z.string().min(1, 'Mot de passe requis'),
+import { z } from 'zod';
+// --- Zod: Schéma utilisateur ---
+export const insertUserSchema = z
+    .object({
+    username: z.string().min(1, "Le nom d'utilisateur est requis"),
+    password: z.string().min(1, 'Le mot de passe est requis'),
+    confirmPassword: z.string().min(1, 'La confirmation du mot de passe est requise'),
+})
+    .refine(data => data.password === data.confirmPassword, {
+    message: 'Les mots de passe ne correspondent pas',
 });
-// Schéma de rendez-vous
-export const appointmentSchema = z.object({
-    fullName: z.string().min(1),
-    email: z.string().email(),
-    phone: z.string().min(1),
-    date: z.string().min(1),
-    message: z.string().optional(),
-});
-// Schéma de message de contact
+// --- Zod: Contact Message ---
 export const contactMessageSchema = z.object({
-    name: z.string().min(1),
-    email: z.string().email(),
-    phone: z.string().min(1),
-    service: z.string().min(1),
-    message: z.string().nullable().optional(),
+    name: z.string().min(1, 'Le nom est requis'),
+    email: z.string().email('Email invalide'),
+    phone: z.string().min(1, 'Le téléphone est requis'),
+    service: z.string().min(1, 'Le service est requis'),
+    message: z.string().min(1, 'Le message est requis'),
 });
-// Schéma de post d'actualité
-export const newsPostSchema = z.object({
-    id: z.number(),
-    title: z.string().min(1),
-    content: z.string().min(1),
-    createdAt: z.string(), // ou z.date() si tu veux gérer des dates en objets JS
+// --- Zod: Appointment ---
+export const appointmentSchema = z.object({
+    name: z.string().min(1, 'Le nom est requis'),
+    email: z.string().email('Email invalide'),
+    phone: z.string().min(1, 'Le téléphone est requis'),
+    service: z.string().min(1, 'Le service est requis'),
+    message: z.string().optional(),
+    status: z.enum(['pending', 'confirmed', 'cancelled']).default('pending'),
 });
-// Export par défaut pour compatibilité éventuelle
-export default {
-    loginSchema,
-    appointmentSchema,
-    contactMessageSchema,
-    newsPostSchema,
-};
+// Alias pour compatibilité
+export const insertContactMessageSchema = contactMessageSchema;
+export const insertAppointmentSchema = appointmentSchema;

@@ -1,136 +1,104 @@
-import * as z from 'zod';
-export declare const loginSchema: z.ZodObject<{
+import { z } from 'zod';
+export declare const insertUserSchema: z.ZodEffects<z.ZodObject<{
     username: z.ZodString;
     password: z.ZodString;
+    confirmPassword: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     username: string;
     password: string;
+    confirmPassword: string;
 }, {
     username: string;
     password: string;
-}>;
-export type LoginInput = z.infer<typeof loginSchema>;
-export declare const appointmentSchema: z.ZodObject<{
-    fullName: z.ZodString;
-    email: z.ZodString;
-    phone: z.ZodString;
-    date: z.ZodString;
-    message: z.ZodOptional<z.ZodString>;
-}, "strip", z.ZodTypeAny, {
-    date: string;
-    email: string;
-    phone: string;
-    fullName: string;
-    message?: string | undefined;
+    confirmPassword: string;
+}>, {
+    username: string;
+    password: string;
+    confirmPassword: string;
 }, {
-    date: string;
-    email: string;
-    phone: string;
-    fullName: string;
-    message?: string | undefined;
+    username: string;
+    password: string;
+    confirmPassword: string;
 }>;
-export type AppointmentInput = z.infer<typeof appointmentSchema>;
 export declare const contactMessageSchema: z.ZodObject<{
     name: z.ZodString;
     email: z.ZodString;
     phone: z.ZodString;
     service: z.ZodString;
-    message: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    message: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    email: string;
     name: string;
+    email: string;
     phone: string;
     service: string;
-    message?: string | null | undefined;
+    message: string;
 }, {
-    email: string;
     name: string;
+    email: string;
     phone: string;
     service: string;
-    message?: string | null | undefined;
+    message: string;
 }>;
-export type ContactMessageInput = z.infer<typeof contactMessageSchema>;
-export declare const newsPostSchema: z.ZodObject<{
-    id: z.ZodNumber;
-    title: z.ZodString;
-    content: z.ZodString;
-    createdAt: z.ZodString;
+export declare const appointmentSchema: z.ZodObject<{
+    name: z.ZodString;
+    email: z.ZodString;
+    phone: z.ZodString;
+    service: z.ZodString;
+    message: z.ZodOptional<z.ZodString>;
+    status: z.ZodDefault<z.ZodEnum<["pending", "confirmed", "cancelled"]>>;
 }, "strip", z.ZodTypeAny, {
-    id: number;
-    createdAt: string;
-    title: string;
-    content: string;
+    name: string;
+    email: string;
+    phone: string;
+    service: string;
+    status: "pending" | "confirmed" | "cancelled";
+    message?: string | undefined;
 }, {
-    id: number;
-    createdAt: string;
-    title: string;
-    content: string;
+    name: string;
+    email: string;
+    phone: string;
+    service: string;
+    message?: string | undefined;
+    status?: "pending" | "confirmed" | "cancelled" | undefined;
 }>;
-export type NewsPostInput = z.infer<typeof newsPostSchema>;
-declare const _default: {
-    loginSchema: z.ZodObject<{
-        username: z.ZodString;
-        password: z.ZodString;
-    }, "strip", z.ZodTypeAny, {
-        username: string;
-        password: string;
-    }, {
-        username: string;
-        password: string;
-    }>;
-    appointmentSchema: z.ZodObject<{
-        fullName: z.ZodString;
-        email: z.ZodString;
-        phone: z.ZodString;
-        date: z.ZodString;
-        message: z.ZodOptional<z.ZodString>;
-    }, "strip", z.ZodTypeAny, {
-        date: string;
-        email: string;
-        phone: string;
-        fullName: string;
-        message?: string | undefined;
-    }, {
-        date: string;
-        email: string;
-        phone: string;
-        fullName: string;
-        message?: string | undefined;
-    }>;
-    contactMessageSchema: z.ZodObject<{
-        name: z.ZodString;
-        email: z.ZodString;
-        phone: z.ZodString;
-        service: z.ZodString;
-        message: z.ZodOptional<z.ZodNullable<z.ZodString>>;
-    }, "strip", z.ZodTypeAny, {
-        email: string;
-        name: string;
-        phone: string;
-        service: string;
-        message?: string | null | undefined;
-    }, {
-        email: string;
-        name: string;
-        phone: string;
-        service: string;
-        message?: string | null | undefined;
-    }>;
-    newsPostSchema: z.ZodObject<{
-        id: z.ZodNumber;
-        title: z.ZodString;
-        content: z.ZodString;
-        createdAt: z.ZodString;
-    }, "strip", z.ZodTypeAny, {
-        id: number;
-        createdAt: string;
-        title: string;
-        content: string;
-    }, {
-        id: number;
-        createdAt: string;
-        title: string;
-        content: string;
-    }>;
-};
-export default _default;
+export declare const insertContactMessageSchema: z.ZodObject<{
+    name: z.ZodString;
+    email: z.ZodString;
+    phone: z.ZodString;
+    service: z.ZodString;
+    message: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    name: string;
+    email: string;
+    phone: string;
+    service: string;
+    message: string;
+}, {
+    name: string;
+    email: string;
+    phone: string;
+    service: string;
+    message: string;
+}>;
+export declare const insertAppointmentSchema: z.ZodObject<{
+    name: z.ZodString;
+    email: z.ZodString;
+    phone: z.ZodString;
+    service: z.ZodString;
+    message: z.ZodOptional<z.ZodString>;
+    status: z.ZodDefault<z.ZodEnum<["pending", "confirmed", "cancelled"]>>;
+}, "strip", z.ZodTypeAny, {
+    name: string;
+    email: string;
+    phone: string;
+    service: string;
+    status: "pending" | "confirmed" | "cancelled";
+    message?: string | undefined;
+}, {
+    name: string;
+    email: string;
+    phone: string;
+    service: string;
+    message?: string | undefined;
+    status?: "pending" | "confirmed" | "cancelled" | undefined;
+}>;
