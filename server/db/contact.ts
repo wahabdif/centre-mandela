@@ -4,7 +4,7 @@
 
 // Exemple d’imports et fonctions à compléter selon ta logique
 import { eq } from 'drizzle-orm';
-import { db } from './sqlite';
+import { db } from './index';
 import { contactMessages } from '../../shared/schema';
 import { ContactMessage, NewContactMessage, UpdateContactMessageStatus } from '../../shared/types';
 
