@@ -1,17 +1,14 @@
-
-// ------------------------------
-// ENREGISTREMENT DES ROUTES API
-// ------------------------------
-
-import type { Express } from 'express';
-
-import authRoutes from './auth';
+import type { Application } from 'express';
 import userRoutes from './users';
-import appointmentRoutes from './appointments';
 import contactRoutes from './contact';
+import authRoutes from './auth';
+import appointmentRoutes from './appointments';
 import newsRoutes from './news';
 
-export function registerRoutes(app: Express) {
+/**
+ * Enregistrer toutes les routes de l'API
+ */
+export function registerRoutes(app: Application) {
   app.use('/api/auth', authRoutes);
   app.use('/api/users', userRoutes);
   app.use('/api/appointments', appointmentRoutes);

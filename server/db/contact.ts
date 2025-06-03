@@ -2,10 +2,7 @@ import { eq } from 'drizzle-orm';
 import { db } from './index';
 import { contactMessages } from '../../shared/schema';
 import type { ContactMessage, InsertContactMessage } from '../../shared/schema';
-
-import type { ContactMessage, NewContactMessage, UpdateContactMessageStatus } from '../../shared/types';
-
-export type { ContactMessage, NewContactMessage, UpdateContactMessageStatus };
+import type { NewContactMessage, UpdateContactMessageStatus } from '../../shared/types';
 
 export async function getAllContactMessages(): Promise<ContactMessage[]> {
   return await db.select().from(contactMessages);

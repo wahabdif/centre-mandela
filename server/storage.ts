@@ -108,7 +108,13 @@ export class SqliteStorage implements IStorage {
       (user as any).email ?? null,
       (user as any).role ?? null,
     );
-    return { id: info.lastInsertRowid as number, ...user };
+    return { 
+      id: info.lastInsertRowid as number, 
+      username: user.username,
+      password: user.password,
+      email: (user as any).email ?? null,
+      role: (user as any).role ?? null
+    };
   }
 
   // Appointment methods
@@ -160,23 +166,26 @@ export class SqliteStorage implements IStorage {
   async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
     const now = Date.now();
     const stmt = db.prepare(
-      'INSERT INTO contact_messages (name, email, phone, message, createdAt, status, httpStatus) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO contact_messages (name, email, phone, service, message, createdAt, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
     );
     const info = stmt.run(
       message.name,
       message.email,
       message.phone,
-      message.message,
+      message.service,
+      message.message || null,
       now,
-      'pending',
       'pending',
     );
     return {
       id: info.lastInsertRowid as number,
-      ...message,
+      name: message.name,
+      email: message.email,
+      phone: message.phone,
+      service: message.service,
+      message: message.message || null,
       createdAt: now,
       status: 'pending',
-      httpStatus: 'pending',
     };
   }
 }
