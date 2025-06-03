@@ -1,17 +1,17 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "baseUrl": "src",
-    "types": ["vite/client"],
-    "paths": {
-      "@/*": ["src/*"],
-      "@lib/*": ["src/lib/*"],
-      "@components/*": ["src/components/*"],
-      "@shared/*": ["../shared/*"],
-      "@hooks/*": ["src/hooks/*"]
-    }
+    "baseUrl": ".",
+    "outDir": "../dist/server",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "target": "ES2020",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "resolveJsonModule": true
   },
-  "include": ["src", "vite.config.ts"],
-  "exclude": ["dist", "node_modules"]
+  "include": ["./**/*"],
+  "exclude": ["../dist", "node_modules"]
 }
