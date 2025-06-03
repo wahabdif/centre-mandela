@@ -1,9 +1,18 @@
 {
-  "extends": "../tsconfig-base.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "../dist/shared",
-    "baseUrl": "."
+    "module": "ESNext",
+    "target": "ES2020",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "types": ["node"]
   },
-  "include": ["**/*"]
+  "include": ["./**/*"],
+  "exclude": ["../dist", "node_modules"]
 }
