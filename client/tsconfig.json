@@ -1,25 +1,16 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "baseUrl": "client",
+    "baseUrl": "src",
+    "types": ["vite/client"],
     "paths": {
       "@/*": ["src/*"],
       "@lib/*": ["src/lib/*"],
       "@components/*": ["src/components/*"],
       "@shared/*": ["../shared/*"],
-      "@hooks/*": ["src/hooks/*"] // Ajout du chemin hooks
+      "@hooks/*": ["src/hooks/*"] 
     },
-    "types": ["vite/client"]
   },
   "include": ["src", "vite.config.ts"],
   "exclude": ["dist", "node_modules"]

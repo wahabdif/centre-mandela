@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "baseUrl": ".",
-    "typeRoots": ["./server/types", "./node_modules/@types"],
+    "baseUrl": "client",
+    "rootDir": ".",
+    "outDir": "../dist/server",
+    "types": ["node"],
+    "typeRoots": ["./types", "../node_modules/@types"],
     "paths": {
       "@/*": ["client/src/*"],
       "@components/*": ["client/src/components/*"],
@@ -12,26 +12,9 @@
       "@utils/*": ["client/src/utils/*"],
       "@shared/*": ["shared/*"]
     },
-    "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": ["node", "express"],
-    "allowJs": false,
-    "outDir": "dist",
-    "isolatedModules": true,
-    "noEmit": false,
-    "sourceMap": true,
-    "skipLibCheck": true,
-
-    // ✅ BONUS : Améliorations avancées pour la robustesse du typage
-    "moduleDetection": "force",
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true
   },
   "include": [
     "client",

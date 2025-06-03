@@ -1,5 +1,3 @@
-// Point d'entrée centralisé pour tous les services DB
-
 // CONTACT
 export {
   getAllContactMessages,
@@ -23,11 +21,18 @@ export {
   getUserByUsername,
   getUserByEmail,
   createUser,
+  createUserWithEmail,
   verifyPassword,
   hashPassword,
   getAllUsers,
   deleteUser,
+  deleteUserByEmail,
   updateUser,
+  updateUserByUsername,
+  updateUserPassword,
+  updateUserEmail,
+  getUserByUsernameOrEmail,
+  getUserByIdOrUsername,
 } from './users';
 
 // APPOINTMENTS
