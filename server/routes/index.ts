@@ -17,3 +17,12 @@ export function registerRoutes(app: Application) {
   app.use('/api/auth', authRoutes);
   app.use('/api/users', userRoutes);
 }
+
+// Export des routeurs individuellement (optionnel)
+export {
+  appointmentRoutes,
+  contactRoutes,
+  newsRoutes,
+  authRoutes,
+  userRoutes,
+};
