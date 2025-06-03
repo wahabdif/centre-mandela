@@ -1,28 +1,45 @@
-// ------------------------------
-// ENREGISTREMENT DES ROUTES API
-// ------------------------------
+import express, { Request, Response } from 'express';
+import path from 'path';
+import dotenv from 'dotenv';
+import { registerRoutes } from './routes';
+import { render } from '../client/src/entry-server';
 
-import { type Application } from 'express';
+dotenv.config();
 
-import appointmentRoutes from './appointments';
-import contactRoutes from './contact';
-import newsRoutes from './news';
-import authRoutes from './auth';
-import userRoutes from './users';
+const app = express();
 
-export function registerRoutes(app: Application) {
-  app.use('/api/appointments', appointmentRoutes);
-  app.use('/api/contact', contactRoutes);
-  app.use('/api/news', newsRoutes);
-  app.use('/api/auth', authRoutes);
-  app.use('/api/users', userRoutes);
-}
+// Validation et récupération du port (par défaut 5000)
+const PORT = Number.isNaN(Number(process.env.PORT))
+  ? 5000
+  : parseInt(process.env.PORT as string, 10);
 
-// Export des routeurs individuellement (optionnel)
-export {
-  appointmentRoutes,
-  contactRoutes,
-  newsRoutes,
-  authRoutes,
-  userRoutes,
-};
+// Middleware pour parser le JSON
+app.use(express.json());
+
+// Servir les fichiers statiques (le build React) dans /public
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Enregistrer les routes API
+registerRoutes(app);
+
+// Gestion des routes non API : SSR React ou fichiers statiques
+app.get('*', (req: Request, res: Response) => {
+  // Si la route commence par /api et qu'elle n'a pas été prise en charge, erreur 404
+  if (req.url.startsWith('/api/')) {
+    return res.status(404).send('API route non trouvée.');
+  }
+
+  try {
+    // Tenter de rendre la page React côté serveur
+    const html = render(req.url);
+    res.status(200).send(html);
+  } catch (error) {
+    console.error('Erreur SSR:', error);
+    res.status(500).send('Erreur serveur.');
+  }
+});
+
+// Démarrer le serveur sur 0.0.0.0
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Serveur Express démarré sur http://0.0.0.0:${PORT}`);
+});

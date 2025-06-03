@@ -45,6 +45,17 @@ export const appointments = sqliteTable('appointments', {
     status: text('status').notNull(),
     createdAt: integer('createdAt').notNull(),
 });
+// --- Drizzle: Table contactMessages ---
+export const contactMessages = sqliteTable('contactMessages', {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    name: text('name').notNull(),
+    email: text('email').notNull(),
+    phone: text('phone').notNull(),
+    service: text('service').notNull(),
+    message: text('message'),
+    status: text('status').notNull().default('unread'),
+    createdAt: integer('createdAt').notNull(),
+});
 // --- Drizzle: Table newsPosts ---
 export const newsPosts = sqliteTable('newsPosts', {
     id: integer('id').primaryKey({ autoIncrement: true }),
