@@ -1,6 +1,6 @@
 // server/types/express.d.ts
 
-import type { User as AppUser } from '../../client/src/type';
+import type { User as AppUser } from '../../shared/types';
 
 declare global {
   namespace Express {

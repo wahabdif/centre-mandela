@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import type { User } from '../../client/src/type';
+import type { User } from '../../shared/types';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'changeme';
 

@@ -1,5 +1,5 @@
-import { db } from '../db/contact';
-import type { NewUser, User } from '../../client/src/type/index';
+import { db } from '../db/index';
+import type { NewUser, User } from '../../shared/types';
 
 /**
  * Récupérer un utilisateur par ID
