@@ -1,31 +1,10 @@
 {
-  "compilerOptions": {
-    "baseUrl": "client",
-    "rootDir": ".",
-    "outDir": "dist",
-    "types": ["node"],
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "paths": {
-      "@/*": ["client/src/*"],
-      "@components/*": ["client/src/components/*"],
-      "@lib/*": ["client/src/lib/*"],
-      "@utils/*": ["client/src/utils/*"],
-      "@shared/*": ["shared/*"]
-    }
-  },
-  "include": [
-    "client",
-    "client/src/Type",
-    "server",
-    "shared"
+  "files": [],
+  "references": [
+    { "path": "client" },
+    { "path": "server" },
+    { "path": "shared" }
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build",
-    "**/*.test.ts",
-    "**/*.test.js"
-  ]
+  "include": [],
+  "exclude": ["node_modules", "dist"]
 }
