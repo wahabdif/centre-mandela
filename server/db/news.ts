@@ -1,29 +1,36 @@
-import { db } from './sqlite';
-import { newsPosts } from '../../shared/schema';
+// ------------------------------
+// NEWS : Gestion des articles / posts
+// ------------------------------
+
 import { eq } from 'drizzle-orm';
-import type { InsertNewsPost } from '../../client/src/type/index';
+import { db } from './index';
+import { newsPosts } from '../../shared/schema';
+import { NewsPost, NewNewsPost, UpdateNewsPost } from '../../shared/types';
 
-// Récupérer toutes les actualités
-export async function getAllNewsPosts() {
-  return db.select().from(newsPosts).orderBy(newsPosts.createdAt).all();
-}
-
-// Récupérer une actualité par ID
-export async function getNewsPostById(id: number) {
-  return db.select().from(newsPosts).where(eq(newsPosts.id, id)).get();
+// GET
+export async function getAllNewsPosts(): Promise<NewsPost[]> {
+  return db.select().from(newsPosts);
 }
 
-// Créer une nouvelle actualité
-export async function createNewsPost(data: InsertNewsPost) {
-  return db.insert(newsPosts).values(data).returning().get();
+export async function getNewsPostById(id: number): Promise<NewsPost | undefined> {
+  const result = await db.select().from(newsPosts).where(eq(newsPosts.id, id));
+  return result[0];
 }
 
-// Supprimer une actualité
-export async function deleteNewsPost(id: number) {
-  return db.delete(newsPosts).where(eq(newsPosts.id, id)).run();
+// CREATE
+export async function createNewsPost(data: NewNewsPost): Promise<NewsPost> {
+  const result = await db.insert(newsPosts).values(data).returning();
+  return result[0];
 }
-// Mettre à jour une actualité
-export async function updateNewsPost(id: number, data: Partial<InsertNewsPost>) {
-  return db.update(newsPosts).set(data).where(eq(newsPosts.id, id)).returning().get();
+
+// UPDATE
+export async function updateNewsPost(id: number, updates: UpdateNewsPost): Promise<NewsPost | undefined> {
+  const result = await db.update(newsPosts).set(updates).where(eq(newsPosts.id, id)).returning();
+  return result[0];
 }
-// Mettre à jour le statut d'une actualité
+
+// DELETE
+export async function deleteNewsPost(id: number): Promise<boolean> {
+  const result = await db.delete(newsPosts).where(eq(newsPosts.id, id));
+  return result > 0;
+}
