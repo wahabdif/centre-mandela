@@ -1,10 +1,14 @@
+// ------------------------------
+// USERS : Fonctions liées aux utilisateurs
+// ------------------------------
+
 import { eq, or } from 'drizzle-orm';
 import { db } from './index';
 import { users } from '../../shared/schema';
 import { NewUser, UpdateUser, User } from '../../shared/types';
 import bcrypt from 'bcryptjs';
 
-// GET
+// GET USERS
 export async function getUserById(id: number): Promise<User | undefined> {
   const result = await db.select().from(users).where(eq(users.id, id));
   return result[0];
@@ -38,29 +42,48 @@ export async function getAllUsers(): Promise<User[]> {
   return db.select().from(users);
 }
 
-// CREATE
+// CREATE USERS
 export async function createUser(data: NewUser): Promise<User> {
   const hashedPassword = await bcrypt.hash(data.password, 10);
-  const result = await db
-    .insert(users)
-    .values({ ...data, password: hashedPassword })
-    .returning();
+  const result = await db.insert(users).values({ ...data, password: hashedPassword }).returning();
   return result[0];
 }
 
 export async function createUserWithEmail(email: string, password: string): Promise<User> {
   const hashedPassword = await bcrypt.hash(password, 10);
-  const result = await db
-    .insert(users)
-    .values({ email, password: hashedPassword, username: email })
-    .returning();
+  const result = await db.insert(users).values({ email, password: hashedPassword, username: email }).returning();
   return result[0];
 }
 
-// UPDATE
+// UPDATE USERS
 export async function updateUser(id: number, updates: UpdateUser): Promise<User | undefined> {
   const result = await db.update(users).set(updates).where(eq(users.id, id)).returning();
   return result[0];
 }
 
-export async function updateUserByUsername(username: string, updates: UpdateUser): Promise
+export async function updateUserByUsername(username: string, updates: UpdateUser): Promise<User | undefined> {
+  const result = await db.update(users).set(updates).where(eq(users.username, username)).returning();
+  return result[0];
+}
+
+export async function updateUserPassword(id: number, newPassword: string): Promise<User | undefined> {
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  const result = await db.update(users).set({ password: hashedPassword }).where(eq(users.id, id)).returning();
+  return result[0];
+}
+
+export async function updateUserEmail(id: number, newEmail: string): Promise<User | undefined> {
+  const result = await db.update(users).set({ email: newEmail }).where(eq(users.id, id)).returning();
+  return result[0];
+}
+
+// DELETE USERS
+export async function deleteUser(id: number): Promise<boolean> {
+  const result = await db.delete(users).where(eq(users.id, id));
+  return result > 0;
+}
+
+export async function deleteUserByEmail(email: string): Promise<boolean> {
+  const result = await db.delete(users).where(eq(users.email, email));
+  return result > 0;
+}
