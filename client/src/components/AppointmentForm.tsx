@@ -73,10 +73,11 @@ export default function AppointmentForm() {
       form.reset();
       setSubmitted(true);
     },
-    onError: error => {
+    onError: (error: unknown) => {
+      const message = error instanceof Error ? error.message : t('form.error.message');
       toast({
         title: t('form.error.title'),
-        description: error.message || t('form.error.message'),
+        description: message,
         variant: 'destructive',
       });
     },
@@ -88,7 +89,7 @@ export default function AppointmentForm() {
 
   if (submitted) {
     return (
-      <div className="bg-white rounded-lg shadow-xl overflow-hidden p-8 text-center text-gray-900">
+      <div className="bg-white rounded-lg shadow-xl overflow-hidden p-8 text-center text-gray-900" aria-live="polite">
         <div className="mb-6 text-5xl text-green-500">✓</div>
         <h3 className="text-2xl font-bold text-primary mb-4">{t('form.success.title')}</h3>
         <p className="text-lg mb-6">{t('form.success.message')}</p>
@@ -123,7 +124,7 @@ export default function AppointmentForm() {
                 <FormItem>
                   <FormLabel className="font-semibold">{t('form.email')}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t('form.emailPlaceholder')} {...field} />
+                    <Input type="email" placeholder={t('form.emailPlaceholder')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -137,7 +138,7 @@ export default function AppointmentForm() {
                 <FormItem>
                   <FormLabel className="font-semibold">{t('form.phone')}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t('form.phonePlaceholder')} {...field} />
+                    <Input type="tel" placeholder={t('form.phonePlaceholder')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -150,7 +151,7 @@ export default function AppointmentForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-semibold">{t('form.service')}</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value || ''}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder={t('form.servicePlaceholder')} />
