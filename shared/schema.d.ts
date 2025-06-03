@@ -1,0 +1,16 @@
+import { z } from 'zod';
+import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
+export declare const insertUserSchema: any;
+export declare const users: any;
+export declare const insertContactMessageSchema: any;
+export declare const insertAppointmentSchema: any;
+export declare const appointments: any;
+export declare const newsPosts: any;
+export type User = InferSelectModel<typeof users>;
+export type InsertUser = InferInsertModel<typeof users>;
+export type Appointment = InferSelectModel<typeof appointments>;
+export type InsertAppointment = InferInsertModel<typeof appointments>;
+export type NewsPost = InferSelectModel<typeof newsPosts>;
+export type InsertNewsPost = InferInsertModel<typeof newsPosts>;
+export type ContactMessage = z.infer<typeof insertContactMessageSchema>;
+export type InsertContactMessage = ContactMessage;

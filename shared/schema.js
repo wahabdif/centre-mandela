@@ -54,4 +54,3 @@ export const newsPosts = sqliteTable('newsPosts', {
     authorId: integer('authorId').notNull(),
     status: text('status').notNull().default('draft'),
 });
-//# sourceMappingURL=schema.js.map
