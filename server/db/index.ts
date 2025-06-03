@@ -1,4 +1,7 @@
-// index.ts (ou api.ts)
+// ------------------------------
+// EXPORTS CENTRAUX
+// ------------------------------
+
 export {
   getAllContactMessages,
   getContactMessageById,
@@ -20,8 +23,6 @@ export {
   getUserByEmail,
   createUser,
   createUserWithEmail,
-  verifyPassword,
-  hashPassword,
   getAllUsers,
   deleteUser,
   deleteUserByEmail,
