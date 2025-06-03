@@ -127,15 +127,15 @@ export declare const insertContactMessageSchema: z.ZodObject<{
     phone: z.ZodString;
     message: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    message: string;
-    email: string;
     name: string;
+    email: string;
     phone: string;
+    message: string;
 }, {
-    message: string;
-    email: string;
     name: string;
+    email: string;
     phone: string;
+    message: string;
 }>;
 export declare const insertAppointmentSchema: z.ZodObject<{
     name: z.ZodString;
@@ -145,15 +145,15 @@ export declare const insertAppointmentSchema: z.ZodObject<{
     message: z.ZodOptional<z.ZodString>;
     status: z.ZodDefault<z.ZodEnum<["pending", "confirmed", "cancelled"]>>;
 }, "strip", z.ZodTypeAny, {
-    status: "pending" | "confirmed" | "cancelled";
-    email: string;
     name: string;
+    email: string;
     phone: string;
     service: string;
+    status: "pending" | "confirmed" | "cancelled";
     message?: string | undefined;
 }, {
-    email: string;
     name: string;
+    email: string;
     phone: string;
     service: string;
     message?: string | undefined;
