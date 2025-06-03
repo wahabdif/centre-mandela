@@ -1,11 +1,7 @@
-
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {
-      "@shared/*": ["../shared/*"]
-    },
     "outDir": "../dist/server",
     "module": "ESNext",
     "moduleResolution": "Node",
