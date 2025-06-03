@@ -4,7 +4,7 @@
 // ENREGISTREMENT DES ROUTES API
 // ------------------------------
 
-import type { Express } from 'express';
+import express from 'express';
 
 import authRoutes from './routes/auth';
 import userRoutes from './routes/users';

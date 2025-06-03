@@ -1,5 +1,5 @@
 
-import type { Express } from 'express';
+import express from 'express';
 import userRoutes from './users';
 import contactRoutes from './contact';
 import authRoutes from './auth';
