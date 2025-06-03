@@ -9,7 +9,7 @@ import newsRoutes from './news';
 /**
  * Enregistrer toutes les routes de l'API
  */
-export function registerRoutes(app: Express) {
+export function registerRoutes(app: express.Application) {
   app.use('/api/auth', authRoutes);
   app.use('/api/users', userRoutes);
   app.use('/api/appointments', appointmentRoutes);

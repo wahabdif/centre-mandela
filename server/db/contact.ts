@@ -1,7 +1,5 @@
-
 import { db } from './index';
-import { contactMessages } from '../../shared/schema';
-import type { ContactMessage, InsertContactMessage } from '../../shared/schema';
+import { contactMessages, type ContactMessage, type InsertContactMessage } from '../../shared/schema';
 import { eq } from 'drizzle-orm';
 
 export async function getAllContactMessages(): Promise<ContactMessage[]> {

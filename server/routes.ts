@@ -12,7 +12,7 @@ import appointmentRoutes from './routes/appointments';
 import contactRoutes from './routes/contact';
 import newsRoutes from './routes/news';
 
-export function registerRoutes(app: Express) {
+export function registerRoutes(app: express.Application) {
   app.use('/api/auth', authRoutes);
   app.use('/api/users', userRoutes);
   app.use('/api/appointments', appointmentRoutes);

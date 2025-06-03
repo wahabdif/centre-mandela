@@ -1,8 +1,7 @@
 
 import { db } from '../db/index';
-import { users } from '../../shared/schema';
+import { users, type User, type InsertUser } from '../../shared/schema';
 import { eq } from 'drizzle-orm';
-import type { User, InsertUser } from '../../shared/schema';
 
 /**
  * Récupérer un utilisateur par ID

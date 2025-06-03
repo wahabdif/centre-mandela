@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import * as db from '../db/contact';
-import { contactMessageSchema } from '../../shared/zod';
-import type { NewContactMessage } from '../../shared/types';
+import { insertContactMessageSchema } from '../../shared/schema';
+import type { InsertContactMessage } from '../../shared/schema';
 
 /**
  * Validation simple de l'ID depuis les params
@@ -51,7 +51,7 @@ export async function getContactMessageById(req: Request, res: Response) {
  */
 export async function createContactMessage(req: Request, res: Response) {
   try {
-    const result = contactMessageSchema.safeParse(req.body);
+    const result = insertContactMessageSchema.safeParse(req.body);
 
     if (!result.success) {
       return res.status(400).json({ error: 'Données invalides', details: result.error.format() });
@@ -59,7 +59,7 @@ export async function createContactMessage(req: Request, res: Response) {
 
     const { email, name, phone, service, message } = result.data;
 
-    const messageData: NewContactMessage = {
+    const messageData: InsertContactMessage = {
       email,
       name,
       phone,
