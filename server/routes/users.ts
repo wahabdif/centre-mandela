@@ -1,19 +1,14 @@
-// ------------------------------
-// ENREGISTREMENT DES ROUTES API
-// ------------------------------
 
-import type { Application } from 'express';
+import express from 'express';
+import * as userController from '../controllers/users';
 
-import authRoutes from './auth';
-import userRoutes from './users';
-import appointmentRoutes from './appointments';
-import contactRoutes from './contact';
-import newsRoutes from './news';
+const router = express.Router();
 
-export function registerRoutes(app: Application) {
-  app.use('/api/auth', authRoutes);
-  app.use('/api/users', userRoutes);
-  app.use('/api/appointments', appointmentRoutes);
-  app.use('/api/contact', contactRoutes);
-  app.use('/api/news', newsRoutes);
-}
+// Routes pour les utilisateurs
+router.get('/', userController.getAllUsers);
+router.get('/:id', userController.getUserById);
+router.post('/', userController.createUser);
+router.put('/:id', userController.updateUser);
+router.delete('/:id', userController.deleteUser);
+
+export default router;

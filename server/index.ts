@@ -1,16 +1,16 @@
+
 import express, { Request, Response } from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import { registerRoutes } from './routes';
-import { render } from '../client/src/entry-server';
 
 dotenv.config();
 
 const app = express();
 
-// Validation et récupération du port (par défaut 3000)
+// Validation et récupération du port (par défaut 5000)
 const PORT = Number.isNaN(Number(process.env.PORT))
-  ? 3000
+  ? 5000
   : parseInt(process.env.PORT as string, 10);
 
 // Middleware pour parser le JSON
@@ -30,16 +30,26 @@ app.get('*', (req: Request, res: Response) => {
   }
 
   try {
-    // Tenter de rendre la page React côté serveur
-    const html = render(req.url);
+    // Pour le moment, on renvoie une page simple sans SSR
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Mon App</title>
+        </head>
+        <body>
+          <div id="root">Application React</div>
+        </body>
+      </html>
+    `;
     res.status(200).send(html);
   } catch (error) {
-    console.error('Erreur SSR:', error);
+    console.error('Erreur serveur:', error);
     res.status(500).send('Erreur serveur.');
   }
 });
 
-// Démarrer le serveur
-app.listen(PORT, () => {
-  console.log(`✅ Serveur Express démarré sur http://localhost:${PORT}`);
+// Démarrer le serveur sur 0.0.0.0
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Serveur Express démarré sur http://0.0.0.0:${PORT}`);
 });

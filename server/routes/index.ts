@@ -1,8 +1,8 @@
+
 import express, { Request, Response } from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
-import { registerRoutes } from './routes';
-import { render } from '../client/src/entry-server';
+import { registerRoutes } from '../routes';
 
 dotenv.config();
 
@@ -30,11 +30,21 @@ app.get('*', (req: Request, res: Response) => {
   }
 
   try {
-    // Tenter de rendre la page React côté serveur
-    const html = render(req.url);
+    // Pour le moment, on renvoie une page simple sans SSR
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Mon App</title>
+        </head>
+        <body>
+          <div id="root">Application React</div>
+        </body>
+      </html>
+    `;
     res.status(200).send(html);
   } catch (error) {
-    console.error('Erreur SSR:', error);
+    console.error('Erreur serveur:', error);
     res.status(500).send('Erreur serveur.');
   }
 });

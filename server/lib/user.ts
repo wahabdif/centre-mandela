@@ -1,43 +1,52 @@
+
 import { db } from '../db/index';
+import { users } from '../../shared/schema';
+import { eq } from 'drizzle-orm';
 import type { NewUser, User } from '../../shared/types';
 
 /**
  * Récupérer un utilisateur par ID
  */
 export async function getUserById(id: number): Promise<User | undefined> {
-  const row = db.prepare(`SELECT * FROM users WHERE id = ?`).get(id);
-  return row as User | undefined;
+  const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+  return result[0];
 }
 
 /**
  * Récupérer un utilisateur par email
  */
 export async function getUserByEmail(email: string): Promise<User | undefined> {
-  const row = db.prepare(`SELECT * FROM users WHERE email = ?`).get(email);
-  return row as User | undefined;
+  const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  return result[0];
+}
+
+/**
+ * Récupérer un utilisateur par username
+ */
+export async function getUserByUsername(username: string): Promise<User | undefined> {
+  const result = await db.select().from(users).where(eq(users.username, username)).limit(1);
+  return result[0];
 }
 
 /**
  * Créer un nouvel utilisateur
  */
 export async function createUser(data: NewUser): Promise<User> {
-  const stmt = db.prepare(`INSERT INTO users (name, email, password) VALUES (?, ?, ?)`);
-  const result = stmt.run(data.name, data.email, data.password);
-  const user = db.prepare(`SELECT * FROM users WHERE id = ?`).get(result.lastInsertRowid);
-  return user as User;
+  const result = await db.insert(users).values(data).returning();
+  return result[0];
 }
 
 /**
  * Supprimer un utilisateur par ID
  */
 export async function deleteUser(id: number): Promise<void> {
-  db.prepare(`DELETE FROM users WHERE id = ?`).run(id);
+  await db.delete(users).where(eq(users.id, id));
 }
 
 /**
  * Lister tous les utilisateurs
  */
 export async function getAllUsers(): Promise<User[]> {
-  const rows = db.prepare(`SELECT * FROM users`).all();
-  return rows as User[];
+  const result = await db.select().from(users);
+  return result;
 }

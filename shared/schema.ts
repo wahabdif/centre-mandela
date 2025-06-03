@@ -1,3 +1,4 @@
+
 import { z } from 'zod';
 import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
 import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
@@ -27,6 +28,7 @@ export const insertContactMessageSchema = z.object({
   name: z.string().min(1, 'Le nom est requis'),
   email: z.string().email('Email invalide'),
   phone: z.string().min(1, 'Le téléphone est requis'),
+  service: z.string().min(1, 'Le service est requis'),
   message: z.string().min(1, 'Le message est requis'),
 });
 
@@ -84,5 +86,5 @@ export type InsertAppointment = InferInsertModel<typeof appointments>;
 export type NewsPost = InferSelectModel<typeof newsPosts>;
 export type InsertNewsPost = InferInsertModel<typeof newsPosts>;
 
-export type ContactMessage = z.infer<typeof insertContactMessageSchema>;
-export type InsertContactMessage = ContactMessage;
+export type ContactMessage = InferSelectModel<typeof contactMessages>;
+export type InsertContactMessage = InferInsertModel<typeof contactMessages>;
