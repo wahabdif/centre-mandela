@@ -1,4 +1,5 @@
-import type { Application } from 'express';
+
+import type { Express } from 'express';
 import userRoutes from './users';
 import contactRoutes from './contact';
 import authRoutes from './auth';
@@ -8,7 +9,7 @@ import newsRoutes from './news';
 /**
  * Enregistrer toutes les routes de l'API
  */
-export function registerRoutes(app: Application) {
+export function registerRoutes(app: Express) {
   app.use('/api/auth', authRoutes);
   app.use('/api/users', userRoutes);
   app.use('/api/appointments', appointmentRoutes);

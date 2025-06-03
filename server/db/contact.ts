@@ -1,8 +1,8 @@
-import { eq } from 'drizzle-orm';
+
 import { db } from './index';
 import { contactMessages } from '../../shared/schema';
 import type { ContactMessage, InsertContactMessage } from '../../shared/schema';
-import type { NewContactMessage, UpdateContactMessageStatus } from '../../shared/types';
+import { eq } from 'drizzle-orm';
 
 export async function getAllContactMessages(): Promise<ContactMessage[]> {
   return await db.select().from(contactMessages);
@@ -10,28 +10,23 @@ export async function getAllContactMessages(): Promise<ContactMessage[]> {
 
 export async function getContactMessageById(id: number): Promise<ContactMessage | undefined> {
   const result = await db.select().from(contactMessages).where(eq(contactMessages.id, id)).limit(1);
-  return result[0];
+  return result[0] as ContactMessage | undefined;
 }
 
-export async function createContactMessage(messageData: Omit<InsertContactMessage, 'id' | 'createdAt'>): Promise<ContactMessage> {
-  const now = Date.now();
+export async function createContactMessage(data: InsertContactMessage): Promise<ContactMessage> {
   const result = await db.insert(contactMessages).values({
-    ...messageData,
-    createdAt: now,
+    ...data,
+    createdAt: Date.now(),
+    status: 'unread'
   }).returning();
-  return result[0];
+  return result[0] as ContactMessage;
 }
 
 export async function updateContactMessageStatus(id: number, status: string): Promise<ContactMessage | undefined> {
-  await db.update(contactMessages).set({ status }).where(eq(contactMessages.id, id));
-  return getContactMessageById(id);
+  const result = await db.update(contactMessages).set({ status }).where(eq(contactMessages.id, id)).returning();
+  return result[0] as ContactMessage | undefined;
 }
 
 export async function deleteContactMessage(id: number): Promise<void> {
   await db.delete(contactMessages).where(eq(contactMessages.id, id));
 }
-
-// Export types for use in controllers
-export type { ContactMessage, InsertContactMessage };
-export type NewContactMessage = Omit<InsertContactMessage, 'id' | 'createdAt'>;
-export type UpdateContactMessageStatus = 'read' | 'unread';

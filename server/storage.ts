@@ -1,3 +1,4 @@
+
 import type {
   User,
   InsertUser,
@@ -37,10 +38,10 @@ CREATE TABLE IF NOT EXISTS contact_messages (
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   phone TEXT NOT NULL,
-  message TEXT NOT NULL,
+  service TEXT NOT NULL,
+  message TEXT,
   createdAt INTEGER NOT NULL,
-  status TEXT NOT NULL DEFAULT 'pending',
-  httpStatus TEXT NOT NULL DEFAULT 'pending'
+  status TEXT NOT NULL DEFAULT 'pending'
 );
 
 CREATE TABLE IF NOT EXISTS newsPosts (
