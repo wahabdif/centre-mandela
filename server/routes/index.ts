@@ -1,3 +1,7 @@
+// ------------------------------
+// ENREGISTREMENT DES ROUTES API
+// ------------------------------
+
 import { type Application } from 'express';
 
 import appointmentRoutes from './appointments';
