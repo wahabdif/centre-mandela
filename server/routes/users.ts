@@ -1,11 +1,19 @@
-import { Router } from 'express';
-import * as users from '../controllers/users';
+// ------------------------------
+// ENREGISTREMENT DES ROUTES API
+// ------------------------------
 
-const router = Router();
+import type { Application } from 'express';
 
-router.get('/', users.getUsers);
-router.get('/:id', users.getUser);
-router.put('/:id', users.updateUser); // Ajout d'une route pour la mise à jour d'un utilisateur
-router.delete('/:id', users.deleteUser); // Ajout d'une route pour la suppression d'un utilisateur
+import authRoutes from './auth';
+import userRoutes from './users';
+import appointmentRoutes from './appointments';
+import contactRoutes from './contact';
+import newsRoutes from './news';
 
-export default router;
+export function registerRoutes(app: Application) {
+  app.use('/api/auth', authRoutes);
+  app.use('/api/users', userRoutes);
+  app.use('/api/appointments', appointmentRoutes);
+  app.use('/api/contact', contactRoutes);
+  app.use('/api/news', newsRoutes);
+}
