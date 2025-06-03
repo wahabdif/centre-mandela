@@ -32,4 +32,4 @@ router.patch('/:id/status', updateAppointmentStatus);
 // Supprimer un rendez-vous par id
 router.delete('/:id', deleteAppointment);
 
-export default router;
+export default router;t router;
