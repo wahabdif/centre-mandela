@@ -1,11 +1,7 @@
-// ------------------------------
-// APPOINTMENTS : Gestion des rendez-vous
-// ------------------------------
-
-import { eq } from 'drizzle-orm';
 import { db } from './index';
 import { appointments } from '../../shared/schema';
 import { Appointment, NewAppointment, UpdateAppointment, UpdateAppointmentStatus } from '../../shared/types';
+import { eq } from 'drizzle-orm';  // <-- Ajoute cet import si manquant
 
 // GET
 export async function getAllAppointments(): Promise<Appointment[]> {
