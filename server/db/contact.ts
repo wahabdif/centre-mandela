@@ -4,7 +4,7 @@
 
 // Exemple d’imports et fonctions à compléter selon ta logique
 import { eq } from 'drizzle-orm';
-import { db } from './index';
+import { db } from './sqlite';
 import { contactMessages } from '../../shared/schema';
 import { ContactMessage, NewContactMessage, UpdateContactMessageStatus } from '../../shared/types';
 
@@ -20,7 +20,12 @@ export async function getContactMessageById(id: number): Promise<ContactMessage 
 
 // CREATE
 export async function createContactMessage(data: NewContactMessage): Promise<ContactMessage> {
-  const result = await db.insert(contactMessages).values(data).returning();
+  const messageWithTimestamp = {
+    ...data,
+    createdAt: Date.now(),
+    status: 'unread' as const,
+  };
+  const result = await db.insert(contactMessages).values(messageWithTimestamp).returning();
   return result[0];
 }
 

@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import * as db from '../db';
 import { contactMessageSchema } from '../../shared/zod';
+import { NewContactMessage } from '../../shared/types';
 
 /**
  * Validation simple de l'ID depuis les params
@@ -58,13 +59,15 @@ export async function createContactMessage(req: Request, res: Response) {
 
     const { email, name, phone, service, message } = result.data;
 
-    const newMessage = await db.createContactMessage({
+    const messageData: NewContactMessage = {
       email,
       name,
       phone,
       service,
-      message: message ?? undefined,
-    });
+      message: message || undefined,
+    };
+
+    const newMessage = await db.createContactMessage(messageData);
 
     console.log('Message créé avec succès:', newMessage);
     res.status(201).json(newMessage);
