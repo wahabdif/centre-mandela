@@ -263,3 +263,46 @@ export function deleteAppointment(id: number): boolean {
   }
   return false;
 }
+// UPDATE by username
+export async function updateUserByUsername(username: string, updates: UpdateUser): Promise<User | undefined> {
+  const result = await db
+    .update(users)
+    .set(updates)
+    .where(eq(users.username, username))
+    .returning();
+  return result[0];
+}
+
+// UPDATE password (avec hash)
+export async function updateUserPassword(id: number, newPassword: string): Promise<User | undefined> {
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  const result = await db
+    .update(users)
+    .set({ password: hashedPassword })
+    .where(eq(users.id, id))
+    .returning();
+  return result[0];
+}
+
+// UPDATE email
+export async function updateUserEmail(id: number, newEmail: string): Promise<User | undefined> {
+  const result = await db
+    .update(users)
+    .set({ email: newEmail })
+    .where(eq(users.id, id))
+    .returning();
+  return result[0];
+}
+
+// DELETE user by id
+export async function deleteUser(id: number): Promise<boolean> {
+  const result = await db.delete(users).where(eq(users.id, id));
+  return result > 0;
+}
+
+// DELETE user by email
+export async function deleteUserByEmail(email: string): Promise<boolean> {
+  const result = await db.delete(users).where(eq(users.email, email));
+  return result > 0;
+}
+
