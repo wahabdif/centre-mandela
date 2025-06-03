@@ -1,34 +1,14 @@
+import type { User, InsertUser, Appointment, InsertAppointment, NewsPost, InsertNewsPost, ContactMessage, InsertContactMessage } from './schema';
 
-import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
-import { users, appointments, newsPosts } from './schema';
+export type { User, InsertUser, Appointment, InsertAppointment, NewsPost, InsertNewsPost, ContactMessage, InsertContactMessage };
 
-// Types pour les utilisateurs
-export type User = InferSelectModel<typeof users>;
-export type NewUser = InferInsertModel<typeof users>;
-export type UpdateUser = Partial<Omit<NewUser, 'id'>>;
+// Alias pour compatibilité
+export type NewUser = InsertUser;
+export type NewAppointment = InsertAppointment;
+export type NewNewsPost = InsertNewsPost;
+export type NewContactMessage = InsertContactMessage;
 
-// Types pour les rendez-vous
-export type Appointment = InferSelectModel<typeof appointments>;
-export type NewAppointment = InferInsertModel<typeof appointments>;
-export type UpdateAppointment = Partial<Omit<NewAppointment, 'id'>>;
-export type UpdateAppointmentStatus = 'pending' | 'confirmed' | 'cancelled';
-
-// Types pour les actualités
-export type NewsPost = InferSelectModel<typeof newsPosts>;
-export type NewNewsPost = InferInsertModel<typeof newsPosts>;
-export type UpdateNewsPost = Partial<Omit<NewNewsPost, 'id'>>;
-
-// Types pour les messages de contact
-export interface ContactMessage {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  service: string;
-  message?: string;
-  status: string;
-  createdAt: number;
+// Type pour mettre à jour le statut des messages de contact
+export interface UpdateContactMessageStatus {
+  status: 'read' | 'unread' | 'archived';
 }
-
-export type NewContactMessage = Omit<ContactMessage, 'id' | 'createdAt'>;
-export type UpdateContactMessageStatus = 'read' | 'unread';
