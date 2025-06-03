@@ -125,17 +125,20 @@ export declare const insertContactMessageSchema: z.ZodObject<{
     name: z.ZodString;
     email: z.ZodString;
     phone: z.ZodString;
+    service: z.ZodString;
     message: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    name: string;
-    email: string;
-    phone: string;
     message: string;
+    email: string;
+    name: string;
+    phone: string;
+    service: string;
 }, {
-    name: string;
-    email: string;
-    phone: string;
     message: string;
+    email: string;
+    name: string;
+    phone: string;
+    service: string;
 }>;
 export declare const insertAppointmentSchema: z.ZodObject<{
     name: z.ZodString;
@@ -145,15 +148,15 @@ export declare const insertAppointmentSchema: z.ZodObject<{
     message: z.ZodOptional<z.ZodString>;
     status: z.ZodDefault<z.ZodEnum<["pending", "confirmed", "cancelled"]>>;
 }, "strip", z.ZodTypeAny, {
-    name: string;
+    status: "pending" | "confirmed" | "cancelled";
     email: string;
+    name: string;
     phone: string;
     service: string;
-    status: "pending" | "confirmed" | "cancelled";
     message?: string | undefined;
 }, {
-    name: string;
     email: string;
+    name: string;
     phone: string;
     service: string;
     message?: string | undefined;
@@ -592,5 +595,5 @@ export type Appointment = InferSelectModel<typeof appointments>;
 export type InsertAppointment = InferInsertModel<typeof appointments>;
 export type NewsPost = InferSelectModel<typeof newsPosts>;
 export type InsertNewsPost = InferInsertModel<typeof newsPosts>;
-export type ContactMessage = z.infer<typeof insertContactMessageSchema>;
-export type InsertContactMessage = ContactMessage;
+export type ContactMessage = InferSelectModel<typeof contactMessages>;
+export type InsertContactMessage = InferInsertModel<typeof contactMessages>;

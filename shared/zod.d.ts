@@ -17,15 +17,15 @@ export declare const appointmentSchema: z.ZodObject<{
     date: z.ZodString;
     message: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
+    date: string;
     email: string;
     phone: string;
-    date: string;
     fullName: string;
     message?: string | undefined;
 }, {
+    date: string;
     email: string;
     phone: string;
-    date: string;
     fullName: string;
     message?: string | undefined;
 }>;
@@ -37,14 +37,14 @@ export declare const contactMessageSchema: z.ZodObject<{
     service: z.ZodString;
     message: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, "strip", z.ZodTypeAny, {
-    name: string;
     email: string;
+    name: string;
     phone: string;
     service: string;
     message?: string | null | undefined;
 }, {
-    name: string;
     email: string;
+    name: string;
     phone: string;
     service: string;
     message?: string | null | undefined;
@@ -85,15 +85,15 @@ declare const _default: {
         date: z.ZodString;
         message: z.ZodOptional<z.ZodString>;
     }, "strip", z.ZodTypeAny, {
+        date: string;
         email: string;
         phone: string;
-        date: string;
         fullName: string;
         message?: string | undefined;
     }, {
+        date: string;
         email: string;
         phone: string;
-        date: string;
         fullName: string;
         message?: string | undefined;
     }>;
@@ -104,14 +104,14 @@ declare const _default: {
         service: z.ZodString;
         message: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     }, "strip", z.ZodTypeAny, {
-        name: string;
         email: string;
+        name: string;
         phone: string;
         service: string;
         message?: string | null | undefined;
     }, {
-        name: string;
         email: string;
+        name: string;
         phone: string;
         service: string;
         message?: string | null | undefined;

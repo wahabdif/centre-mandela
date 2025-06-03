@@ -23,6 +23,7 @@ export const insertContactMessageSchema = z.object({
     name: z.string().min(1, 'Le nom est requis'),
     email: z.string().email('Email invalide'),
     phone: z.string().min(1, 'Le téléphone est requis'),
+    service: z.string().min(1, 'Le service est requis'),
     message: z.string().min(1, 'Le message est requis'),
 });
 // --- Zod: Appointment ---
