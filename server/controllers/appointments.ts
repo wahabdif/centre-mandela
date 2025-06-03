@@ -20,4 +20,4 @@ interface UpdateAppointmentBody {
 }
 
 interface UpdateAppointmentStatusBody {
-  status: 'pending
+  status: 'pending' | 'confirmed' | 'cancelled';
