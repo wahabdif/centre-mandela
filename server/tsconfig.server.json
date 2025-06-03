@@ -1,4 +1,4 @@
-// tsconfig.server.json
+
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
