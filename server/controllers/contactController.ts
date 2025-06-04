@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { db } from '../db/sqlite';
-import { contactMessages, insertContactMessageSchema } from '../../shared/schema';
+import { contactMessages, insertContactMessageSchema } from '../shared/schema';
 
 export const submitContactForm = async (req: Request, res: Response) => {
   const parsed = insertContactMessageSchema.safeParse(req.body);
