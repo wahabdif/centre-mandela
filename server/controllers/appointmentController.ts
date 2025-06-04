@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { db } from '../db/sqlite';
-import { appointments, insertAppointmentSchema } from '../../shared/schema';
+import { appointments, insertAppointmentSchema } from '../shared/schema';
 import { eq } from 'drizzle-orm';
 
 export const getAllAppointments = async (_req: Request, res: Response) => {
