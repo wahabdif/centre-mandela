@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
 import { db } from '../db/sqlite';
+import { users, insertUserSchema } from '../shared/schema';
 import { users, insertUserSchema } from '../../shared/schema';
 import bcrypt from 'bcryptjs';
 
