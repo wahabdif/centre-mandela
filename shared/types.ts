@@ -21,8 +21,6 @@ export interface UpdateContactMessageStatus {
   status: 'read' | 'unread' | 'archived';
 }
 
-// Pour la mise à jour partielle d'un rendez-vous (sans createdAt ni id)
+// Manquant dans ta version actuelle :
 export type UpdateAppointment = Partial<Omit<InsertAppointment, 'createdAt'>>;
-
-// Pour la mise à jour du statut uniquement
 export type UpdateAppointmentStatus = 'pending' | 'confirmed' | 'cancelled';
