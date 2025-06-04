@@ -10,7 +10,7 @@ import {
   updateAppointment,
   updateAppointmentStatus,
   deleteAppointment,
-} from '../controllers/appointments';
+} from '../controllers/appointmentController';
 
 const router = Router();
 

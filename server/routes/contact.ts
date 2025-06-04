@@ -9,7 +9,7 @@ import {
   createContactMessage,
   updateContactMessageStatus,
   sendMessage,
-} from '../controllers/contact';
+} from '../controllers/contactController';
 
 const router = Router();
 

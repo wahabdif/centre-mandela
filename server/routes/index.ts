@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import appointmentRoutes from './appointmentRoutes';
-import userRoutes from './userRoutes';
-import contactRoutes from './contactRoutes';
-import authRoutes from './authRoutes';
-import newsRoutes from './newsRoutes';
+import appointmentRoutes from './appointments';
+import userRoutes from './users';
+import contactRoutes from './contact';
+import authRoutes from './auth';
+import newsRoutes from './news';
 
 const router = Router();
 

@@ -3,7 +3,7 @@
 // ------------------------------
 
 import { Router } from 'express';
-import * as auth from '../controllers/auth';
+import * as auth from '../controllers/userController';
 
 const router = Router();
 

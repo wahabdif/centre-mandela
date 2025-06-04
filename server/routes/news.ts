@@ -6,7 +6,7 @@ import { Router } from 'express';
 import {
   getAllNews,
   getNewsById,
-} from '../controllers/news';
+} from '../controllers/newsController';
 
 const router = Router();
 

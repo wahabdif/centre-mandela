@@ -6,3 +6,5 @@ export type { InsertContactMessage as NewContactMessage } from './schema';
 export interface UpdateContactMessageStatus {
     status: 'read' | 'unread' | 'archived';
 }
+export type UpdateAppointment = Partial<Omit<InsertAppointment, 'createdAt'>>;
+export type UpdateAppointmentStatus = 'pending' | 'confirmed' | 'cancelled';
