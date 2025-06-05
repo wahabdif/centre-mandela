@@ -2,37 +2,27 @@
 > centre-mandela-monorepo@1.0.0 build
 > tsc --build
 
-client/src/App.tsx(4,32): error TS2307: Cannot find module 'react-i18next' or its corresponding type declarations.
-client/src/components/AppointmentForm.tsx(3,25): error TS2307: Cannot find module 'react-hook-form' or its corresponding type declarations.
-client/src/components/AppointmentForm.tsx(4,29): error TS2307: Cannot find module '@hookform/resolvers/zod' or its corresponding type declarations.
-client/src/components/AppointmentForm.tsx(5,29): error TS2307: Cannot find module '@tanstack/react-query' or its corresponding type declarations.
-client/src/components/AppointmentForm.tsx(9,32): error TS2307: Cannot find module 'react-i18next' or its corresponding type declarations.
 client/src/components/AppointmentForm.tsx(29,10): error TS2305: Module '"lucide-react"' has no exported member 'LoaderCircle'.
-client/src/components/AppointmentForm.tsx(109,26): error TS7031: Binding element 'field' implicitly has an 'any' type.
-client/src/components/AppointmentForm.tsx(123,26): error TS7031: Binding element 'field' implicitly has an 'any' type.
-client/src/components/AppointmentForm.tsx(137,26): error TS7031: Binding element 'field' implicitly has an 'any' type.
-client/src/components/AppointmentForm.tsx(151,26): error TS7031: Binding element 'field' implicitly has an 'any' type.
-client/src/components/AppointmentForm.tsx(176,26): error TS7031: Binding element 'field' implicitly has an 'any' type.
-client/src/components/Footer.tsx(2,32): error TS2307: Cannot find module 'react-i18next' or its corresponding type declarations.
-client/src/components/LanguageSwitcher.tsx(1,32): error TS2307: Cannot find module 'react-i18next' or its corresponding type declarations.
 client/src/components/LanguageSwitcher.tsx(24,9): error TS2322: Type 'Language | undefined' is not assignable to type 'Language'.
   Type 'undefined' is not assignable to type 'Language'.
 client/src/components/ServiceDetailCard.tsx(2,50): error TS2307: Cannot find module '@/types' or its corresponding type declarations.
 client/src/components/ui/accordion.tsx(2,37): error TS2307: Cannot find module '@radix-ui/react-accordion' or its corresponding type declarations.
+client/src/components/ui/calendar.tsx(3,27): error TS2307: Cannot find module 'react-day-picker' or its corresponding type declarations.
+client/src/components/ui/calendar.tsx(48,22): error TS7031: Binding element 'className' implicitly has an 'any' type.
+client/src/components/ui/calendar.tsx(51,23): error TS7031: Binding element 'className' implicitly has an 'any' type.
 client/src/components/ui/collapsible.tsx(3,39): error TS2307: Cannot find module '@radix-ui/react-collapsible' or its corresponding type declarations.
-client/src/components/ui/context-menu.tsx(94,4): error TS2375: Type '{ children: (ReactNode | Element)[]; slot?: string | undefined; style?: CSSProperties | undefined; title?: string | undefined; suppressHydrationWarning?: boolean | undefined; ... 265 more ...; checked: CheckedState | undefined; }' is not assignable to type 'ContextMenuCheckboxItemProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+client/src/components/ui/context-menu.tsx(94,4): error TS2375: Type '{ children: (Element | ReactI18NextChildren | Iterable<ReactI18NextChildren>)[]; slot?: string | undefined; style?: CSSProperties | undefined; ... 267 more ...; checked: boolean | undefined; }' is not assignable to type 'ContextMenuCheckboxItemProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
   Types of property 'checked' are incompatible.
-    Type 'CheckedState | undefined' is not assignable to type 'CheckedState'.
-      Type 'undefined' is not assignable to type 'CheckedState'.
-client/src/components/ui/dropdown-menu.tsx(95,4): error TS2375: Type '{ children: (ReactNode | Element)[]; slot?: string | undefined; style?: CSSProperties | undefined; title?: string | undefined; suppressHydrationWarning?: boolean | undefined; ... 265 more ...; checked: CheckedState | undefined; }' is not assignable to type 'DropdownMenuCheckboxItemProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Type 'boolean | undefined' is not assignable to type 'boolean'.
+      Type 'undefined' is not assignable to type 'boolean'.
+client/src/components/ui/dropdown-menu.tsx(95,4): error TS2375: Type '{ children: (Element | ReactI18NextChildren | Iterable<ReactI18NextChildren>)[]; slot?: string | undefined; style?: CSSProperties | undefined; ... 267 more ...; checked: boolean | undefined; }' is not assignable to type 'DropdownMenuCheckboxItemProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
   Types of property 'checked' are incompatible.
-    Type 'CheckedState | undefined' is not assignable to type 'CheckedState'.
-      Type 'undefined' is not assignable to type 'CheckedState'.
-client/src/components/ui/form.tsx(13,8): error TS2307: Cannot find module 'react-hook-form' or its corresponding type declarations.
+    Type 'boolean | undefined' is not assignable to type 'boolean'.
+      Type 'undefined' is not assignable to type 'boolean'.
 client/src/components/ui/input-otp.tsx(36,11): error TS2339: Property 'char' does not exist on type 'SlotProps | undefined'.
 client/src/components/ui/input-otp.tsx(36,17): error TS2339: Property 'hasFakeCaret' does not exist on type 'SlotProps | undefined'.
 client/src/components/ui/input-otp.tsx(36,31): error TS2339: Property 'isActive' does not exist on type 'SlotProps | undefined'.
-client/src/components/ui/menubar.tsx(137,4): error TS2375: Type '{ children: (ReactNode | Element)[]; slot?: string | undefined; style?: CSSProperties | undefined; title?: string | undefined; suppressHydrationWarning?: boolean | undefined; ... 265 more ...; checked: CheckedState | undefined; }' is not assignable to type 'MenubarCheckboxItemProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+client/src/components/ui/menubar.tsx(137,4): error TS2375: Type '{ children: (Element | ReactI18NextChildren | Iterable<ReactI18NextChildren>)[]; slot?: string | undefined; style?: CSSProperties | undefined; ... 267 more ...; checked: CheckedState | undefined; }' is not assignable to type 'MenubarCheckboxItemProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
   Types of property 'checked' are incompatible.
     Type 'CheckedState | undefined' is not assignable to type 'CheckedState'.
       Type 'undefined' is not assignable to type 'CheckedState'.
@@ -44,12 +34,9 @@ client/src/hooks/use-toast.ts(188,45): error TS2345: Argument of type '{ type: "
         Type 'undefined' is not assignable to type 'string'.
 client/src/lib/data/practicalInfo.ts(1,26): error TS2307: Cannot find module 'react-icons' or its corresponding type declarations.
 client/src/lib/data/practicalInfo.ts(2,44): error TS2307: Cannot find module 'react-icons/fi' or its corresponding type declarations.
-client/src/lib/i18n.ts(1,18): error TS2307: Cannot find module 'i18next' or its corresponding type declarations.
-client/src/lib/i18n.ts(2,34): error TS2307: Cannot find module 'react-i18next' or its corresponding type declarations.
 client/src/lib/i18n.ts(4,16): error TS6307: File '/workspaces/centre-mandela/client/src/locales/fr/translation.json' is not listed within the file list of project '/workspaces/centre-mandela/client/tsconfig.json'. Projects must list all files or use an 'include' pattern.
 client/src/lib/i18n.ts(5,16): error TS6307: File '/workspaces/centre-mandela/client/src/locales/ar/translation.json' is not listed within the file list of project '/workspaces/centre-mandela/client/tsconfig.json'. Projects must list all files or use an 'include' pattern.
 client/src/lib/i18n.ts(6,16): error TS6307: File '/workspaces/centre-mandela/client/src/locales/en/translation.json' is not listed within the file list of project '/workspaces/centre-mandela/client/tsconfig.json'. Projects must list all files or use an 'include' pattern.
-client/src/lib/queryClient.ts(1,44): error TS2307: Cannot find module '@tanstack/react-query' or its corresponding type declarations.
 client/src/lib/queryClient.ts(17,32): error TS2769: No overload matches this call.
   Overload 1 of 2, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
     Argument of type '{ method: string; headers: { 'Content-Type': string; } | undefined; body: string | undefined; credentials: "include"; }' is not assignable to parameter of type 'RequestInit' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
@@ -61,24 +48,11 @@ client/src/lib/queryClient.ts(17,32): error TS2769: No overload matches this cal
       Types of property 'body' are incompatible.
         Type 'string | undefined' is not assignable to type 'BodyInit | null'.
           Type 'undefined' is not assignable to type 'BodyInit | null'.
-client/src/lib/queryClient.ts(31,19): error TS7031: Binding element 'queryKey' implicitly has an 'any' type.
 client/src/lib/utils.ts(2,25): error TS2307: Cannot find module 'tailwind-merge' or its corresponding type declarations.
-client/src/pages/Appointment.tsx(2,32): error TS2307: Cannot find module 'react-i18next' or its corresponding type declarations.
-client/src/pages/Contact.tsx(3,25): error TS2307: Cannot find module 'react-hook-form' or its corresponding type declarations.
-client/src/pages/Contact.tsx(4,29): error TS2307: Cannot find module '@hookform/resolvers/zod' or its corresponding type declarations.
-client/src/pages/Contact.tsx(5,29): error TS2307: Cannot find module '@tanstack/react-query' or its corresponding type declarations.
 client/src/pages/Contact.tsx(23,3): error TS2305: Module '"lucide-react"' has no exported member 'LoaderCircle'.
-client/src/pages/Contact.tsx(35,32): error TS2307: Cannot find module 'react-i18next' or its corresponding type declarations.
-client/src/pages/Contact.tsx(117,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
-client/src/pages/Contact.tsx(134,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
-client/src/pages/Contact.tsx(152,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
-client/src/pages/Contact.tsx(170,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
-client/src/pages/Contact.tsx(188,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
-client/src/pages/Home.tsx(1,32): error TS2307: Cannot find module 'react-i18next' or its corresponding type declarations.
 client/src/pages/Home.tsx(35,18): error TS2604: JSX element type 'Icon' does not have any construct or call signatures.
 client/src/pages/Home.tsx(35,18): error TS2786: 'Icon' cannot be used as a JSX component.
   Its type 'ElementType<any, keyof IntrinsicElements> | undefined' is not a valid JSX element type.
     Type 'undefined' is not assignable to type 'ElementType'.
-client/src/pages/Testimonials.tsx(4,32): error TS2307: Cannot find module 'react-i18next' or its corresponding type declarations.
 client/src/utils/darkModeToggle.ts(23,7): error TS18047: 'button' is possibly 'null'.
 client/src/utils/darkModeToggle.ts(25,7): error TS18047: 'button' is possibly 'null'.
