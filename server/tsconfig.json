@@ -2,12 +2,10 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
-    "jsx": "react-jsx",
     "outDir": "dist",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "module": "ESNext",
+    "target": "ES2022",
+    "baseUrl": "."
   },
   "include": ["src"],
   "references": []

@@ -1,10 +1,7 @@
 {
   "files": [],
   "references": [
-    { "path": "client" },
-    { "path": "server" },
-    { "path": "shared" }
-  ],
-  "include": [],
-  "exclude": ["node_modules", "dist"]
+    { "path": "./client" },
+    { "path": "./server" }
+  ]
 }
