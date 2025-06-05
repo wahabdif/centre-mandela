@@ -12,7 +12,8 @@ export async function apiRequest(
   url: string,
   data?: unknown,
 ): Promise<Response> {
-  const headers: HeadersInit = data ? { 'Content-Type': 'application/json' } : {};
+  // headers est soit un objet avec Content-Type, soit undefined
+  const headers: HeadersInit | undefined = data ? { 'Content-Type': 'application/json' } : undefined;
 
   const fetchOptions: RequestInit = {
     method,
