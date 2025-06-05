@@ -11,6 +11,7 @@ export default function Appointment() {
           <button
             onClick={() => window.history.back()}
             className="flex items-center text-white hover:text-gray-200 transition-colors font-medium bg-primary/30 hover:bg-primary/40 px-3 py-1.5 rounded-full"
+            aria-label={t('appointment.back')}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -23,6 +24,8 @@ export default function Appointment() {
               strokeLinecap="round"
               strokeLinejoin="round"
               className="mr-1"
+              aria-hidden="true"
+              focusable="false"
             >
               <path d="m12 19-7-7 7-7" />
               <path d="M19 12H5" />
