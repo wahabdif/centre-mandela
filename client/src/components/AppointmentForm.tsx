@@ -191,7 +191,7 @@ export default function AppointmentForm() {
             >
               {createAppointment.isPending ? (
                 <>
-                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                  < Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   {t('form.loading')}
                 </>
               ) : (
