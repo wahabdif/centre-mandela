@@ -4,27 +4,29 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
+// Chargement des variables d’environnement
 dotenv.config();
 
-// Résolution ESM
+// Résolution pour ESM (équivalent de __dirname)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Dossier source client
+// Répertoire racine du projet client
 const clientRoot = path.resolve(__dirname);
 
-// Dossier de build dans le backend Express
+// Répertoire de build vers le backend
 const outDirPath = path.resolve(__dirname, '../server/public/frontend');
 
+// Configuration Vite
 export default defineConfig({
-  root: clientRoot, // Assure que Vite part du dossier client
+  root: clientRoot,
 
   plugins: [react()],
 
   resolve: {
     alias: {
-      '@': path.resolve(clientRoot, 'src'),
-      '@shared': path.resolve(__dirname, '../shared'),
+      '@': path.resolve(clientRoot, 'src'),         // Pour importer depuis src/
+      '@shared': path.resolve(__dirname, '../shared'), // Partagé entre frontend/backend si besoin
     },
   },
 

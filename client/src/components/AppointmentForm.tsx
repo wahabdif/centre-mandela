@@ -26,7 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { LoaderCircle } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 const appointmentFormSchema = z.object({
   name: z.string().min(3, { message: 'form.errors.name' }),

@@ -9,6 +9,14 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"],
+  "include": [
+    "src/**/*",
+    "src/locales/**/**/*.json"
+   ],
+  "exclude": [
+    "node_modules",
+    "dist",
+  ],
+
   "references": []
 }
