@@ -1,38 +1,38 @@
-// vite.config.ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
-// Charge les variables d'environnement depuis .env
 dotenv.config();
 
-// Résout __dirname dans un module ES
+// Résolution ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Chemin de sortie pour le build frontend (dans le backend Express)
+// Dossier source client
+const clientRoot = path.resolve(__dirname);
+
+// Dossier de build dans le backend Express
 const outDirPath = path.resolve(__dirname, '../server/public/frontend');
 
-// Définition de la configuration Vite
 export default defineConfig({
-  root: __dirname, // Racine du projet client
+  root: clientRoot, // Assure que Vite part du dossier client
 
   plugins: [react()],
 
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'), // Alias vers src/
-      '@shared': path.resolve(__dirname, '../shared'), // Code partagé frontend/backend
+      '@': path.resolve(clientRoot, 'src'),
+      '@shared': path.resolve(__dirname, '../shared'),
     },
   },
 
   build: {
-    outDir: outDirPath,        // Dossier de build dans le backend
-    emptyOutDir: true,         // Vide avant chaque build
-    sourcemap: true,           // Pour faciliter le debug
-    target: 'esnext',          // Cible moderne compatible avec React 18+
+    outDir: outDirPath,
+    emptyOutDir: true,
+    sourcemap: true,
+    target: 'esnext',
   },
 
   server: {
@@ -41,7 +41,7 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       '/api': {
-        target: process.env['VITE_BACKEND_URL'] || 'http://localhost:4000',
+        target: process.env.VITE_BACKEND_URL || 'http://localhost:4000',
         changeOrigin: true,
         secure: false,
       },
@@ -49,13 +49,12 @@ export default defineConfig({
   },
 
   define: {
-    // Injecte dynamiquement les variables d'environnement dans le code frontend
     'process.env': {
-      BACKEND_URL: process.env['VITE_BACKEND_URL'],
+      BACKEND_URL: process.env.VITE_BACKEND_URL,
     },
   },
 
   optimizeDeps: {
-    include: ['autoprefixer'], // Inclusion forcée si nécessaire
+    include: ['autoprefixer'],
   },
 });
