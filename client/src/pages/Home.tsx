@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { services, iconMap } from '@/lib/data/services';
+import { services } from '@/lib/data/services';
+import { iconMap } from '@/lib/data/iconMap'; // Correction ici : import depuis iconMap.ts
 import { doctors } from '@/lib/data/doctors';
 import { practicalInfo } from '@/lib/data/practicalInfo';
 import { testimonials } from '@/lib/data/testimonials';
@@ -28,7 +29,7 @@ export default function Home() {
       <section className="py-20 px-4 max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12">{t('services.section_title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {services.map(({ icon, title, description, image, id }, idx) => {
+          {services.map(({ icon, title, description, image, id }) => {
             const Icon = iconMap[icon] || iconMap['brain'];
             return (
               <div key={id} className="bg-white shadow-lg rounded-lg p-6 text-center space-y-4">
