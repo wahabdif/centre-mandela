@@ -17,17 +17,18 @@ export function setupDarkModeToggle(buttonSelector: string) {
   }
 
   if (!button) return;
+  const btn = button!; // assertion non-null pour TS
 
   function updateButton() {
     if (html.classList.contains('dark')) {
-      button.textContent = '🌙 Mode Sombre';
+      btn.textContent = '🌙 Mode Sombre';
     } else {
-      button.textContent = '☀️ Mode Clair';
+      btn.textContent = '☀️ Mode Clair';
     }
   }
   updateButton();
 
-  button.addEventListener('click', () => {
+  btn.addEventListener('click', () => {
     html.classList.toggle('dark');
     if (html.classList.contains('dark')) {
       localStorage.setItem('theme', 'dark');
