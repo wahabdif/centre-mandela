@@ -20,11 +20,9 @@ export default function LanguageSwitcher() {
   const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Récupérer la langue courante avec un type sûr
-  const currentLang: Language =
-    languages.find((l) => l.code === i18n.language) ?? languages[0];
+  // ✅ Correction TS2322 : cast explicite
+  const currentLang = (languages.find((l) => l.code === i18n.language) ?? languages[0]) as Language;
 
-  // Fermer le menu si clic en dehors ou Échap
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (ref.current && !ref.current.contains(event.target as Node)) {
@@ -32,6 +30,7 @@ export default function LanguageSwitcher() {
         toggleButtonRef.current?.focus();
       }
     }
+
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         setOpen(false);
@@ -47,12 +46,10 @@ export default function LanguageSwitcher() {
     };
   }, []);
 
-  // Changer la direction du document selon la langue
   useEffect(() => {
     document.documentElement.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
   }, [i18n.language]);
 
-  // Focus sur la langue courante quand on ouvre
   useEffect(() => {
     if (open) {
       const currentIndex = languages.findIndex((l) => l.code === i18n.language);
@@ -61,7 +58,6 @@ export default function LanguageSwitcher() {
     }
   }, [open, i18n.language]);
 
-  // Navigation clavier dans le menu
   const onKeyDownMenu = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (!open) return;
@@ -74,26 +70,19 @@ export default function LanguageSwitcher() {
           event.preventDefault();
           buttonsRef.current[(currentIndex + 1) % focusableCount]?.focus();
           break;
-
         case 'ArrowUp':
           event.preventDefault();
           buttonsRef.current[(currentIndex - 1 + focusableCount) % focusableCount]?.focus();
           break;
-
         case 'Tab':
-          if (event.shiftKey) {
-            if (currentIndex === 0) {
-              event.preventDefault();
-              buttonsRef.current[focusableCount - 1]?.focus();
-            }
-          } else {
-            if (currentIndex === focusableCount - 1) {
-              event.preventDefault();
-              buttonsRef.current[0]?.focus();
-            }
+          if (event.shiftKey && currentIndex === 0) {
+            event.preventDefault();
+            buttonsRef.current[focusableCount - 1]?.focus();
+          } else if (!event.shiftKey && currentIndex === focusableCount - 1) {
+            event.preventDefault();
+            buttonsRef.current[0]?.focus();
           }
           break;
-
         default:
           break;
       }
