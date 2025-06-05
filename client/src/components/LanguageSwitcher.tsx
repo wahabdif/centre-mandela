@@ -1,7 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState, useRef, useCallback } from 'react';
 
-const languages = [
+type Language = {
+  code: string;
+  label: string;
+  flag: string;
+};
+
+const languages: Language[] = [
   { code: 'fr', label: 'Français', flag: '🇫🇷' },
   { code: 'en', label: 'English', flag: '🇺🇸' },
   { code: 'ar', label: 'العربية', flag: '🇩🇿' },
@@ -14,7 +20,9 @@ export default function LanguageSwitcher() {
   const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
 
-  const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
+  // Récupérer la langue courante avec un type sûr
+  const currentLang: Language =
+    languages.find((l) => l.code === i18n.language) ?? languages[0];
 
   // Fermer le menu si clic en dehors ou Échap
   useEffect(() => {
