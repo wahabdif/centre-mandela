@@ -5,8 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import Map from "@/components/Map";
-import { contactInfo, workingHours } from "@/lib/constants";
+import { useTranslation } from "react-i18next";
 
 import {
   Form,
@@ -19,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+
 import {
   Loader,
   MapPin,
@@ -32,8 +32,6 @@ import {
   CheckCircle,
 } from "lucide-react";
 
-import { useTranslation } from "react-i18next";
-
 // Schéma de validation
 const contactFormSchema = z.object({
   name: z.string().min(3, { message: "form.nameMinLength" }),
@@ -42,7 +40,7 @@ const contactFormSchema = z.object({
     .string()
     .regex(/^[0-9+\s()-]{8,15}$/, { message: "form.phoneInvalid" }),
   message: z.string().min(10, { message: "form.messageMinLength" }),
-  id: z.number().positive({ message: "L'ID doit être un nombre positif." }),
+  id: z.number().positive({ message: "form.idPositive" }),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
@@ -66,6 +64,10 @@ export default function Contact() {
   const submitContact = useMutation({
     mutationFn: async (data: ContactFormValues) => {
       const response = await apiRequest("POST", "/api/contact", data);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Erreur lors de l'envoi");
+      }
       return response.json();
     },
     onSuccess: () => {
@@ -201,10 +203,15 @@ export default function Contact() {
                 />
                 <Button
                   type="submit"
-                  disabled={submitContact.status === "pending"}
+                  disabled={submitContact.status === "loading"}
                 >
-                  {submitContact.status === "pending"
-                    ? t("form.sending")
+                  {submitContact.status === "loading"
+                    ? (
+                      <>
+                        <Loader className="mr-2 h-4 w-4 animate-spin" />
+                        {t("form.sending")}
+                      </>
+                    )
                     : t("form.sendButton")}
                 </Button>
               </form>
