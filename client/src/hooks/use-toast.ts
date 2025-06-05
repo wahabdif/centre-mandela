@@ -30,7 +30,7 @@ function validateId(id: number): void {
 
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER;
-  validateId(count); // Ajout de la validation ici
+  validateId(count);
   return count.toString();
 }
 
