@@ -4,10 +4,11 @@
     "composite": true,
     "jsx": "react-jsx",
     "outDir": "dist",
-    "baseUrl": ".", // base relative à ce fichier
+    "baseUrl": ".", 
     "paths": {
       "@/*": ["src/*"],
-      "@components/*": ["src/components/*"] // <-- Ajout ici
+      "@components/*": ["src/components/*"],
+      "@type/*": ["src/components/*"]"
     }
   },
   "include": [
