@@ -30,7 +30,7 @@ export default function Home() {
         <h2 className="text-3xl font-bold text-center mb-12">{t('services.section_title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {services.map(({ icon, title, description, image, id }) => {
-            const Icon = iconMap[icon] || iconMap['brain'];
+            const Icon = iconmap[icon] || iconmap['brain'];
             return (
               <div key={id} className="bg-white shadow-lg rounded-lg p-6 text-center space-y-4">
                 <Icon className="w-12 h-12 mx-auto text-primary" />
