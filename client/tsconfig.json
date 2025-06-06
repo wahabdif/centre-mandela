@@ -8,8 +8,8 @@
     "paths": {
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
-      "@type/*": ["src/components/*"]"
-    },
+      "@type/*": ["src/components/*"]
+    }
   },
   "include": [
     "src/**/*",
