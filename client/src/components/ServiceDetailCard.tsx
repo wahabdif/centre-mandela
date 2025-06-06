@@ -1,5 +1,5 @@
 import { CheckCircle } from 'lucide-react';
-import type { ServiceProps, ServiceDetail } from '@/src/types';
+import type { ServiceProps, ServiceDetail } from '@/types';
 
 interface ServiceDetailCardProps {
   service: ServiceProps;
