@@ -1,20 +1,22 @@
-import { Brain, Cpu, Camera, ScanFace, Bone } from 'lucide-react';
+import { Brain, Cpu, Camera, ScanFace, Bone, WaveSquare } from 'lucide-react';
+
+export const iconMap = {
+  brain: Brain,
+  cpu: Cpu,
+  camera: Camera,
+  'scan-face': ScanFace,
+  bone: Bone,
+  waveform: WaveSquare, // ajout de l’icône waveform
+};
+
+export type IconName = keyof typeof iconMap;
 
 export type Service = {
   id: number;
   title: string;
   description: string;
   image: string;
-  icon: string; // Nom d’icône à utiliser (ex: pour Lucide ou FontAwesome)
-};
-
-// Mapping string -> composant d'icône
-export const iconMap: Record<string, React.ElementType> = {
-  brain: Brain,
-  cpu: Cpu,
-  camera: Camera,
-  'scan-face': ScanFace,
-  bone: Bone,
+  icon: IconName;
 };
 
 export const services: Service[] = [
