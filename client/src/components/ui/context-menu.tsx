@@ -1,3 +1,8 @@
+import * as React from 'react';
+import * as ContextMenuPrimitive from '@radix-ui/react-context-menu';
+import { Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
 const ContextMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof ContextMenuPrimitive.CheckboxItem>,
   Omit<
@@ -24,3 +29,7 @@ const ContextMenuCheckboxItem = React.forwardRef<
     {children}
   </ContextMenuPrimitive.CheckboxItem>
 ));
+
+ContextMenuCheckboxItem.displayName = 'ContextMenuCheckboxItem';
+
+export { ContextMenuCheckboxItem };
