@@ -2,7 +2,7 @@ import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import TestimonialCard from '@/components/TestimonialCard';
 import { useTranslation } from 'react-i18next';
-import { testimonials } from '@/components/lib/constants';
+import { testimonials } from '@/lib/constants';
 
 export default function Testimonials() {
   const { t } = useTranslation();
