@@ -1,3 +1,8 @@
+import * as React from 'react';
+import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import { Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
 const DropdownMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   Omit<
@@ -24,3 +29,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     {children}
   </DropdownMenuPrimitive.CheckboxItem>
 ));
+
+DropdownMenuCheckboxItem.displayName = 'DropdownMenuCheckboxItem';
+
+export { DropdownMenuCheckboxItem };
