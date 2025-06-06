@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@//hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -201,18 +201,15 @@ export default function Contact() {
                     </FormItem>
                   )}
                 />
-                <Button
-                  type="submit"
-                  disabled={submitContact.status === "loading"}
-                >
-                  {submitContact.status === "loading"
-                    ? (
-                      <>
-                        <Loader className="mr-2 h-4 w-4 animate-spin" />
-                        {t("form.sending")}
-                      </>
-                    )
-                    : t("form.sendButton")}
+                <Button type="submit" disabled={submitContact.isPending}>
+                  {submitContact.isPending ? (
+                    <>
+                      <Loader className="mr-2 h-4 w-4 animate-spin" />
+                      {t("form.sending")}
+                    </>
+                  ) : (
+                    t("form.sendButton")
+                  )}
                 </Button>
               </form>
             </Form>
