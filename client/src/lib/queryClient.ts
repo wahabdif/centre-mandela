@@ -19,8 +19,8 @@ export async function apiRequest(
   const fetchOptions: RequestInit = {
     method,
     credentials: 'include',
-    ...(headers && { headers }),
-    ...(data && { body: JSON.stringify(data) }),
+    ...(headers ? { headers } : {}),
+    ...(data ? { body: JSON.stringify(data) } : {}),
   };
 
   const res = await fetch(url, fetchOptions);
