@@ -1,35 +1,64 @@
-import * as React from 'react';
-import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { Check } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Brain, Cpu, Camera, ScanFace, Bone, Wave } from 'lucide-react';
 
-const DropdownMenuCheckboxItem = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
-  Omit<
-    React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>,
-    'checked'
-  > & {
-    checked?: boolean;
-  }
->(({ className, children, checked, ...props }, ref) => (
-  <DropdownMenuPrimitive.CheckboxItem
-    ref={ref}
-    className={cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      className,
-    )}
-    checked={checked}
-    {...props}
-  >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      <DropdownMenuPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
-      </DropdownMenuPrimitive.ItemIndicator>
-    </span>
-    {children}
-  </DropdownMenuPrimitive.CheckboxItem>
-));
+export type Service = {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  icon: string; // Nom d’icône à utiliser (ex: pour Lucide ou FontAwesome)
+};
 
-DropdownMenuCheckboxItem.displayName = 'DropdownMenuCheckboxItem';
+// Mapping string -> composant d'icône
+export const iconMap: Record<string, React.ElementType> = {
+  brain: Brain,
+  cpu: Cpu,
+  camera: Camera,
+  'scan-face': ScanFace,
+  bone: Bone,
+  waveform: Wave, // Correction ici : Wave au lieu de WaveSquare
+};
 
-export { DropdownMenuCheckboxItem };
+export const services: Service[] = [
+  {
+    id: 1,
+    title: 'IRM',
+    description: 'Imagerie par Résonance Magnétique pour le diagnostic précis des tissus mous.',
+    image: '/images/irm.jpg',
+    icon: 'brain',
+  },
+  {
+    id: 2,
+    title: 'Scanner (CT)',
+    description: 'Tomodensitométrie pour une visualisation en coupe des structures internes.',
+    image: '/images/scanner.jpg',
+    icon: 'cpu',
+  },
+  {
+    id: 3,
+    title: 'Radiologie Numérique',
+    description: 'Radiographies numériques de haute qualité avec faible dose de rayons.',
+    image: '/images/radiologie.jpg',
+    icon: 'camera',
+  },
+  {
+    id: 4,
+    title: 'Échographie',
+    description: "Imagerie par ultrasons pour l'examen des tissus mous et organes internes.",
+    image: '/images/echo.jpg',
+    icon: 'waveform',
+  },
+  {
+    id: 5,
+    title: 'Mammographie',
+    description: 'Dépistage et diagnostic des affections mammaires.',
+    image: '/images/mammo.jpg',
+    icon: 'scan-face',
+  },
+  {
+    id: 6,
+    title: 'Ostéodensitométrie',
+    description: 'Mesure de la densité osseuse pour diagnostiquer l’ostéoporose.',
+    image: '/images/osteo.jpg',
+    icon: 'bone',
+  },
+];
