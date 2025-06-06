@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { services } from '@/lib/data/services';
-import { iconmap } from '@/lib/data/iconmap'; // Correction ici : import depuis iconMap.ts
+import { iconmap } from '@/lib/data/iconmap'; // Correction ici : import depuis iconmap.ts
 import { doctors } from '@/lib/data/doctors';
 import { practicalInfo } from '@/lib/data/practicalInfo';
 import { testimonials } from '@/lib/data/testimonials';
