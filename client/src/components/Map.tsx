@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { contactInfo } from "@/src/lib/constants";
+import { contactInfo } from "@/lib/constants";
 import { MapPin, Navigation, Phone, Mail, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
