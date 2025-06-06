@@ -4,19 +4,19 @@
     "composite": true,
     "jsx": "react-jsx",
     "outDir": "dist",
-    "baseUrl": ".",
+    "baseUrl": ".", // base relative à ce fichier
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"] // <-- Ajout ici
     }
   },
   "include": [
     "src/**/*",
     "src/locales/**/**/*.json"
-   ],
+  ],
   "exclude": [
     "node_modules",
-    "dist",
+    "dist"
   ],
-
   "references": []
 }
